@@ -2,167 +2,230 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Catálogo Velas MAILE</title>
 
     <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Parisienne&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+
+
 </head>
 
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <!-- PORTADA -->
+        <!-- PORTADA -->
 
-    <section class="portada">
-
-        <img
-            src="imagenes/logo-maile.png"
-            alt="Logo Velas MAILE"
-            class="logo"
-        >
-
-        <p class="nuestro">
-            NUESTRO
-        </p>
-
-        <h1 class="catalogo-titulo">
-            CATÁLOGO
-        </h1>
-
-        <p class="velas-titulo">
-            Velas
-        </p>
-
-        <div class="botones-redes">
-
-            <a
-                href="#"
-                class="boton-red"
-            >
-                WhatsApp
-            </a>
-
-            <a
-                href="#"
-                class="boton-red"
-            >
-                Instagram
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- PUBLICACIONES -->
-
-    <main class="catalogo">
-
-        <button class="publicacion" onclick="abrirPublicacion(0)">
-            <img src="imagenes/vela1.jpg" alt="Vela personalizada">
-        </button>
-
-        <button class="publicacion" onclick="abrirPublicacion(1)">
-            <img src="imagenes/vela2.png" alt="Vela personalizada">
-        </button>
-
-        <button class="publicacion" onclick="abrirPublicacion(2)">
-            <img src="imagenes/vela3.png" alt="Vela personalizada">
-        </button>
-
-        <button class="publicacion" onclick="abrirPublicacion(3)">
-            <img src="imagenes/vela4.png" alt="Vela personalizada">
-        </button>
-
-        <button class="publicacion" onclick="abrirPublicacion(4)">
-            <img src="imagenes/vela5.png" alt="Vela personalizada">
-        </button>
-
-        <button class="publicacion" onclick="abrirPublicacion(5)">
-            <img src="imagenes/vela6.png" alt="Vela personalizada">
-        </button>
-
-    </main>
-
-</div>
-
-
-<!-- PUBLICACIÓN ABIERTA -->
-
-<div id="modal" class="modal">
-
-    <div class="modal-contenido">
-
-        <div class="barra-superior">
-
-            <button
-                class="volver"
-                onclick="cerrarPublicacion()"
-            >
-                ←
-            </button>
-
-            <span>Velas MAILE</span>
-
-        </div>
-
-
-        <div class="carrusel">
+        <section class="portada">
 
             <img
-                id="imagenGrande"
-                src=""
-                alt="Producto"
+                src="imagenes/logo-maile.png"
+                alt="Logo Velas MAILE"
+                class="logo"
             >
 
+            <p class="nuestro">
+                NUESTRO
+            </p>
+
+            <h1 class="catalogo-titulo">
+                CATÁLOGO
+            </h1>
+
+            <p class="velas-titulo">
+                Velas
+            </p>
+
+            <div class="botones-redes">
+
+                <a
+                    href="#"
+                    class="boton-red"
+                >
+                    WhatsApp
+                </a>
+
+                <a
+                    href="#"
+                    class="boton-red"
+                >
+                    Instagram
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATÁLOGO -->
+
+        <main class="catalogo">
+
             <button
-                class="flecha flecha-izquierda"
-                onclick="fotoAnterior()"
+                class="publicacion"
+                onclick="abrirPublicacion(0)"
             >
-                ‹
+                <img
+                    src="imagenes/vela1.jpg"
+                    alt="Vela personalizada"
+                >
             </button>
 
             <button
-                class="flecha flecha-derecha"
-                onclick="fotoSiguiente()"
+                class="publicacion"
+                onclick="abrirPublicacion(1)"
             >
-                ›
+                <img
+                    src="imagenes/vela2.png"
+                    alt="Vela personalizada"
+                >
             </button>
 
-        </div>
-
-
-        <div
-            id="indicadores"
-            class="indicadores"
-        ></div>
-
-
-        <div class="informacion">
-
-            <h2 id="tituloProducto"></h2>
-
-            <p id="descripcionProducto"></p>
-
-            <a
-                id="botonWhatsapp"
-                href="#"
-                target="_blank"
-                class="whatsapp"
+            <button
+                class="publicacion"
+                onclick="abrirPublicacion(2)"
             >
-                Pedir por WhatsApp
-            </a>
+                <img
+                    src="imagenes/vela3.png"
+                    alt="Vela personalizada"
+                >
+            </button>
+
+            <button
+                class="publicacion"
+                onclick="abrirPublicacion(3)"
+            >
+                <img
+                    src="imagenes/vela4.png"
+                    alt="Vela personalizada"
+                >
+            </button>
+
+            <button
+                class="publicacion"
+                onclick="abrirPublicacion(4)"
+            >
+                <img
+                    src="imagenes/vela5.png"
+                    alt="Vela personalizada"
+                >
+            </button>
+
+            <button
+                class="publicacion"
+                onclick="abrirPublicacion(5)"
+            >
+                <img
+                    src="imagenes/vela6.png"
+                    alt="Vela personalizada"
+                >
+            </button>
+
+        </main>
+
+    </div>
+
+
+    <!-- MODAL DE PUBLICACIÓN -->
+
+    <div
+        id="modal"
+        class="modal"
+    >
+
+        <div class="modal-contenido">
+
+            <!-- BARRA SUPERIOR -->
+
+            <div class="barra-superior">
+
+                <button
+                    class="volver"
+                    onclick="cerrarPublicacion()"
+                >
+                    ←
+                </button>
+
+                <span>
+                    Velas MAILE
+                </span>
+
+            </div>
+
+
+            <!-- CARRUSEL -->
+
+            <div class="carrusel">
+
+                <img
+                    id="imagenGrande"
+                    src=""
+                    alt="Producto"
+                >
+
+                <button
+                    class="flecha flecha-izquierda"
+                    onclick="fotoAnterior()"
+                >
+                    ‹
+                </button>
+
+                <button
+                    class="flecha flecha-derecha"
+                    onclick="fotoSiguiente()"
+                >
+                    ›
+                </button>
+
+            </div>
+
+
+            <!-- PUNTOS DEL CARRUSEL -->
+
+            <div
+                id="indicadores"
+                class="indicadores"
+            >
+            </div>
+
+
+            <!-- INFORMACIÓN -->
+
+            <div class="informacion">
+
+                <h2 id="tituloProducto">
+                </h2>
+
+                <p id="descripcionProducto">
+                </p>
+
+                <a
+                    id="botonWhatsapp"
+                    href="#"
+                    target="_blank"
+                    class="whatsapp"
+                >
+                    Pedir por WhatsApp
+                </a>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>

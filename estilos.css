@@ -4,23 +4,42 @@
     box-sizing: border-box;
 }
 
+:root {
+    --dorado: #b57a20;
+    --texto: #111111;
+    --gris-fondo: #ececec;
+    --gris-claro: #f3f3f3;
+    --borde: #eeeeee;
+}
+
 html {
-    background: #ececec;
+    background: var(--gris-fondo);
 }
 
 body {
+
+    background: #EAF5F2;
     margin: 0;
+
     font-family: Arial, Helvetica, sans-serif;
-    background: #ececec;
-    color: #222;
+
+    background: var(--gris-fondo);
+
+    color: var(--texto);
 }
 
 
-/* CONTENEDOR TIPO CELULAR */
+/* =========================
+   CONTENEDOR CELULAR
+========================= */
 
 .app {
+
+    background: #F2FBF8;
     width: 100%;
+
     max-width: 430px;
+
     min-height: 100vh;
 
     margin: 0 auto;
@@ -29,105 +48,150 @@ body {
 }
 
 
-/* PERFIL */
+/* =========================
+   PORTADA
+========================= */
 
-.perfil {
-    padding: 24px 18px 18px;
+.portada {
+
+    background: #F7FCFA;
+    width: 100%;
+
+    min-height: 560px;
+
+    padding: 34px 22px 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    text-align: center;
+
+    background: #ffffff;
 }
 
-.perfil h1 {
-    font-size: 25px;
-    font-weight: 700;
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    display: block;
+
+    width: 135px !important;
+    height: 135px !important;
+
+    max-width: 135px !important;
+    max-height: 135px !important;
+
+    object-fit: contain;
+
+    margin: 0 auto 25px auto;
 }
 
-.frase {
-    margin-top: 5px;
 
-    font-size: 14px;
+/* =========================
+   NUESTRO
+========================= */
 
-    color: #666;
+.nuestro {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    letter-spacing: 7px;
+    font-weight: 400;
+}
+
+.catalogo-titulo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    font-weight: 400;
+}
+
+.velas-titulo {
+    font-family: "Italianno", cursive;
+
+    font-size: 110px;
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    color: #c28a3a;
+
+    margin-top: 10px;
 }
 
 
-/* BOTONES */
+/* =========================
+   BOTONES REDES
+========================= */
 
-.botones-perfil {
+.botones-redes {
+    width: 100%;
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 8px;
+    gap: 10px;
 
-    margin-top: 18px;
+    margin-top: 34px;
 }
 
-.boton {
+
+
+.boton-red {
+    height: 50px;
+
     display: flex;
 
     align-items: center;
 
     justify-content: center;
 
-    height: 38px;
+    border-radius: 14px;
 
-    border-radius: 8px;
+    background: var(--gris-claro);
 
-    background: #f1f1f1;
-
-    color: #222;
+    color: #111111;
 
     text-decoration: none;
 
-    font-size: 14px;
+    font-size: 15px;
 
-    font-weight: 600;
+    font-weight: 700;
+
+    border: 1px solid var(--borde);
+}
+
+.boton-red:active {
+    transform: scale(0.97);
 }
 
 
-/* CATEGORÍAS */
-
-.categorias {
-    display: flex;
-
-    gap: 8px;
-
-    overflow-x: auto;
-
-    padding: 5px 14px 15px;
-
-    scrollbar-width: none;
-}
-
-.categorias::-webkit-scrollbar {
-    display: none;
-}
-
-.categorias button {
-    flex: 0 0 auto;
-
-    border: 1px solid #dddddd;
-
-    background: white;
-
-    padding: 8px 14px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-
-    cursor: pointer;
-}
-
-
-/* CATÁLOGO */
+/* =========================
+   CUADRÍCULA CATÁLOGO
+========================= */
 
 .catalogo {
+    width: 100%;
+
     display: grid;
 
     grid-template-columns: repeat(3, 1fr);
 
     gap: 2px;
+
+    background: #ffffff;
 }
+
+
+/* =========================
+   PUBLICACIONES
+========================= */
 
 .publicacion {
     border: 0;
@@ -136,7 +200,7 @@ body {
 
     margin: 0;
 
-    background: #eee;
+    background: #eeeeee;
 
     aspect-ratio: 1 / 1;
 
@@ -149,26 +213,33 @@ body {
     display: block;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
 }
 
+.publicacion:active img {
+    opacity: 0.85;
+}
 
-/* MODAL */
+
+/* =========================
+   MODAL
+========================= */
 
 .modal {
     display: none;
 
     position: fixed;
 
-    top: 0;
-    left: 0;
+    inset: 0;
 
     width: 100%;
+
     height: 100%;
 
-    background: #000;
+    background: #000000;
 
     z-index: 1000;
 
@@ -184,24 +255,26 @@ body {
 
     margin: 0 auto;
 
-    background: white;
+    background: #ffffff;
 }
 
 
-/* BARRA SUPERIOR */
+/* =========================
+   BARRA SUPERIOR
+========================= */
 
 .barra-superior {
-    height: 52px;
+    height: 54px;
 
     display: flex;
 
     align-items: center;
 
+    padding: 0 14px;
+
     border-bottom: 1px solid #eeeeee;
 
-    padding: 0 12px;
-
-    background: white;
+    background: #ffffff;
 }
 
 .barra-superior span {
@@ -213,17 +286,31 @@ body {
 }
 
 .volver {
+    width: 36px;
+
+    height: 36px;
+
     border: 0;
 
-    background: transparent;
+    border-radius: 50%;
 
-    font-size: 26px;
+    background: #f4f4f4;
+
+    font-size: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     cursor: pointer;
 }
 
 
-/* CARRUSEL */
+/* =========================
+   CARRUSEL
+========================= */
 
 .carrusel {
     position: relative;
@@ -232,7 +319,7 @@ body {
 
     aspect-ratio: 1 / 1;
 
-    background: #000;
+    background: #000000;
 
     display: flex;
 
@@ -245,10 +332,16 @@ body {
 
 .carrusel img {
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
 }
+
+
+/* =========================
+   FLECHAS
+========================= */
 
 .flecha {
     position: absolute;
@@ -258,6 +351,7 @@ body {
     transform: translateY(-50%);
 
     width: 38px;
+
     height: 38px;
 
     border: 0;
@@ -284,7 +378,9 @@ body {
 }
 
 
-/* INDICADORES */
+/* =========================
+   INDICADORES
+========================= */
 
 .indicadores {
     display: flex;
@@ -293,11 +389,12 @@ body {
 
     gap: 5px;
 
-    padding: 9px 0;
+    padding: 10px 0;
 }
 
 .punto {
     width: 6px;
+
     height: 6px;
 
     border-radius: 50%;
@@ -306,14 +403,16 @@ body {
 }
 
 .punto.activo {
-    background: #222;
+    background: var(--dorado);
 }
 
 
-/* INFORMACIÓN */
+/* =========================
+   INFORMACIÓN PRODUCTO
+========================= */
 
 .informacion {
-    padding: 8px 18px 30px;
+    padding: 10px 18px 30px;
 }
 
 .informacion h2 {
@@ -327,13 +426,15 @@ body {
 
     line-height: 1.5;
 
-    color: #555;
+    color: #555555;
 
     margin-bottom: 18px;
 }
 
 
-/* WHATSAPP */
+/* =========================
+   WHATSAPP
+========================= */
 
 .whatsapp {
     display: flex;
@@ -360,13 +461,15 @@ body {
 }
 
 
-/* PANTALLAS MÁS GRANDES */
+/* =========================
+   PC = SIMULACIÓN CELULAR
+========================= */
 
 @media (min-width: 431px) {
 
     .app,
     .modal-contenido {
-        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
     }
 
 }

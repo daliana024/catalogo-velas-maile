@@ -4,46 +4,4162 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo Velas MAILE</title>
-
     <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Velas MAILE</h1>
-        <p>Detalles hechos con amor</p>
-    </header>
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
 
-    <main class="catalogo">
+<main class="catalogo">
 
-        <div class="publicacion">
-            <img src="imagenes/vela1.jpg" alt="Vela personalizada">
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
         </div>
 
-        <div class="publicacion">
-            <img src="imagenes/vela2.jpg" alt="Vela personalizada">
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
         </div>
 
-        <div class="publicacion">
-            <img src="imagenes/vela3.jpg" alt="Vela personalizada">
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
         </div>
 
-        <div class="publicacion">
-            <img src="imagenes/vela4.jpg" alt="Vela personalizada">
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
         </div>
 
-        <div class="publicacion">
-            <img src="imagenes/vela5.jpg" alt="Vela personalizada">
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
         </div>
 
-        <div class="publicacion">
-            <img src="imagenes/vela6.jpg" alt="Vela personalizada">
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
         </div>
 
-    </main>
+    </div>
 
-    <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Velas MAILE</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header class="encabezado">
+    <h1>Velas MAILE</h1>
+    <p>Detalles hechos con amor</p>
+</header>
+
+<main class="catalogo">
+
+    <div class="publicacion" onclick="abrirPublicacion(0)">
+        <img src="imagenes/vela1.jpg" alt="Vela 1">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(1)">
+        <img src="imagenes/vela2.jpg" alt="Vela 2">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(2)">
+        <img src="imagenes/vela3.jpg" alt="Vela 3">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(3)">
+        <img src="imagenes/vela4.jpg" alt="Vela 4">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(4)">
+        <img src="imagenes/vela5.jpg" alt="Vela 5">
+    </div>
+
+    <div class="publicacion" onclick="abrirPublicacion(5)">
+        <img src="imagenes/vela6.jpg" alt="Vela 6">
+    </div>
+
+</main>
+
+<div id="modal" class="modal">
+
+    <div class="modal-contenido">
+
+        <button class="cerrar" onclick="cerrarPublicacion()">×</button>
+
+        <div class="carrusel">
+
+            <button class="flecha izquierda" onclick="fotoAnterior()">‹</button>
+
+            <img id="imagenGrande" src="" alt="Producto">
+
+            <button class="flecha derecha" onclick="fotoSiguiente()">›</button>
+
+        </div>
+
+        <div class="informacion">
+
+            <h2 id="tituloProducto"></h2>
+
+            <p id="descripcionProducto"></p>
+
+            <a
+                id="botonWhatsapp"
+                class="whatsapp"
+                href="#"
+                target="_blank"
+            >
+                Pedir por WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>

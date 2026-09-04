@@ -2,7 +2,7 @@ const productos = [
 
     {
         titulo: "Vela personalizada",
-        descripcion: "Vela artesanal personalizada, ideal para recuerdos y celebraciones especiales.",
+        descripcion: "Vela artesanal personalizada para momentos especiales.",
 
         imagenes: [
             "imagenes/vela1.jpg",
@@ -11,9 +11,10 @@ const productos = [
         ]
     },
 
+
     {
         titulo: "Vela Baby Shower",
-        descripcion: "Hermoso recuerdo personalizado para celebrar la llegada de tu bebé.",
+        descripcion: "Un detalle especial para celebrar la llegada de tu bebé.",
 
         imagenes: [
             "imagenes/vela2.jpg",
@@ -21,36 +22,40 @@ const productos = [
         ]
     },
 
+
     {
-        titulo: "Vela Bautizo",
-        descripcion: "Vela personalizada para bautizos y celebraciones religiosas.",
+        titulo: "Vela para Bautizo",
+        descripcion: "Recuerdo personalizado para bautizos y celebraciones religiosas.",
 
         imagenes: [
             "imagenes/vela3.jpg"
         ]
     },
 
+
     {
         titulo: "Vela personalizada",
-        descripcion: "Diseño artesanal elaborado especialmente para tu celebración.",
+        descripcion: "Diseño artesanal creado especialmente para tu celebración.",
 
         imagenes: [
             "imagenes/vela4.jpg"
         ]
     },
 
+
     {
         titulo: "Recuerdo artesanal",
-        descripcion: "Recuerdo personalizado elaborado con amor.",
+        descripcion: "Velas personalizadas elaboradas con dedicación y amor.",
 
         imagenes: [
             "imagenes/vela5.jpg"
         ]
     },
 
+
     {
         titulo: "Velas MAILE",
-        descripcion: "Detalles especiales para momentos inolvidables.",
+        descripcion: "Detalles personalizados para momentos inolvidables.",
 
         imagenes: [
             "imagenes/vela6.jpg"
@@ -65,11 +70,14 @@ let productoActual = 0;
 let fotoActual = 0;
 
 
+/* ABRIR PUBLICACIÓN */
+
 function abrirPublicacion(indice) {
 
     productoActual = indice;
 
     fotoActual = 0;
+
 
     const producto = productos[indice];
 
@@ -77,16 +85,19 @@ function abrirPublicacion(indice) {
     document.getElementById("tituloProducto").textContent =
         producto.titulo;
 
+
     document.getElementById("descripcionProducto").textContent =
         producto.descripcion;
 
 
-    mostrarFoto();
+    actualizarImagen();
+
+
+    crearIndicadores();
 
 
     const mensaje =
-        "Hola, estoy interesada en " +
-        producto.titulo;
+        `Hola, estoy interesada en: ${producto.titulo}`;
 
 
     document.getElementById("botonWhatsapp").href =
@@ -97,18 +108,28 @@ function abrirPublicacion(indice) {
     document.getElementById("modal").style.display =
         "block";
 
+
+    document.body.style.overflow =
+        "hidden";
 }
 
+
+/* CERRAR */
 
 function cerrarPublicacion() {
 
     document.getElementById("modal").style.display =
         "none";
 
+
+    document.body.style.overflow =
+        "auto";
 }
 
 
-function mostrarFoto() {
+/* ACTUALIZAR FOTO */
+
+function actualizarImagen() {
 
     const producto =
         productos[productoActual];
@@ -117,8 +138,12 @@ function mostrarFoto() {
     document.getElementById("imagenGrande").src =
         producto.imagenes[fotoActual];
 
+
+    actualizarIndicadores();
 }
 
+
+/* SIGUIENTE */
 
 function fotoSiguiente() {
 
@@ -136,10 +161,11 @@ function fotoSiguiente() {
     }
 
 
-    mostrarFoto();
-
+    actualizarImagen();
 }
 
+
+/* ANTERIOR */
 
 function fotoAnterior() {
 
@@ -158,6 +184,61 @@ function fotoAnterior() {
     }
 
 
-    mostrarFoto();
+    actualizarImagen();
+}
 
+
+/* CREAR PUNTOS */
+
+function crearIndicadores() {
+
+    const contenedor =
+        document.getElementById("indicadores");
+
+
+    contenedor.innerHTML = "";
+
+
+    const producto =
+        productos[productoActual];
+
+
+    producto.imagenes.forEach(() => {
+
+        const punto =
+            document.createElement("div");
+
+
+        punto.classList.add("punto");
+
+
+        contenedor.appendChild(punto);
+
+    });
+
+
+    actualizarIndicadores();
+}
+
+
+/* ACTUALIZAR PUNTOS */
+
+function actualizarIndicadores() {
+
+    const puntos =
+        document.querySelectorAll(".punto");
+
+
+    puntos.forEach((punto, indice) => {
+
+        punto.classList.remove("activo");
+
+
+        if (indice === fotoActual) {
+
+            punto.classList.add("activo");
+
+        }
+
+    });
 }

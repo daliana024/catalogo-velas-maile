@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
 
@@ -7,17 +8,17 @@
 
     <title>Catálogo Velas MAILE</title>
 
+    <!-- FUENTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italianno&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
     <link rel="stylesheet" href="estilos.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Parisienne&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -46,6 +47,9 @@
                 Velas
             </p>
 
+
+            <!-- BOTONES -->
+
             <div class="botones-redes">
 
                 <a
@@ -67,7 +71,7 @@
         </section>
 
 
-        <!-- CATÁLOGO -->
+        <!-- CUADRÍCULA DE PUBLICACIONES -->
 
         <main class="catalogo">
 
@@ -81,15 +85,17 @@
                 >
             </button>
 
+
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(1)"
             >
                 <img
                     src="imagenes/vela2.png"
-                    alt="Vela personalizada"
+                    alt="Vela Baby Shower"
                 >
             </button>
+
 
             <button
                 class="publicacion"
@@ -97,9 +103,10 @@
             >
                 <img
                     src="imagenes/vela3.png"
-                    alt="Vela personalizada"
+                    alt="Vela para Bautizo"
                 >
             </button>
+
 
             <button
                 class="publicacion"
@@ -111,15 +118,17 @@
                 >
             </button>
 
+
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(4)"
             >
                 <img
                     src="imagenes/vela5.png"
-                    alt="Vela personalizada"
+                    alt="Recuerdo artesanal"
                 >
             </button>
+
 
             <button
                 class="publicacion"
@@ -127,7 +136,7 @@
             >
                 <img
                     src="imagenes/vela6.png"
-                    alt="Vela personalizada"
+                    alt="Velas MAILE"
                 >
             </button>
 
@@ -136,7 +145,7 @@
     </div>
 
 
-    <!-- MODAL DE PUBLICACIÓN -->
+    <!-- PUBLICACIÓN ABIERTA -->
 
     <div
         id="modal"
@@ -152,6 +161,7 @@
                 <button
                     class="volver"
                     onclick="cerrarPublicacion()"
+                    aria-label="Volver al catálogo"
                 >
                     ←
                 </button>
@@ -176,6 +186,7 @@
                 <button
                     class="flecha flecha-izquierda"
                     onclick="fotoAnterior()"
+                    aria-label="Foto anterior"
                 >
                     ‹
                 </button>
@@ -183,6 +194,7 @@
                 <button
                     class="flecha flecha-derecha"
                     onclick="fotoSiguiente()"
+                    aria-label="Foto siguiente"
                 >
                     ›
                 </button>
@@ -190,24 +202,21 @@
             </div>
 
 
-            <!-- PUNTOS DEL CARRUSEL -->
+            <!-- INDICADORES -->
 
             <div
                 id="indicadores"
                 class="indicadores"
-            >
-            </div>
+            ></div>
 
 
             <!-- INFORMACIÓN -->
 
             <div class="informacion">
 
-                <h2 id="tituloProducto">
-                </h2>
+                <h2 id="tituloProducto"></h2>
 
-                <p id="descripcionProducto">
-                </p>
+                <p id="descripcionProducto"></p>
 
                 <a
                     id="botonWhatsapp"
@@ -225,7 +234,10 @@
     </div>
 
 
+    <!-- JAVASCRIPT -->
+
     <script src="script.js"></script>
 
 </body>
+
 </html>

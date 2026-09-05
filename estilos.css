@@ -4,13 +4,9 @@
 
 @font-face {
     font-family: "Hello Honey";
-
-    src: url("fuentes/hello honey.otf")
-        format("opentype");
-
+    src: url("fuentes/hello honey.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
-
     font-display: swap;
 }
 
@@ -22,43 +18,30 @@
 * {
     margin: 0;
     padding: 0;
-
     box-sizing: border-box;
 }
 
-
 :root {
     --dorado: #b77b22;
-
     --texto: #111111;
-
     --fondo-exterior: #e8e2d8;
-
     --marron: #4f3a2b;
+    --fondo-producto: #f5f0e9;
 }
-
 
 html,
 body {
     width: 100%;
-
     min-height: 100%;
 }
-
 
 html {
     background: var(--fondo-exterior);
 }
 
-
 body {
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     color: var(--texto);
-
     background: var(--fondo-exterior);
 }
 
@@ -69,9 +52,7 @@ body {
 
 .app {
     width: 100%;
-
     max-width: 430px;
-
     min-height: 100vh;
 
     margin: 0 auto;
@@ -88,63 +69,40 @@ body {
 
 .portada {
     width: 100%;
-
     min-height: 700px;
 
     position: relative;
 
     display: flex;
-
     justify-content: center;
-
     align-items: flex-start;
 
-    background-image:
-        url("imagenes/portada.png");
-
+    background-image: url("imagenes/portada.png");
     background-size: cover;
-
-    background-position:
-        center bottom;
-
-    background-repeat:
-        no-repeat;
+    background-position: center bottom;
+    background-repeat: no-repeat;
 }
-
 
 .capa-portada {
     width: 100%;
-
     min-height: 700px;
 
-    padding:
-        34px
-        22px
-        24px;
+    padding: 34px 22px 24px;
 
     display: flex;
-
     flex-direction: column;
 
     align-items: center;
-
-    justify-content:
-        flex-start;
+    justify-content: flex-start;
 
     text-align: center;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255, 250, 243, 0.03)
-            0%,
-
-            rgba(255, 250, 243, 0.06)
-            45%,
-
-            rgba(255, 250, 243, 0.02)
-            100%
-        );
+    background: linear-gradient(
+        180deg,
+        rgba(255, 250, 243, 0.03) 0%,
+        rgba(255, 250, 243, 0.06) 45%,
+        rgba(255, 250, 243, 0.02) 100%
+    );
 }
 
 
@@ -156,18 +114,13 @@ body {
     display: block;
 
     width: 130px;
-
     height: 130px;
 
     object-fit: contain;
 
-    margin:
-        0
-        auto
-        22px;
+    margin: 0 auto 22px;
 
     position: relative;
-
     left: -7px;
 
     border-radius: 50%;
@@ -183,16 +136,12 @@ body {
 
     margin-bottom: 9px;
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family: "Cormorant Garamond", serif;
 
     font-size: 30px;
-
     font-weight: 500;
 
     letter-spacing: 7px;
-
     line-height: 1;
 
     color: #5a4331;
@@ -200,20 +149,15 @@ body {
     text-align: center;
 }
 
-
 .catalogo-titulo {
     width: 100%;
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family: "Cormorant Garamond", serif;
 
     font-size: 60px;
-
     font-weight: 400;
 
     letter-spacing: 4px;
-
     line-height: 0.95;
 
     color: #21170f;
@@ -221,18 +165,14 @@ body {
     text-align: center;
 }
 
-
 .velas-titulo {
     width: 100%;
 
     margin-top: 3px;
 
-    font-family:
-        "Hello Honey",
-        cursive;
+    font-family: "Hello Honey", cursive;
 
     font-size: 95px;
-
     font-weight: normal;
 
     line-height: 1;
@@ -241,8 +181,7 @@ body {
 
     text-align: center;
 
-    transform:
-        translateX(-2px);
+    transform: translateX(-2px);
 }
 
 
@@ -254,23 +193,20 @@ body {
     width: 100%;
 
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 
     gap: 14px;
 
-    padding:
-        0
-        32px;
+    padding: 0 32px;
 
-    margin-top: -115px;
+    margin: 0;
 
     position: relative;
-
     z-index: 10;
-}
 
+    /* Los sube visualmente sin mover el catálogo */
+    transform: translateY(-78px);
+}
 
 .boton-red {
     height: 44px;
@@ -278,62 +214,42 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 8px;
 
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 
     border-radius: 14px;
 
-    background:
-        rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.92);
 
     color: var(--marron);
 
     text-decoration: none;
 
     font-size: 14px;
-
     font-weight: 600;
 
-    box-shadow:
-        0
-        5px
-        16px
-        rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
 
-    backdrop-filter:
-        blur(6px);
-
-    -webkit-backdrop-filter:
-        blur(6px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 
     transition:
         transform 0.15s ease,
         background 0.15s ease,
         box-shadow 0.15s ease;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
-
 .boton-red:active {
-    transform:
-        scale(0.96);
+    transform: scale(0.96);
 
-    background:
-        #ffffff;
+    background: #ffffff;
 
-    box-shadow:
-        0
-        3px
-        10px
-        rgba(0, 0, 0, 0.07);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
 }
 
 
@@ -343,7 +259,6 @@ body {
 
 .icono-red {
     width: 18px;
-
     height: 18px;
 
     flex-shrink: 0;
@@ -361,17 +276,17 @@ body {
 
     display: grid;
 
-    /* DOS PRODUCTOS POR FILA */
-
-    grid-template-columns:
-        repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 3px;
 
-    margin-top: 115px;
+    /* Compensa la altura física del bloque de botones */
+    margin-top: -44px;
 
-    background:
-        #f9f5ef;
+    background: #f9f5ef;
+
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -382,37 +297,37 @@ body {
 .publicacion {
     width: 100%;
 
-    aspect-ratio:
-        1 / 1;
+    aspect-ratio: 1 / 1;
 
     border: 0;
 
     padding: 0;
-
     margin: 0;
 
-    background:
-        #eeeeee;
+    background: var(--fondo-producto);
 
     overflow: hidden;
 
     cursor: pointer;
 
-    -webkit-tap-highlight-color:
-        transparent;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    -webkit-tap-highlight-color: transparent;
+}
 
 .publicacion img {
     display: block;
 
     width: 100%;
-
     height: 100%;
 
-    object-fit: cover;
-}
+    object-fit: contain;
+    object-position: center;
 
+    background: var(--fondo-producto);
+}
 
 .publicacion:active img {
     opacity: 0.85;
@@ -431,21 +346,17 @@ body {
     inset: 0;
 
     width: 100%;
-
     height: 100%;
 
     z-index: 1000;
 
-    background:
-        rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.85);
 
     overflow-y: auto;
 }
 
-
 .modal-contenido {
     width: 100%;
-
     max-width: 430px;
 
     min-height: 100vh;
@@ -462,58 +373,45 @@ body {
 
 .barra-superior {
     width: 100%;
-
     height: 54px;
 
     display: flex;
-
     align-items: center;
 
-    padding:
-        0
-        14px;
+    padding: 0 14px;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 
-    border-bottom:
-        1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
-
 
 .barra-superior span {
     margin-left: 12px;
 
     font-size: 16px;
-
     font-weight: 600;
 }
 
-
 .volver {
     width: 36px;
-
     height: 36px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border: 0;
-
     border-radius: 50%;
 
-    background:
-        #f4f4f4;
+    background: #f4f4f4;
 
-    color:
-        #111111;
+    color: #111111;
 
     font-size: 24px;
 
     cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -526,35 +424,24 @@ body {
 
     width: 100%;
 
-    aspect-ratio:
-        1 / 1;
+    aspect-ratio: 1 / 1;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     overflow: hidden;
 
-    background:
-        #f3eee7;
-
-    /*
-       Permite desplazamiento vertical
-       de la página, pero nosotros
-       detectamos el movimiento horizontal.
-    */
+    background: #f3eee7;
 
     touch-action: pan-y;
 }
-
 
 .carrusel img {
     display: block;
 
     width: 100%;
-
     height: 100%;
 
     object-fit: contain;
@@ -563,8 +450,7 @@ body {
 
     -webkit-user-drag: none;
 
-    transition:
-        opacity 0.15s ease;
+    transition: opacity 0.15s ease;
 }
 
 
@@ -576,44 +462,33 @@ body {
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     gap: 6px;
 
     min-height: 28px;
 
-    padding:
-        8px
-        0;
+    padding: 8px 0;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 }
-
 
 .punto {
     width: 7px;
-
     height: 7px;
 
     border-radius: 50%;
 
-    background:
-        #d2d2d2;
+    background: #d2d2d2;
 
-    transition:
-        0.2s;
+    transition: 0.2s;
 }
-
 
 .punto.activo {
     width: 8px;
-
     height: 8px;
 
-    background:
-        var(--dorado);
+    background: var(--dorado);
 }
 
 
@@ -622,29 +497,18 @@ body {
 ===================================== */
 
 .informacion {
-    padding:
-        8px
-        20px
-        32px;
+    padding: 8px 20px 32px;
 
-    background:
-        #ffffff;
+    background: #ffffff;
 }
-
 
 .informacion h2 {
     margin-bottom: 5px;
 
     font-size: 20px;
 
-    color:
-        #21170f;
+    color: #21170f;
 }
-
-
-/* =====================================
-   PRECIO
-===================================== */
 
 .precio-producto {
     margin-bottom: 12px !important;
@@ -653,10 +517,8 @@ body {
 
     font-weight: 700;
 
-    color:
-        var(--dorado) !important;
+    color: var(--dorado) !important;
 }
-
 
 .informacion p {
     margin-bottom: 20px;
@@ -665,8 +527,7 @@ body {
 
     line-height: 1.6;
 
-    color:
-        #555555;
+    color: #555555;
 }
 
 
@@ -676,34 +537,25 @@ body {
 
 .whatsapp {
     width: 100%;
-
     height: 48px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 12px;
 
-    background:
-        #25d366;
+    background: #25d366;
 
-    color:
-        #ffffff;
+    color: #ffffff;
 
     text-decoration: none;
 
     font-size: 15px;
-
     font-weight: 700;
 
-    box-shadow:
-        0
-        4px
-        12px
-        rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -715,11 +567,6 @@ body {
 
     .app,
     .modal-contenido {
-        box-shadow:
-            0
-            0
-            30px
-            rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
     }
-
 }

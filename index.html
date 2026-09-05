@@ -8,8 +8,9 @@
 
     <title>Catálogo Velas MAILE</title>
 
-    <!-- FUENTES -->
+    <!-- FUENTES DE GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
@@ -17,127 +18,166 @@
         rel="stylesheet"
     >
 
-    <!-- CSS -->
+    <!-- ESTILOS -->
     <link rel="stylesheet" href="estilos.css">
 </head>
+
 
 <body>
 
     <div class="app">
 
-        <!-- PORTADA -->
+        <!-- =====================================
+             PORTADA
+        ====================================== -->
 
         <section class="portada">
 
-            <img
-                src="imagenes/logo-maile.png"
-                alt="Logo Velas MAILE"
-                class="logo"
-            >
+            <div class="capa-portada">
 
-            <p class="nuestro">
-                NUESTRO
-            </p>
+                <!-- LOGO -->
 
-            <h1 class="catalogo-titulo">
-                CATÁLOGO
-            </h1>
-
-            <p class="velas-titulo">
-                Velas
-            </p>
-
-
-            <!-- BOTONES -->
-
-            <div class="botones-redes">
-
-                <a
-                    href="#"
-                    class="boton-red"
+                <img
+                    src="imagenes/logo-maile.png"
+                    alt="Logo Velas MAILE"
+                    class="logo"
                 >
-                    WhatsApp
-                </a>
 
-                <a
-                    href="#"
-                    class="boton-red"
-                >
-                    Instagram
-                </a>
+
+                <!-- TEXTO -->
+
+                <p class="nuestro">
+                    NUESTRO
+                </p>
+
+                <h1 class="catalogo-titulo">
+                    CATÁLOGO
+                </h1>
+
+                <p class="velas-titulo">
+                    Velas
+                </p>
 
             </div>
 
         </section>
 
 
-        <!-- CUADRÍCULA DE PUBLICACIONES -->
+        <!-- =====================================
+             BOTONES DE REDES
+        ====================================== -->
+
+        <div class="botones-redes">
+
+            <a
+                href="#"
+                class="boton-red"
+                id="botonWhatsappPrincipal"
+                target="_blank"
+            >
+                WhatsApp
+            </a>
+
+
+            <a
+                href="#"
+                class="boton-red"
+                id="botonInstagram"
+                target="_blank"
+            >
+                Instagram
+            </a>
+
+        </div>
+
+
+        <!-- =====================================
+             CUADRÍCULA DEL CATÁLOGO
+        ====================================== -->
 
         <main class="catalogo">
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(0)"
+                aria-label="Abrir publicación 1"
             >
+
                 <img
                     src="imagenes/vela1.jpg"
                     alt="Vela personalizada"
                 >
+
             </button>
 
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(1)"
+                aria-label="Abrir publicación 2"
             >
+
                 <img
                     src="imagenes/vela2.png"
-                    alt="Vela Baby Shower"
+                    alt="Vela personalizada"
                 >
+
             </button>
 
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(2)"
+                aria-label="Abrir publicación 3"
             >
+
                 <img
                     src="imagenes/vela3.png"
-                    alt="Vela para Bautizo"
+                    alt="Vela personalizada"
                 >
+
             </button>
 
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(3)"
+                aria-label="Abrir publicación 4"
             >
+
                 <img
                     src="imagenes/vela4.png"
                     alt="Vela personalizada"
                 >
+
             </button>
 
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(4)"
+                aria-label="Abrir publicación 5"
             >
+
                 <img
                     src="imagenes/vela5.png"
-                    alt="Recuerdo artesanal"
+                    alt="Vela personalizada"
                 >
+
             </button>
 
 
             <button
                 class="publicacion"
                 onclick="abrirPublicacion(5)"
+                aria-label="Abrir publicación 6"
             >
+
                 <img
                     src="imagenes/vela6.png"
-                    alt="Velas MAILE"
+                    alt="Vela personalizada"
                 >
+
             </button>
 
         </main>
@@ -145,7 +185,9 @@
     </div>
 
 
-    <!-- PUBLICACIÓN ABIERTA -->
+    <!-- =====================================
+         MODAL DE PUBLICACIÓN
+    ====================================== -->
 
     <div
         id="modal"
@@ -183,6 +225,7 @@
                     alt="Producto"
                 >
 
+
                 <button
                     class="flecha flecha-izquierda"
                     onclick="fotoAnterior()"
@@ -190,6 +233,7 @@
                 >
                     ‹
                 </button>
+
 
                 <button
                     class="flecha flecha-derecha"
@@ -207,16 +251,20 @@
             <div
                 id="indicadores"
                 class="indicadores"
-            ></div>
+            >
+            </div>
 
 
             <!-- INFORMACIÓN -->
 
             <div class="informacion">
 
-                <h2 id="tituloProducto"></h2>
+                <h2 id="tituloProducto">
+                </h2>
 
-                <p id="descripcionProducto"></p>
+                <p id="descripcionProducto">
+                </p>
+
 
                 <a
                     id="botonWhatsapp"

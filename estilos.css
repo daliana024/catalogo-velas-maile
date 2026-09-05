@@ -4,9 +4,13 @@
 
 @font-face {
     font-family: "Hello Honey";
-    src: url("fuentes/hello honey.otf") format("opentype");
+
+    src: url("fuentes/hello honey.otf")
+        format("opentype");
+
     font-weight: normal;
     font-style: normal;
+
     font-display: swap;
 }
 
@@ -18,28 +22,43 @@
 * {
     margin: 0;
     padding: 0;
+
     box-sizing: border-box;
 }
 
+
 :root {
     --dorado: #b77b22;
+
     --texto: #111111;
+
     --fondo-exterior: #e8e2d8;
+
+    --marron: #4f3a2b;
 }
+
 
 html,
 body {
     width: 100%;
+
     min-height: 100%;
 }
+
 
 html {
     background: var(--fondo-exterior);
 }
 
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     color: var(--texto);
+
     background: var(--fondo-exterior);
 }
 
@@ -50,7 +69,9 @@ body {
 
 .app {
     width: 100%;
+
     max-width: 430px;
+
     min-height: 100vh;
 
     margin: 0 auto;
@@ -67,40 +88,63 @@ body {
 
 .portada {
     width: 100%;
+
     min-height: 700px;
 
     position: relative;
 
     display: flex;
+
     justify-content: center;
+
     align-items: flex-start;
 
-    background-image: url("imagenes/portada.png");
+    background-image:
+        url("imagenes/portada.png");
+
     background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
+
+    background-position:
+        center bottom;
+
+    background-repeat:
+        no-repeat;
 }
+
 
 .capa-portada {
     width: 100%;
+
     min-height: 700px;
 
-    padding: 34px 22px 24px;
+    padding:
+        34px
+        22px
+        24px;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
-    justify-content: flex-start;
+
+    justify-content:
+        flex-start;
 
     text-align: center;
 
-    background: linear-gradient(
-        180deg,
-        rgba(255, 250, 243, 0.03) 0%,
-        rgba(255, 250, 243, 0.06) 45%,
-        rgba(255, 250, 243, 0.02) 100%
-    );
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 250, 243, 0.03)
+            0%,
+
+            rgba(255, 250, 243, 0.06)
+            45%,
+
+            rgba(255, 250, 243, 0.02)
+            100%
+        );
 }
 
 
@@ -112,13 +156,18 @@ body {
     display: block;
 
     width: 130px;
+
     height: 130px;
 
     object-fit: contain;
 
-    margin: 0 auto 22px;
+    margin:
+        0
+        auto
+        22px;
 
     position: relative;
+
     left: -7px;
 
     border-radius: 50%;
@@ -134,11 +183,16 @@ body {
 
     margin-bottom: 9px;
 
-    font-family: "Cormorant Garamond", serif;
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
     font-size: 30px;
+
     font-weight: 500;
 
     letter-spacing: 7px;
+
     line-height: 1;
 
     color: #5a4331;
@@ -146,14 +200,20 @@ body {
     text-align: center;
 }
 
+
 .catalogo-titulo {
     width: 100%;
 
-    font-family: "Cormorant Garamond", serif;
-    font-size: 45px;
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 60px;
+
     font-weight: 400;
 
     letter-spacing: 4px;
+
     line-height: 0.95;
 
     color: #21170f;
@@ -161,13 +221,18 @@ body {
     text-align: center;
 }
 
+
 .velas-titulo {
     width: 100%;
 
     margin-top: 3px;
 
-    font-family: "Hello Honey", cursive;
+    font-family:
+        "Hello Honey",
+        cursive;
+
     font-size: 95px;
+
     font-weight: normal;
 
     line-height: 1;
@@ -176,59 +241,114 @@ body {
 
     text-align: center;
 
-    transform: translateX(-2px);
+    transform:
+        translateX(-2px);
 }
 
 
 /* =====================================
-   BOTONES DE REDES
+   BOTONES REDES
 ===================================== */
 
 .botones-redes {
     width: 100%;
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
 
-    gap: 12px;
+    grid-template-columns:
+        1fr 1fr;
 
-    padding: 0 28px;
+    gap: 14px;
+
+    padding:
+        0
+        32px;
 
     margin-top: -115px;
 
     position: relative;
+
     z-index: 10;
 }
 
+
 .boton-red {
-    height: 40px;
+    height: 44px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 12px;
+    gap: 8px;
 
-    background: rgba(255, 255, 255, 0.90);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.8);
 
-    color: #111111;
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    color: var(--marron);
 
     text-decoration: none;
 
     font-size: 14px;
-    font-weight: 700;
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-weight: 600;
 
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    box-shadow:
+        0
+        5px
+        16px
+        rgba(0, 0, 0, 0.08);
 
-    -webkit-tap-highlight-color: transparent;
+    backdrop-filter:
+        blur(6px);
+
+    -webkit-backdrop-filter:
+        blur(6px);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
+
 .boton-red:active {
-    transform: scale(0.97);
+    transform:
+        scale(0.96);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0
+        3px
+        10px
+        rgba(0, 0, 0, 0.07);
+}
+
+
+/* =====================================
+   ICONOS
+===================================== */
+
+.icono-red {
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+    fill: currentColor;
 }
 
 
@@ -240,42 +360,59 @@ body {
     width: 100%;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
 
-    gap: 2px;
+    /* DOS PRODUCTOS POR FILA */
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 3px;
 
     margin-top: 115px;
 
-    background: #f9f5ef;
+    background:
+        #f9f5ef;
 }
+
+
+/* =====================================
+   PUBLICACIONES
+===================================== */
 
 .publicacion {
     width: 100%;
 
-    aspect-ratio: 1 / 1;
+    aspect-ratio:
+        1 / 1;
 
     border: 0;
 
     padding: 0;
+
     margin: 0;
 
-    background: #eeeeee;
+    background:
+        #eeeeee;
 
     overflow: hidden;
 
     cursor: pointer;
 
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 }
+
 
 .publicacion img {
     display: block;
 
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
 }
+
 
 .publicacion:active img {
     opacity: 0.85;
@@ -294,18 +431,23 @@ body {
     inset: 0;
 
     width: 100%;
+
     height: 100%;
 
     z-index: 1000;
 
-    background: #000000;
+    background:
+        rgba(0, 0, 0, 0.85);
 
     overflow-y: auto;
 }
 
+
 .modal-contenido {
     width: 100%;
+
     max-width: 430px;
+
     min-height: 100vh;
 
     margin: 0 auto;
@@ -320,39 +462,54 @@ body {
 
 .barra-superior {
     width: 100%;
+
     height: 54px;
 
     display: flex;
+
     align-items: center;
 
-    padding: 0 14px;
+    padding:
+        0
+        14px;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    border-bottom: 1px solid #eeeeee;
+    border-bottom:
+        1px solid #eeeeee;
 }
+
 
 .barra-superior span {
     margin-left: 12px;
 
     font-size: 16px;
+
     font-weight: 600;
 }
 
+
 .volver {
     width: 36px;
+
     height: 36px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border: 0;
+
     border-radius: 50%;
 
-    background: #f4f4f4;
+    background:
+        #f4f4f4;
 
-    color: #111111;
+    color:
+        #111111;
 
     font-size: 24px;
 
@@ -361,7 +518,7 @@ body {
 
 
 /* =====================================
-   CARRUSEL
+   CARRUSEL TÁCTIL
 ===================================== */
 
 .carrusel {
@@ -369,56 +526,45 @@ body {
 
     width: 100%;
 
-    aspect-ratio: 1 / 1;
+    aspect-ratio:
+        1 / 1;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     overflow: hidden;
 
-    background: #000000;
+    background:
+        #f3eee7;
+
+    /*
+       Permite desplazamiento vertical
+       de la página, pero nosotros
+       detectamos el movimiento horizontal.
+    */
+
+    touch-action: pan-y;
 }
 
+
 .carrusel img {
+    display: block;
+
     width: 100%;
+
     height: 100%;
 
     object-fit: contain;
-}
 
-.flecha {
-    position: absolute;
+    user-select: none;
 
-    top: 50%;
+    -webkit-user-drag: none;
 
-    width: 38px;
-    height: 38px;
-
-    transform: translateY(-50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.45);
-
-    color: #ffffff;
-
-    font-size: 30px;
-
-    cursor: pointer;
-}
-
-.flecha-izquierda {
-    left: 10px;
-}
-
-.flecha-derecha {
-    right: 10px;
+    transition:
+        opacity 0.15s ease;
 }
 
 
@@ -428,24 +574,46 @@ body {
 
 .indicadores {
     display: flex;
+
     justify-content: center;
 
-    gap: 5px;
+    align-items: center;
 
-    padding: 10px 0;
+    gap: 6px;
+
+    min-height: 28px;
+
+    padding:
+        8px
+        0;
+
+    background:
+        #ffffff;
 }
 
+
 .punto {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+
+    height: 7px;
 
     border-radius: 50%;
 
-    background: #c8c8c8;
+    background:
+        #d2d2d2;
+
+    transition:
+        0.2s;
 }
 
+
 .punto.activo {
-    background: var(--dorado);
+    width: 8px;
+
+    height: 8px;
+
+    background:
+        var(--dorado);
 }
 
 
@@ -454,23 +622,51 @@ body {
 ===================================== */
 
 .informacion {
-    padding: 10px 18px 30px;
+    padding:
+        8px
+        20px
+        32px;
+
+    background:
+        #ffffff;
 }
+
 
 .informacion h2 {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 
-    font-size: 18px;
+    font-size: 20px;
+
+    color:
+        #21170f;
 }
 
+
+/* =====================================
+   PRECIO
+===================================== */
+
+.precio-producto {
+    margin-bottom: 12px !important;
+
+    font-size: 20px !important;
+
+    font-weight: 700;
+
+    color:
+        var(--dorado) !important;
+}
+
+
 .informacion p {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 
     font-size: 14px;
 
-    line-height: 1.5;
+    line-height: 1.6;
 
-    color: #555555;
+    color:
+        #555555;
 }
 
 
@@ -480,34 +676,50 @@ body {
 
 .whatsapp {
     width: 100%;
-    height: 46px;
+
+    height: 48px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    background: #25d366;
+    background:
+        #25d366;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
     text-decoration: none;
 
     font-size: 15px;
+
     font-weight: 700;
+
+    box-shadow:
+        0
+        4px
+        12px
+        rgba(0, 0, 0, 0.08);
 }
 
 
 /* =====================================
-   PC = VISTA TIPO CELULAR
+   COMPUTADOR = VISTA CELULAR
 ===================================== */
 
 @media (min-width: 431px) {
 
     .app,
     .modal-contenido {
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+        box-shadow:
+            0
+            0
+            30px
+            rgba(0, 0, 0, 0.08);
     }
 
 }

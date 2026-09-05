@@ -10,6 +10,7 @@
     font-display: swap;
 }
 
+
 /* =====================================
    CONFIGURACIÓN GENERAL
 ===================================== */
@@ -24,7 +25,6 @@
     --dorado: #b77b22;
     --texto: #111111;
     --fondo-exterior: #e8e2d8;
-    --borde: rgba(0, 0, 0, 0.06);
 }
 
 html,
@@ -38,18 +38,14 @@ html {
 }
 
 body {
-    margin: 0;
-
     font-family: Arial, Helvetica, sans-serif;
-
     color: var(--texto);
-
     background: var(--fondo-exterior);
 }
 
 
 /* =====================================
-   CONTENEDOR CELULAR
+   APP
 ===================================== */
 
 .app {
@@ -73,22 +69,17 @@ body {
     width: 100%;
     min-height: 700px;
 
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
     background-image: url("imagenes/portada.png");
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
-
-    position: relative;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
 }
-
-
-/* =====================================
-   CAPA SOBRE LA PORTADA
-===================================== */
 
 .capa-portada {
     width: 100%;
@@ -104,14 +95,14 @@ body {
 
     text-align: center;
 
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255, 250, 243, 0.03) 0%,
-            rgba(255, 250, 243, 0.06) 45%,
-            rgba(255, 250, 243, 0.02) 100%
-        );
+    background: linear-gradient(
+        180deg,
+        rgba(255, 250, 243, 0.03) 0%,
+        rgba(255, 250, 243, 0.06) 45%,
+        rgba(255, 250, 243, 0.02) 100%
+    );
 }
+
 
 /* =====================================
    LOGO
@@ -125,26 +116,25 @@ body {
 
     object-fit: contain;
 
-    margin: 0 auto 22px auto;
-
-    border-radius: 50%;
-
-    background: transparent;
-
-    box-shadow: none;
+    margin: 0 auto 22px;
 
     position: relative;
-
     left: -7px;
+
+    border-radius: 50%;
 }
 
+
 /* =====================================
-   TEXTO NUESTRO
+   TEXTOS
 ===================================== */
 
 .nuestro {
-    font-family: "Cormorant Garamond", serif;
+    width: 100%;
 
+    margin-bottom: 9px;
+
+    font-family: "Cormorant Garamond", serif;
     font-size: 30px;
     font-weight: 500;
 
@@ -153,19 +143,13 @@ body {
 
     color: #5a4331;
 
-    margin-bottom: 9px;
-
     text-align: center;
 }
 
-
-/* =====================================
-   TEXTO CATÁLOGO
-===================================== */
-
 .catalogo-titulo {
-    font-family: "Cormorant Garamond", serif;
+    width: 100%;
 
+    font-family: "Cormorant Garamond", serif;
     font-size: 60px;
     font-weight: 400;
 
@@ -177,14 +161,12 @@ body {
     text-align: center;
 }
 
-
-/* =====================================
-   TEXTO VELAS
-===================================== */
-
 .velas-titulo {
-    font-family: "Hello Honey", cursive;
+    width: 100%;
 
+    margin-top: 3px;
+
+    font-family: "Hello Honey", cursive;
     font-size: 95px;
     font-weight: normal;
 
@@ -192,11 +174,7 @@ body {
 
     color: var(--dorado);
 
-    width: 100%;
-
     text-align: center;
-
-    margin-top: 3px;
 
     transform: translateX(-2px);
 }
@@ -210,7 +188,6 @@ body {
     width: 100%;
 
     display: grid;
-
     grid-template-columns: 1fr 1fr;
 
     gap: 12px;
@@ -220,22 +197,17 @@ body {
     margin-top: -115px;
 
     position: relative;
-
     z-index: 10;
-
-    background: transparent;
 }
 
 .boton-red {
     height: 40px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border: 1px solid rgba(255, 255, 255, 0.65);
-
     border-radius: 12px;
 
     background: rgba(255, 255, 255, 0.90);
@@ -247,11 +219,9 @@ body {
     font-size: 14px;
     font-weight: 700;
 
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     backdrop-filter: blur(4px);
-
     -webkit-backdrop-filter: blur(4px);
 
     -webkit-tap-highlight-color: transparent;
@@ -263,14 +233,13 @@ body {
 
 
 /* =====================================
-   CUADRÍCULA DEL CATÁLOGO
+   CATÁLOGO
 ===================================== */
 
 .catalogo {
     width: 100%;
 
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
 
     gap: 2px;
@@ -280,11 +249,6 @@ body {
     background: #f9f5ef;
 }
 
-
-/* =====================================
-   PUBLICACIONES
-===================================== */
-
 .publicacion {
     width: 100%;
 
@@ -292,8 +256,8 @@ body {
 
     border: 0;
 
-    margin: 0;
     padding: 0;
+    margin: 0;
 
     background: #eeeeee;
 
@@ -332,9 +296,9 @@ body {
     width: 100%;
     height: 100%;
 
-    background: #000000;
-
     z-index: 1000;
+
+    background: #000000;
 
     overflow-y: auto;
 }
@@ -342,7 +306,6 @@ body {
 .modal-contenido {
     width: 100%;
     max-width: 430px;
-
     min-height: 100vh;
 
     margin: 0 auto;
@@ -360,7 +323,6 @@ body {
     height: 54px;
 
     display: flex;
-
     align-items: center;
 
     padding: 0 14px;
@@ -382,12 +344,10 @@ body {
     height: 36px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border: 0;
-
     border-radius: 50%;
 
     background: #f4f4f4;
@@ -397,8 +357,6 @@ body {
     font-size: 24px;
 
     cursor: pointer;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -414,7 +372,6 @@ body {
     aspect-ratio: 1 / 1;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -430,11 +387,6 @@ body {
     object-fit: contain;
 }
 
-
-/* =====================================
-   FLECHAS
-===================================== */
-
 .flecha {
     position: absolute;
 
@@ -445,14 +397,12 @@ body {
 
     transform: translateY(-50%);
 
-    border: 0;
-
-    border-radius: 50%;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
 
     background: rgba(0, 0, 0, 0.45);
 
@@ -461,8 +411,6 @@ body {
     font-size: 30px;
 
     cursor: pointer;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
 .flecha-izquierda {
@@ -480,7 +428,6 @@ body {
 
 .indicadores {
     display: flex;
-
     justify-content: center;
 
     gap: 5px;
@@ -528,7 +475,7 @@ body {
 
 
 /* =====================================
-   BOTÓN WHATSAPP
+   WHATSAPP
 ===================================== */
 
 .whatsapp {
@@ -536,7 +483,6 @@ body {
     height: 46px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -554,14 +500,14 @@ body {
 
 
 /* =====================================
-   EN COMPUTADOR SE VE COMO CELULAR
+   PC = VISTA TIPO CELULAR
 ===================================== */
 
 @media (min-width: 431px) {
 
     .app,
     .modal-contenido {
-        box-shadow:
-            0 0 30px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
     }
+
 }

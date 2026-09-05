@@ -3,33 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Catálogo Velas MAILE</title>
 
-    <!-- FUENTES -->
+    <!-- Fuente para NUESTRO y CATÁLOGO -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italianno&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap"
         rel="stylesheet"
     >
 
-    <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Parisienne&display=swap"
-    rel="stylesheet"
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&display=swap"
-    rel="stylesheet"
->
-
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="estilos.css">
 </head>
 
@@ -37,10 +23,7 @@
 
     <div class="app">
 
-        <!-- =========================
-             PORTADA
-        ========================== -->
-
+        <!-- PORTADA -->
         <section class="portada">
 
             <div class="capa-portada">
@@ -68,10 +51,7 @@
         </section>
 
 
-        <!-- =========================
-             BOTONES DE REDES
-        ========================== -->
-
+        <!-- REDES -->
         <div class="botones-redes">
 
             <a
@@ -79,6 +59,7 @@
                 class="boton-red"
                 id="botonWhatsappPrincipal"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 WhatsApp
             </a>
@@ -88,6 +69,7 @@
                 class="boton-red"
                 id="botonInstagram"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 Instagram
             </a>
@@ -95,10 +77,7 @@
         </div>
 
 
-        <!-- =========================
-             CATÁLOGO
-        ========================== -->
-
+        <!-- CATÁLOGO -->
         <main class="catalogo">
 
             <button
@@ -120,7 +99,7 @@
             >
                 <img
                     src="imagenes/vela2.png"
-                    alt="Vela personalizada"
+                    alt="Vela Baby Shower"
                 >
             </button>
 
@@ -132,7 +111,7 @@
             >
                 <img
                     src="imagenes/vela3.png"
-                    alt="Vela personalizada"
+                    alt="Vela para bautizo"
                 >
             </button>
 
@@ -156,7 +135,7 @@
             >
                 <img
                     src="imagenes/vela5.png"
-                    alt="Vela personalizada"
+                    alt="Recuerdo artesanal"
                 >
             </button>
 
@@ -168,7 +147,7 @@
             >
                 <img
                     src="imagenes/vela6.png"
-                    alt="Vela personalizada"
+                    alt="Velas MAILE"
                 >
             </button>
 
@@ -177,18 +156,10 @@
     </div>
 
 
-    <!-- =========================
-         MODAL
-    ========================== -->
-
-    <div
-        id="modal"
-        class="modal"
-    >
+    <!-- PUBLICACIÓN ABIERTA -->
+    <div id="modal" class="modal">
 
         <div class="modal-contenido">
-
-            <!-- BARRA SUPERIOR -->
 
             <div class="barra-superior">
 
@@ -200,14 +171,10 @@
                     ←
                 </button>
 
-                <span>
-                    Velas MAILE
-                </span>
+                <span>Velas MAILE</span>
 
             </div>
 
-
-            <!-- CARRUSEL -->
 
             <div class="carrusel">
 
@@ -236,15 +203,11 @@
             </div>
 
 
-            <!-- INDICADORES -->
-
             <div
                 id="indicadores"
                 class="indicadores"
             ></div>
 
-
-            <!-- INFORMACIÓN -->
 
             <div class="informacion">
 
@@ -256,6 +219,7 @@
                     id="botonWhatsapp"
                     href="#"
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="whatsapp"
                 >
                     Pedir por WhatsApp
@@ -266,9 +230,6 @@
         </div>
 
     </div>
-
-
-    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
 

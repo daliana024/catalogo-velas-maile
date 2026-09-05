@@ -113,7 +113,6 @@ body {
         );
 }
 
-
 /* =====================================
    LOGO
 ===================================== */
@@ -121,20 +120,23 @@ body {
 .logo {
     display: block;
 
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
 
     object-fit: contain;
 
-    margin: 0 auto 22px;
+    margin: 0 auto 22px auto;
 
     border-radius: 50%;
 
     background: transparent;
 
     box-shadow: none;
-}
 
+    position: relative;
+
+    left: -7px;
+}
 
 /* =====================================
    TEXTO NUESTRO
@@ -194,7 +196,7 @@ body {
 
     text-align: center;
 
-    margin-top: 12px;
+    margin-top: 3px;
 
     transform: translateX(-2px);
 }

@@ -1,503 +1,258 @@
-/* =====================================
-   PRODUCTOS
-===================================== */
-
 const productos = [
-
     {
         titulo: "Vela personalizada",
-
         precio: "$12.000",
-
-        descripcion:
-            "Vela artesanal personalizada para momentos especiales.",
-
+        descripcion: "Vela artesanal personalizada para momentos especiales. Ideal como detalle decorativo o recuerdo para celebraciones.",
+        etiquetas: ["Personalizada", "Recuerdos", "Detalles"],
         imagenes: [
             "imagenes/vela1.jpg",
+            "imagenes/vela1.jpg",
+            "imagenes/vela1.jpg"
+        ]
+    },
+
+    {
+        titulo: "Vela religiosa",
+        precio: "$18.000",
+        descripcion: "Diseño especial con temática religiosa, elaborado con mucho cuidado para un detalle significativo y elegante.",
+        etiquetas: ["Religiosa", "Bautizo", "Primera Comunión"],
+        imagenes: [
             "imagenes/vela2.png",
+            "imagenes/vela2.png",
+            "imagenes/vela2.png"
+        ]
+    },
+
+    {
+        titulo: "Vela clásica blanca",
+        precio: "$10.000",
+        descripcion: "Una vela de estilo clásico y limpio, perfecta para celebraciones, recordatorios o decoración especial.",
+        etiquetas: ["Clásica", "Decoración", "Eventos"],
+        imagenes: [
+            "imagenes/vela3.png",
+            "imagenes/vela3.png",
             "imagenes/vela3.png"
         ]
     },
 
-
     {
-        titulo: "Vela Baby Shower",
-
-        precio: "$10.000",
-
-        descripcion:
-            "Un hermoso detalle personalizado para celebrar la llegada de tu bebé.",
-
-        imagenes: [
-            "imagenes/vela2.png",
-            "imagenes/vela3.png",
-            "imagenes/vela4.png"
-        ]
-    },
-
-
-    {
-        titulo: "Vela para Bautizo",
-
+        titulo: "Vela de grado",
         precio: "$11.000",
-
-        descripcion:
-            "Recuerdo personalizado para bautizos y celebraciones religiosas.",
-
-        imagenes: [
-            "imagenes/vela3.png",
-            "imagenes/vela4.png"
-        ]
-    },
-
-
-    {
-        titulo: "Vela personalizada",
-
-        precio: "$15.000",
-
-        descripcion:
-            "Diseño artesanal creado especialmente para tu celebración.",
-
+        descripcion: "Detalle especial para grados y logros académicos. Personalizable con nombre, color y ocasión.",
+        etiquetas: ["Grado", "Personalizada", "Souvenir"],
         imagenes: [
             "imagenes/vela4.png",
+            "imagenes/vela4.png",
+            "imagenes/vela4.png"
+        ]
+    },
+
+    {
+        titulo: "Vela decorativa",
+        precio: "$11.500",
+        descripcion: "Diseño decorativo artesanal con acabado elegante, pensado para regalar o decorar celebraciones.",
+        etiquetas: ["Decorativa", "Regalo", "Eventos"],
+        imagenes: [
+            "imagenes/vela5.png",
+            "imagenes/vela5.png",
             "imagenes/vela5.png"
         ]
     },
 
-
     {
-        titulo: "Recuerdo artesanal",
-
-        precio: "$9.000",
-
-        descripcion:
-            "Velas personalizadas elaboradas con dedicación y amor.",
-
-        imagenes: [
-            "imagenes/vela5.png",
-            "imagenes/vela6.png"
-        ]
-    },
-
-
-    {
-        titulo: "Velas MAILE",
-
+        titulo: "Vela para recuerdo",
         precio: "$13.000",
-
-        descripcion:
-            "Detalles personalizados para momentos inolvidables.",
-
+        descripcion: "Vela personalizada para recuerdos de eventos especiales, con presentación delicada y elegante.",
+        etiquetas: ["Baby Shower", "Bautizo", "Cumpleaños"],
         imagenes: [
             "imagenes/vela6.png",
-            "imagenes/vela1.jpg"
+            "imagenes/vela6.png",
+            "imagenes/vela6.png"
         ]
     }
-
 ];
 
-
-/* =====================================
-   VARIABLES
-===================================== */
+const catalogo = document.getElementById("catalogo");
+const modal = document.getElementById("modal");
+const tituloProducto = document.getElementById("tituloProducto");
+const precioProducto = document.getElementById("precioProducto");
+const descripcionProducto = document.getElementById("descripcionProducto");
+const etiquetasProducto = document.getElementById("etiquetasProducto");
+const imagenGrande = document.getElementById("imagenGrande");
+const indicadores = document.getElementById("indicadores");
+const botonWhatsapp = document.getElementById("botonWhatsapp");
+const carrusel = document.getElementById("carrusel");
 
 let productoActual = 0;
-
 let fotoActual = 0;
 
-
-/* VARIABLES PARA SWIPE */
-
 let inicioX = 0;
-
 let finX = 0;
 
+renderizarCatalogo();
 
-/* =====================================
-   ABRIR PUBLICACIÓN
-===================================== */
+function renderizarCatalogo() {
+    catalogo.innerHTML = "";
+
+    productos.forEach((producto, indice) => {
+        const boton = document.createElement("button");
+        boton.className = "publicacion";
+        boton.setAttribute("aria-label", `Abrir ${producto.titulo}`);
+        boton.onclick = () => abrirPublicacion(indice);
+
+        boton.innerHTML = `
+            <img src="${producto.imagenes[0]}" alt="${producto.titulo}">
+            <span class="ver-detalle">Toca para ver</span>
+        `;
+
+        catalogo.appendChild(boton);
+    });
+}
 
 function abrirPublicacion(indice) {
-
     productoActual = indice;
-
     fotoActual = 0;
 
+    const producto = productos[productoActual];
 
-    const producto =
-        productos[productoActual];
+    tituloProducto.textContent = producto.titulo;
+    precioProducto.textContent = producto.precio;
+    descripcionProducto.textContent = producto.descripcion;
 
-
-    /* TÍTULO */
-
-    document.getElementById(
-        "tituloProducto"
-    ).textContent =
-        producto.titulo;
-
-
-    /* PRECIO */
-
-    document.getElementById(
-        "precioProducto"
-    ).textContent =
-        producto.precio;
-
-
-    /* DESCRIPCIÓN */
-
-    document.getElementById(
-        "descripcionProducto"
-    ).textContent =
-        producto.descripcion;
-
-
-    /* INDICADORES */
-
+    renderizarEtiquetas(producto.etiquetas);
     crearIndicadores();
-
-
-    /* FOTO */
-
     actualizarImagen();
 
+    const mensaje = `Hola, vi su catálogo de Velas MAILE y estoy interesada en ${producto.titulo}, con precio ${producto.precio}. ¿Me puedes dar más información?`;
 
-    /* WHATSAPP */
-
-    const mensaje =
-        `Hola, vi su catálogo de Velas MAILE y estoy interesada en ${producto.titulo} con precio ${producto.precio}.`;
-
-
-    document.getElementById(
-        "botonWhatsapp"
-    ).href =
+    botonWhatsapp.href =
         "https://wa.me/573008866132?text=" +
         encodeURIComponent(mensaje);
 
-
-    /* MOSTRAR MODAL */
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "block";
-
-
-    /* BLOQUEAR SCROLL DE FONDO */
-
-    document.body.style.overflow =
-        "hidden";
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
 }
-
-
-/* =====================================
-   CERRAR PUBLICACIÓN
-===================================== */
 
 function cerrarPublicacion() {
-
-    document.getElementById(
-        "modal"
-    ).style.display =
-        "none";
-
-
-    document.body.style.overflow =
-        "";
+    modal.style.display = "none";
+    document.body.style.overflow = "";
 }
 
+function renderizarEtiquetas(listaEtiquetas) {
+    etiquetasProducto.innerHTML = "";
 
-/* =====================================
-   ACTUALIZAR IMAGEN
-===================================== */
+    listaEtiquetas.forEach((texto) => {
+        const span = document.createElement("span");
+        span.className = "etiqueta";
+        span.textContent = texto;
+        etiquetasProducto.appendChild(span);
+    });
+}
 
 function actualizarImagen() {
+    const producto = productos[productoActual];
 
-    const producto =
-        productos[productoActual];
-
-
-    const imagen =
-        document.getElementById(
-            "imagenGrande"
-        );
-
-
-    /*
-       Pequeño efecto de transición
-    */
-
-    imagen.style.opacity =
-        "0";
-
+    imagenGrande.style.opacity = "0";
 
     setTimeout(() => {
-
-        imagen.src =
-            producto.imagenes[
-                fotoActual
-            ];
-
-
-        imagen.style.opacity =
-            "1";
-
-    }, 100);
-
+        imagenGrande.src = producto.imagenes[fotoActual];
+        imagenGrande.alt = producto.titulo + " - foto " + (fotoActual + 1);
+        imagenGrande.style.opacity = "1";
+    }, 90);
 
     actualizarIndicadores();
 }
 
-
-/* =====================================
-   FOTO SIGUIENTE
-===================================== */
-
 function fotoSiguiente() {
-
-    const producto =
-        productos[productoActual];
-
+    const total = productos[productoActual].imagenes.length;
 
     fotoActual++;
 
-
-    if (
-        fotoActual >=
-        producto.imagenes.length
-    ) {
-
+    if (fotoActual >= total) {
         fotoActual = 0;
-
     }
-
 
     actualizarImagen();
 }
 
-
-/* =====================================
-   FOTO ANTERIOR
-===================================== */
-
 function fotoAnterior() {
-
-    const producto =
-        productos[productoActual];
-
+    const total = productos[productoActual].imagenes.length;
 
     fotoActual--;
 
-
-    if (
-        fotoActual < 0
-    ) {
-
-        fotoActual =
-            producto.imagenes.length - 1;
-
+    if (fotoActual < 0) {
+        fotoActual = total - 1;
     }
-
 
     actualizarImagen();
 }
 
-
-/* =====================================
-   CREAR INDICADORES
-===================================== */
-
 function crearIndicadores() {
+    indicadores.innerHTML = "";
 
-    const contenedor =
-        document.getElementById(
-            "indicadores"
-        );
+    const total = productos[productoActual].imagenes.length;
 
-
-    contenedor.innerHTML =
-        "";
-
-
-    const producto =
-        productos[productoActual];
-
-
-    producto.imagenes.forEach(
-        () => {
-
-            const punto =
-                document.createElement(
-                    "div"
-                );
-
-
-            punto.classList.add(
-                "punto"
-            );
-
-
-            contenedor.appendChild(
-                punto
-            );
-
-        }
-    );
-
+    for (let i = 0; i < total; i++) {
+        const punto = document.createElement("div");
+        punto.className = "punto";
+        indicadores.appendChild(punto);
+    }
 
     actualizarIndicadores();
 }
 
-
-/* =====================================
-   ACTUALIZAR INDICADORES
-===================================== */
-
 function actualizarIndicadores() {
+    const puntos = document.querySelectorAll(".punto");
 
-    const puntos =
-        document.querySelectorAll(
-            ".punto"
-        );
-
-
-    puntos.forEach(
-        (punto, indice) => {
-
-            punto.classList.toggle(
-                "activo",
-                indice === fotoActual
-            );
-
-        }
-    );
+    puntos.forEach((punto, indice) => {
+        punto.classList.toggle("activo", indice === fotoActual);
+    });
 }
-
-
-/* =====================================
-   SWIPE CON EL DEDO
-===================================== */
-
-const carrusel =
-    document.getElementById(
-        "carrusel"
-    );
-
-
-/* CUANDO TOCA LA PANTALLA */
 
 carrusel.addEventListener(
     "touchstart",
-
     function(evento) {
-
-        inicioX =
-            evento.touches[0]
-                .clientX;
-
+        inicioX = evento.touches[0].clientX;
     },
-
-    {
-        passive: true
-    }
+    { passive: true }
 );
-
-
-/* CUANDO SUELTA EL DEDO */
 
 carrusel.addEventListener(
     "touchend",
-
     function(evento) {
-
-        finX =
-            evento.changedTouches[0]
-                .clientX;
-
-
+        finX = evento.changedTouches[0].clientX;
         detectarDeslizamiento();
-
     },
-
-    {
-        passive: true
-    }
+    { passive: true }
 );
 
-
-/* =====================================
-   DETECTAR DIRECCIÓN
-===================================== */
-
 function detectarDeslizamiento() {
+    const distancia = finX - inicioX;
+    const minimo = 50;
 
-    const distancia =
-        finX - inicioX;
-
-
-    /*
-       Distancia mínima que debe
-       mover el dedo para cambiar foto.
-    */
-
-    const minimo =
-        50;
-
-
-    if (
-        Math.abs(distancia) <
-        minimo
-    ) {
-
+    if (Math.abs(distancia) < minimo) {
         return;
-
     }
 
-
-    /*
-       Desliza hacia la izquierda
-       = siguiente imagen
-    */
-
-    if (
-        distancia < 0
-    ) {
-
+    if (distancia < 0) {
         fotoSiguiente();
-
-    }
-
-
-    /*
-       Desliza hacia la derecha
-       = imagen anterior
-    */
-
-    else {
-
+    } else {
         fotoAnterior();
-
     }
 }
 
+document.addEventListener("keydown", function(evento) {
+    if (evento.key === "Escape") {
+        cerrarPublicacion();
+    }
 
-/* =====================================
-   CERRAR CON TECLA ESC
-===================================== */
-
-document.addEventListener(
-    "keydown",
-
-    function(evento) {
-
-        if (
-            evento.key === "Escape"
-        ) {
-
-            cerrarPublicacion();
-
+    if (modal.style.display === "block") {
+        if (evento.key === "ArrowRight") {
+            fotoSiguiente();
         }
 
+        if (evento.key === "ArrowLeft") {
+            fotoAnterior();
+        }
     }
-);
+});

@@ -8,9 +8,8 @@
 
     <title>Catálogo Velas MAILE</title>
 
-    <!-- FUENTES DE GOOGLE -->
+    <!-- FUENTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
@@ -18,33 +17,39 @@
         rel="stylesheet"
     >
 
-    <!-- ESTILOS -->
+    <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Parisienne&display=swap"
+    rel="stylesheet"
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Great+Vibes&display=swap"
+    rel="stylesheet"
+>
+
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="estilos.css">
 </head>
-
 
 <body>
 
     <div class="app">
 
-        <!-- =====================================
+        <!-- =========================
              PORTADA
-        ====================================== -->
+        ========================== -->
 
         <section class="portada">
 
             <div class="capa-portada">
-
-                <!-- LOGO -->
 
                 <img
                     src="imagenes/logo-maile.png"
                     alt="Logo Velas MAILE"
                     class="logo"
                 >
-
-
-                <!-- TEXTO -->
 
                 <p class="nuestro">
                     NUESTRO
@@ -63,9 +68,9 @@
         </section>
 
 
-        <!-- =====================================
+        <!-- =========================
              BOTONES DE REDES
-        ====================================== -->
+        ========================== -->
 
         <div class="botones-redes">
 
@@ -77,7 +82,6 @@
             >
                 WhatsApp
             </a>
-
 
             <a
                 href="#"
@@ -91,9 +95,9 @@
         </div>
 
 
-        <!-- =====================================
-             CUADRÍCULA DEL CATÁLOGO
-        ====================================== -->
+        <!-- =========================
+             CATÁLOGO
+        ========================== -->
 
         <main class="catalogo">
 
@@ -102,12 +106,10 @@
                 onclick="abrirPublicacion(0)"
                 aria-label="Abrir publicación 1"
             >
-
                 <img
                     src="imagenes/vela1.jpg"
                     alt="Vela personalizada"
                 >
-
             </button>
 
 
@@ -116,12 +118,10 @@
                 onclick="abrirPublicacion(1)"
                 aria-label="Abrir publicación 2"
             >
-
                 <img
                     src="imagenes/vela2.png"
                     alt="Vela personalizada"
                 >
-
             </button>
 
 
@@ -130,12 +130,10 @@
                 onclick="abrirPublicacion(2)"
                 aria-label="Abrir publicación 3"
             >
-
                 <img
                     src="imagenes/vela3.png"
                     alt="Vela personalizada"
                 >
-
             </button>
 
 
@@ -144,12 +142,10 @@
                 onclick="abrirPublicacion(3)"
                 aria-label="Abrir publicación 4"
             >
-
                 <img
                     src="imagenes/vela4.png"
                     alt="Vela personalizada"
                 >
-
             </button>
 
 
@@ -158,12 +154,10 @@
                 onclick="abrirPublicacion(4)"
                 aria-label="Abrir publicación 5"
             >
-
                 <img
                     src="imagenes/vela5.png"
                     alt="Vela personalizada"
                 >
-
             </button>
 
 
@@ -172,12 +166,10 @@
                 onclick="abrirPublicacion(5)"
                 aria-label="Abrir publicación 6"
             >
-
                 <img
                     src="imagenes/vela6.png"
                     alt="Vela personalizada"
                 >
-
             </button>
 
         </main>
@@ -185,9 +177,9 @@
     </div>
 
 
-    <!-- =====================================
-         MODAL DE PUBLICACIÓN
-    ====================================== -->
+    <!-- =========================
+         MODAL
+    ========================== -->
 
     <div
         id="modal"
@@ -225,7 +217,6 @@
                     alt="Producto"
                 >
 
-
                 <button
                     class="flecha flecha-izquierda"
                     onclick="fotoAnterior()"
@@ -233,7 +224,6 @@
                 >
                     ‹
                 </button>
-
 
                 <button
                     class="flecha flecha-derecha"
@@ -251,20 +241,16 @@
             <div
                 id="indicadores"
                 class="indicadores"
-            >
-            </div>
+            ></div>
 
 
             <!-- INFORMACIÓN -->
 
             <div class="informacion">
 
-                <h2 id="tituloProducto">
-                </h2>
+                <h2 id="tituloProducto"></h2>
 
-                <p id="descripcionProducto">
-                </p>
-
+                <p id="descripcionProducto"></p>
 
                 <a
                     id="botonWhatsapp"

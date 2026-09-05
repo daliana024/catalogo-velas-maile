@@ -1,4 +1,16 @@
 /* =====================================
+   FUENTE PERSONALIZADA
+===================================== */
+
+@font-face {
+    font-family: "Hello Honey";
+    src: url("fuentes/hello honey.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =====================================
    CONFIGURACIÓN GENERAL
 ===================================== */
 
@@ -9,10 +21,10 @@
 }
 
 :root {
-    --dorado: #c28a3a;
+    --dorado: #b77b22;
     --texto: #111111;
-    --fondo-exterior: #ebe8e2;
-    --borde: rgba(0, 0, 0, 0.08);
+    --fondo-exterior: #e8e2d8;
+    --borde: rgba(0, 0, 0, 0.06);
 }
 
 html,
@@ -27,36 +39,43 @@ html {
 
 body {
     margin: 0;
+
     font-family: Arial, Helvetica, sans-serif;
+
     color: var(--texto);
+
     background: var(--fondo-exterior);
 }
 
 
 /* =====================================
-   CONTENEDOR PRINCIPAL
+   CONTENEDOR CELULAR
 ===================================== */
 
 .app {
     width: 100%;
     max-width: 430px;
     min-height: 100vh;
+
     margin: 0 auto;
-    background: #f8f4ee;
+
+    background: #f9f5ef;
+
+    overflow: hidden;
 }
 
 
 /* =====================================
-   PORTADA CON IMAGEN
+   PORTADA
 ===================================== */
 
 .portada {
     width: 100%;
-    min-height: 640px;
+    min-height: 700px;
 
-    background-image: url("portada.png");
+    background-image: url("imagenes/portada.png");
     background-size: cover;
-    background-position: center;
+    background-position: center bottom;
     background-repeat: no-repeat;
 
     position: relative;
@@ -66,25 +85,32 @@ body {
     justify-content: center;
 }
 
+
+/* =====================================
+   CAPA SOBRE LA PORTADA
+===================================== */
+
 .capa-portada {
     width: 100%;
-    min-height: 640px;
+    min-height: 700px;
 
-    padding: 32px 22px 24px;
+    padding: 34px 22px 24px;
 
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: flex-start;
 
     text-align: center;
 
-    background: linear-gradient(
-        180deg,
-        rgba(255, 250, 243, 0.10) 0%,
-        rgba(255, 250, 243, 0.18) 30%,
-        rgba(255, 250, 243, 0.10) 100%
-    );
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 250, 243, 0.03) 0%,
+            rgba(255, 250, 243, 0.06) 45%,
+            rgba(255, 250, 243, 0.02) 100%
+        );
 }
 
 
@@ -103,39 +129,74 @@ body {
     margin: 0 auto 22px;
 
     border-radius: 50%;
+
+    background: transparent;
+
+    box-shadow: none;
 }
 
 
 /* =====================================
-   TEXTOS
+   TEXTO NUESTRO
 ===================================== */
 
 .nuestro {
     font-family: "Cormorant Garamond", serif;
-    font-size: 18px;
-    font-weight: 400;
+
+    font-size: 30px;
+    font-weight: 500;
+
     letter-spacing: 7px;
     line-height: 1;
-    color: #3b2d20;
-    margin-bottom: 8px;
+
+    color: #5a4331;
+
+    margin-bottom: 9px;
+
+    text-align: center;
 }
+
+
+/* =====================================
+   TEXTO CATÁLOGO
+===================================== */
 
 .catalogo-titulo {
     font-family: "Cormorant Garamond", serif;
-    font-size: 52px;
+
+    font-size: 60px;
     font-weight: 400;
+
     letter-spacing: 4px;
     line-height: 0.95;
-    color: #1f160f;
+
+    color: #21170f;
+
+    text-align: center;
 }
 
+
+/* =====================================
+   TEXTO VELAS
+===================================== */
+
 .velas-titulo {
-    font-family: "Italianno", cursive;
-    font-size: 98px;
-    font-weight: 400;
-    line-height: 0.8;
+    font-family: "Hello Honey", cursive;
+
+    font-size: 95px;
+    font-weight: normal;
+
+    line-height: 1;
+
     color: var(--dorado);
-    margin-top: 18px;
+
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 12px;
+
+    transform: translateX(-2px);
 }
 
 
@@ -146,39 +207,50 @@ body {
 .botones-redes {
     width: 100%;
 
-    max-width: 430px;
-
-    margin: 0 auto;
-
     display: grid;
+
     grid-template-columns: 1fr 1fr;
 
     gap: 12px;
 
-    padding: 18px 22px 18px;
+    padding: 0 28px;
 
-    background: #f8f4ee;
+    margin-top: -115px;
+
+    position: relative;
+
+    z-index: 10;
+
+    background: transparent;
 }
 
 .boton-red {
-    height: 52px;
+    height: 40px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    border: 1px solid var(--borde);
-    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.65);
 
-    background: rgba(255, 255, 255, 0.72);
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.90);
 
     color: #111111;
+
     text-decoration: none;
 
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
 
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+
+    backdrop-filter: blur(4px);
+
+    -webkit-backdrop-filter: blur(4px);
 
     -webkit-tap-highlight-color: transparent;
 }
@@ -196,11 +268,14 @@ body {
     width: 100%;
 
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
 
     gap: 2px;
 
-    background: #f8f4ee;
+    margin-top: 115px;
+
+    background: #f9f5ef;
 }
 
 
@@ -210,15 +285,18 @@ body {
 
 .publicacion {
     width: 100%;
+
     aspect-ratio: 1 / 1;
 
     border: 0;
+
     margin: 0;
     padding: 0;
 
-    background: #e9e9e9;
+    background: #eeeeee;
 
     overflow: hidden;
+
     cursor: pointer;
 
     -webkit-tap-highlight-color: transparent;
@@ -226,8 +304,10 @@ body {
 
 .publicacion img {
     display: block;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
@@ -244,6 +324,7 @@ body {
     display: none;
 
     position: fixed;
+
     inset: 0;
 
     width: 100%;
@@ -259,6 +340,7 @@ body {
 .modal-contenido {
     width: 100%;
     max-width: 430px;
+
     min-height: 100vh;
 
     margin: 0 auto;
@@ -268,7 +350,7 @@ body {
 
 
 /* =====================================
-   BARRA SUPERIOR PUBLICACIÓN
+   BARRA SUPERIOR
 ===================================== */
 
 .barra-superior {
@@ -276,6 +358,7 @@ body {
     height: 54px;
 
     display: flex;
+
     align-items: center;
 
     padding: 0 14px;
@@ -287,6 +370,7 @@ body {
 
 .barra-superior span {
     margin-left: 12px;
+
     font-size: 16px;
     font-weight: 600;
 }
@@ -296,18 +380,23 @@ body {
     height: 36px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     border: 0;
+
     border-radius: 50%;
 
     background: #f4f4f4;
 
     color: #111111;
+
     font-size: 24px;
 
     cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 
@@ -319,9 +408,11 @@ body {
     position: relative;
 
     width: 100%;
+
     aspect-ratio: 1 / 1;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -333,6 +424,7 @@ body {
 .carrusel img {
     width: 100%;
     height: 100%;
+
     object-fit: contain;
 }
 
@@ -343,6 +435,7 @@ body {
 
 .flecha {
     position: absolute;
+
     top: 50%;
 
     width: 38px;
@@ -351,18 +444,23 @@ body {
     transform: translateY(-50%);
 
     border: 0;
+
     border-radius: 50%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     background: rgba(0, 0, 0, 0.45);
 
     color: #ffffff;
+
     font-size: 30px;
 
     cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 .flecha-izquierda {
@@ -380,8 +478,11 @@ body {
 
 .indicadores {
     display: flex;
+
     justify-content: center;
+
     gap: 5px;
+
     padding: 10px 0;
 }
 
@@ -390,6 +491,7 @@ body {
     height: 6px;
 
     border-radius: 50%;
+
     background: #c8c8c8;
 }
 
@@ -408,13 +510,17 @@ body {
 
 .informacion h2 {
     margin-bottom: 8px;
+
     font-size: 18px;
 }
 
 .informacion p {
     margin-bottom: 18px;
+
     font-size: 14px;
+
     line-height: 1.5;
+
     color: #555555;
 }
 
@@ -428,6 +534,7 @@ body {
     height: 46px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -436,6 +543,7 @@ body {
     background: #25d366;
 
     color: #ffffff;
+
     text-decoration: none;
 
     font-size: 15px;
@@ -448,8 +556,10 @@ body {
 ===================================== */
 
 @media (min-width: 431px) {
+
     .app,
     .modal-contenido {
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+        box-shadow:
+            0 0 30px rgba(0, 0, 0, 0.08);
     }
 }

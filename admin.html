@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administración | Velas Maile</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <main class="admin">
+
+        <section id="loginPanel" class="panel login-panel">
+
+            <h1>Velas Maile</h1>
+            <p class="subtitulo">Administración del catálogo</p>
+
+            <form id="loginForm">
+
+                <label for="correo">Correo</label>
+                <input
+                    type="email"
+                    id="correo"
+                    required
+                    autocomplete="email"
+                >
+
+                <label for="contrasena">Contraseña</label>
+                <input
+                    type="password"
+                    id="contrasena"
+                    required
+                    autocomplete="current-password"
+                >
+
+                <button type="submit" class="boton-principal">
+                    Iniciar sesión
+                </button>
+
+                <p id="mensajeLogin" class="mensaje"></p>
+
+            </form>
+
+        </section>
+
+
+        <section id="adminPanel" class="panel oculto">
+
+            <div class="encabezado-admin">
+
+                <div>
+                    <h1>Velas Maile</h1>
+                    <p>Gestión de productos</p>
+                </div>
+
+                <button
+                    id="cerrarSesion"
+                    class="boton-secundario"
+                    type="button"
+                >
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+
+            <form id="productoForm">
+
+                <input
+                    type="hidden"
+                    id="productoId"
+                >
+
+
+                <label for="titulo">Título</label>
+                <input
+                    type="text"
+                    id="titulo"
+                    required
+                    placeholder="Ej. Vela para Bautizo"
+                >
+
+
+                <label for="precio">Precio</label>
+                <input
+                    type="number"
+                    id="precio"
+                    min="0"
+                    step="100"
+                    required
+                    placeholder="15000"
+                >
+
+
+                <label for="descripcion">Descripción</label>
+                <textarea
+                    id="descripcion"
+                    rows="4"
+                    required
+                    placeholder="Describe la vela..."
+                ></textarea>
+
+
+                <label for="etiquetas">
+                    Etiquetas
+                </label>
+
+                <input
+                    type="text"
+                    id="etiquetas"
+                    placeholder="Bautizo, Baby Shower, Cumpleaños"
+                >
+
+                <small>
+                    Separa las etiquetas con comas.
+                </small>
+
+
+                <label for="orden">Orden</label>
+
+                <input
+                    type="number"
+                    id="orden"
+                    value="0"
+                    min="0"
+                >
+
+
+                <label for="fotos">
+                    Fotos del producto
+                </label>
+
+                <input
+                    type="file"
+                    id="fotos"
+                    accept="image/png,image/jpeg,image/webp"
+                    multiple
+                >
+
+                <small>
+                    Puedes seleccionar varias fotos de la misma vela.
+                </small>
+
+
+                <div
+                    id="previewFotos"
+                    class="preview-fotos"
+                ></div>
+
+
+                <button
+                    type="submit"
+                    class="boton-principal"
+                    id="guardarProducto"
+                >
+                    Publicar producto
+                </button>
+
+
+                <button
+                    type="button"
+                    class="boton-secundario oculto"
+                    id="cancelarEdicion"
+                >
+                    Cancelar edición
+                </button>
+
+
+                <p
+                    id="mensajeProducto"
+                    class="mensaje"
+                ></p>
+
+            </form>
+
+
+            <section class="productos-admin">
+
+                <h2>Productos publicados</h2>
+
+                <div id="listaProductos"></div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase-config.js"></script>
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

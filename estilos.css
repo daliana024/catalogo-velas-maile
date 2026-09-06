@@ -1,3 +1,7 @@
+/* =====================================
+   FUENTE PERSONALIZADA
+===================================== */
+
 @font-face {
     font-family: "Hello Honey";
     src: url("fuentes/hello honey.otf") format("opentype");
@@ -5,6 +9,11 @@
     font-style: normal;
     font-display: swap;
 }
+
+
+/* =====================================
+   CONFIGURACIÓN GENERAL
+===================================== */
 
 * {
     margin: 0;
@@ -15,450 +24,1209 @@
 :root {
     --dorado: #b9822f;
     --dorado-suave: #d7b07c;
+
     --texto: #231912;
     --marron: #5e4533;
+
     --fondo-exterior: #e8e1d7;
+
     --crema: #f8f1e8;
     --crema-oscuro: #efe2d3;
+
     --blanco-suave: #fffdf9;
-    --sombra: 0 8px 24px rgba(72, 48, 26, 0.10);
+
+    --sombra:
+        0 8px 24px rgba(72, 48, 26, 0.10);
 }
+
 
 html,
 body {
     width: 100%;
     min-height: 100%;
+
+    overflow-x: hidden;
 }
+
 
 html {
     background: var(--fondo-exterior);
 }
 
+
 body {
-    font-family: "Manrope", sans-serif;
+    font-family: "Manrope", Arial, Helvetica, sans-serif;
+
     color: var(--texto);
+
     background: var(--fondo-exterior);
 }
 
+
+/* =====================================
+   APP
+===================================== */
+
 .app {
     width: 100%;
+
     max-width: 430px;
+
     min-height: 100vh;
+
     margin: 0 auto;
+
     background: var(--crema);
+
     overflow: hidden;
 }
+
+
+/* =====================================
+   PORTADA
+===================================== */
 
 .portada {
     width: 100%;
+
     min-height: 700px;
+
     position: relative;
+
     display: flex;
+
     justify-content: center;
+
     align-items: flex-start;
-    background-image: url("imagenes/portada.png");
+
+    background-image:
+        url("imagenes/portada.png");
+
     background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
+
+    background-position:
+        center bottom;
+
+    background-repeat:
+        no-repeat;
 }
+
 
 .capa-portada {
     width: 100%;
+
     min-height: 700px;
-    padding: 34px 22px 24px;
+
+    padding:
+        34px
+        22px
+        24px;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
-    justify-content: flex-start;
+
+    justify-content:
+        flex-start;
+
     text-align: center;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 250, 243, 0.03) 0%,
-        rgba(255, 250, 243, 0.05) 50%,
-        rgba(255, 250, 243, 0.01) 100%
-    );
+
+    background:
+        linear-gradient(
+            180deg,
+
+            rgba(
+                255,
+                250,
+                243,
+                0.03
+            ) 0%,
+
+            rgba(
+                255,
+                250,
+                243,
+                0.05
+            ) 50%,
+
+            rgba(
+                255,
+                250,
+                243,
+                0.01
+            ) 100%
+        );
 }
+
+
+/* =====================================
+   LOGO
+===================================== */
 
 .logo {
     display: block;
+
     width: 130px;
     height: 130px;
+
     object-fit: contain;
-    margin: 0 auto 22px;
+
+    margin:
+        0
+        auto
+        22px;
+
     position: relative;
+
     left: -7px;
+
     border-radius: 50%;
 }
+
+
+/* =====================================
+   TEXTOS PORTADA
+   RESPONSIVOS
+===================================== */
 
 .nuestro {
     width: 100%;
+
     margin-bottom: 9px;
-    font-family: "Cormorant Garamond", serif;
-    font-size: 30px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(
+            22px,
+            7vw,
+            30px
+        );
+
     font-weight: 500;
-    letter-spacing: 7px;
+
+    letter-spacing:
+        clamp(
+            4px,
+            1.5vw,
+            7px
+        );
+
     line-height: 1;
+
     color: #6a4e39;
+
     text-align: center;
 }
+
 
 .catalogo-titulo {
     width: 100%;
-    font-family: "Cormorant Garamond", serif;
-    font-size: 60px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(
+            42px,
+            11vw,
+            60px
+        );
+
     font-weight: 500;
-    letter-spacing: 4px;
+
+    letter-spacing:
+        clamp(
+            1px,
+            0.8vw,
+            4px
+        );
+
     line-height: 0.95;
+
     color: #231912;
+
     text-align: center;
+
+    white-space: nowrap;
 }
+
 
 .velas-titulo {
     width: 100%;
-    margin-top: 3px;
-    font-family: "Hello Honey", cursive;
-    font-size: 95px;
+
+    margin-top: 8px;
+
+    font-family:
+        "Hello Honey",
+        cursive;
+
+    font-size:
+        clamp(
+            76px,
+            22vw,
+            95px
+        );
+
     font-weight: normal;
+
     line-height: 1;
+
     color: var(--dorado);
+
     text-align: center;
-    transform: translateX(-2px);
+
+    transform: none;
 }
+
+
+/* =====================================
+   BOTONES REDES
+===================================== */
 
 .botones-redes {
     width: 100%;
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 14px;
-    padding: 0 32px;
+
+    padding:
+        0
+        32px;
+
     margin: 0;
+
     position: relative;
+
     z-index: 10;
-    transform: translateY(-78px);
+
+    transform:
+        translateY(-78px);
 }
+
 
 .boton-red {
     height: 44px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     gap: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.85);
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.85
+        );
+
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.92);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.92
+        );
+
     color: var(--marron);
+
     text-decoration: none;
+
     font-size: 14px;
+
     font-weight: 700;
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+
+    box-shadow:
+        0
+        5px
+        16px
+        rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
+    backdrop-filter:
+        blur(6px);
+
+    -webkit-backdrop-filter:
+        blur(6px);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
+
 .boton-red:active {
-    transform: scale(0.97);
-    background: #ffffff;
+    transform:
+        scale(0.97);
+
+    background:
+        #ffffff;
 }
+
+
+/* =====================================
+   ICONOS
+===================================== */
 
 .icono-red {
     width: 18px;
+
     height: 18px;
+
     flex-shrink: 0;
+
     fill: currentColor;
 }
 
+
+/* =====================================
+   CATÁLOGO
+===================================== */
+
 .catalogo {
     width: 100%;
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
     gap: 10px;
+
     margin-top: -44px;
-    padding: 10px 10px 18px;
-    background: var(--crema);
+
+    padding:
+        10px
+        10px
+        18px;
+
+    background:
+        var(--crema);
+
     position: relative;
+
     z-index: 1;
 }
 
+
+/* =====================================
+   PUBLICACIONES
+===================================== */
+
 .publicacion {
     position: relative;
+
     width: 100%;
-    aspect-ratio: 1 / 1;
+
+    aspect-ratio:
+        1 / 1;
+
     border: 0;
+
     padding: 0;
+
     margin: 0;
-    background: var(--crema-oscuro);
+
+    background:
+        var(--crema-oscuro);
+
     overflow: hidden;
+
     cursor: pointer;
+
     border-radius: 18px;
+
     display: block;
-    box-shadow: var(--sombra);
-    -webkit-tap-highlight-color: transparent;
+
+    box-shadow:
+        var(--sombra);
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
+
 
 .publicacion img {
     display: block;
+
     width: 100%;
+
     height: 100%;
+
     object-fit: cover;
+
     object-position: center;
-    transition: transform 0.28s ease, filter 0.28s ease;
+
+    transition:
+        transform 0.28s ease,
+        filter 0.28s ease;
 }
+
 
 .publicacion::after {
     content: "";
+
     position: absolute;
+
     inset: 0;
-    background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.02) 0%,
-        rgba(0, 0, 0, 0) 48%,
-        rgba(0, 0, 0, 0.38) 100%
-    );
+
+    background:
+        linear-gradient(
+            180deg,
+
+            rgba(
+                0,
+                0,
+                0,
+                0.02
+            ) 0%,
+
+            rgba(
+                0,
+                0,
+                0,
+                0
+            ) 48%,
+
+            rgba(
+                0,
+                0,
+                0,
+                0.38
+            ) 100%
+        );
+
     pointer-events: none;
 }
 
+
 .publicacion:active img {
-    transform: scale(1.03);
-    filter: brightness(0.96);
+    transform:
+        scale(1.03);
+
+    filter:
+        brightness(0.96);
 }
+
+
+/* =====================================
+   TOCA PARA VER
+===================================== */
 
 .ver-detalle {
     position: absolute;
+
     left: 10px;
+
     bottom: 10px;
+
     z-index: 2;
-    padding: 6px 11px;
+
+    padding:
+        6px
+        11px;
+
     border-radius: 999px;
-    background: rgba(255, 253, 249, 0.92);
-    color: var(--marron);
+
+    background:
+        rgba(
+            255,
+            253,
+            249,
+            0.92
+        );
+
+    color:
+        var(--marron);
+
     font-size: 12px;
+
     font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    box-shadow:
+        0
+        2px
+        8px
+        rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
     pointer-events: none;
 }
 
+
+/* =====================================
+   MENSAJE CATÁLOGO
+===================================== */
+
+.mensaje-catalogo {
+    grid-column:
+        1 / -1;
+
+    padding:
+        45px
+        20px;
+
+    text-align: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 20px;
+
+    color:
+        #795f49;
+}
+
+
+/* =====================================
+   MODAL
+===================================== */
+
 .modal {
     display: none;
+
     position: fixed;
+
     inset: 0;
+
     width: 100%;
+
     height: 100%;
+
     z-index: 1000;
-    background: rgba(30, 19, 10, 0.52);
+
+    background:
+        rgba(
+            30,
+            19,
+            10,
+            0.52
+        );
+
     overflow-y: auto;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+
+    backdrop-filter:
+        blur(4px);
+
+    -webkit-backdrop-filter:
+        blur(4px);
 }
+
 
 .modal-contenido {
     width: 100%;
+
     max-width: 430px;
+
     min-height: 100vh;
+
     margin: 0 auto;
-    background: linear-gradient(180deg, #fffdf9 0%, #fbf4ec 100%);
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffdf9 0%,
+            #fbf4ec 100%
+        );
 }
+
+
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
 
 .barra-superior {
     width: 100%;
+
     height: 68px;
+
     display: flex;
+
     align-items: center;
-    padding: 0 16px;
-    background: rgba(255, 253, 249, 0.92);
-    border-bottom: 1px solid #efe2d4;
+
+    padding:
+        0
+        16px;
+
+    background:
+        rgba(
+            255,
+            253,
+            249,
+            0.92
+        );
+
+    border-bottom:
+        1px solid
+        #efe2d4;
+
     position: sticky;
+
     top: 0;
+
     z-index: 20;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
 }
+
 
 .barra-superior span {
     margin-left: 12px;
+
     font-size: 20px;
-    font-family: "Cormorant Garamond", serif;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
     font-weight: 600;
-    color: #2f2015;
+
+    color:
+        #2f2015;
 }
+
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
 
 .volver {
     width: 44px;
+
     height: 44px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    border: 1px solid #eadbca;
+
+    border:
+        1px solid
+        #eadbca;
+
     border-radius: 50%;
-    background: #fffaf4;
-    color: #4f3a2b;
+
+    background:
+        #fffaf4;
+
+    color:
+        #4f3a2b;
+
     font-size: 28px;
+
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    -webkit-tap-highlight-color: transparent;
+
+    box-shadow:
+        0
+        4px
+        12px
+        rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
+    -webkit-tap-highlight-color:
+        transparent;
 }
 
+
 .volver:active {
-    transform: scale(0.97);
+    transform:
+        scale(0.97);
 }
+
+
+/* =====================================
+   CARRUSEL
+===================================== */
 
 .carrusel-wrapper {
     position: relative;
-    padding: 14px 14px 0;
+
+    padding:
+        14px
+        14px
+        0;
 }
+
 
 .carrusel {
     position: relative;
+
     width: 100%;
-    aspect-ratio: 1 / 1;
+
+    aspect-ratio:
+        1 / 1;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     overflow: hidden;
-    background: linear-gradient(180deg, #f8efe6 0%, #f2e5d8 100%);
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8efe6 0%,
+            #f2e5d8 100%
+        );
+
     border-radius: 24px;
-    box-shadow: var(--sombra);
-    touch-action: pan-y;
+
+    box-shadow:
+        var(--sombra);
+
+    touch-action:
+        pan-y;
 }
+
 
 .carrusel img {
     display: block;
+
     width: 100%;
+
     height: 100%;
+
     object-fit: contain;
+
     user-select: none;
-    -webkit-user-drag: none;
-    transition: opacity 0.15s ease;
+
+    -webkit-user-drag:
+        none;
+
+    transition:
+        opacity
+        0.15s
+        ease;
 }
+
+
+/* =====================================
+   FLECHAS
+===================================== */
 
 .flecha {
     position: absolute;
+
     top: 50%;
-    transform: translateY(-50%);
+
+    transform:
+        translateY(-50%);
+
     width: 42px;
+
     height: 42px;
+
     border: 0;
+
     border-radius: 50%;
-    background: rgba(255, 253, 249, 0.88);
-    color: #5d4431;
+
+    background:
+        rgba(
+            255,
+            253,
+            249,
+            0.88
+        );
+
+    color:
+        #5d4431;
+
     font-size: 28px;
+
     line-height: 1;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.09);
+
+    box-shadow:
+        0
+        6px
+        16px
+        rgba(
+            0,
+            0,
+            0,
+            0.09
+        );
+
     z-index: 5;
 }
+
 
 .flecha-izquierda {
     left: 24px;
 }
 
+
 .flecha-derecha {
     right: 24px;
 }
 
+
+/* =====================================
+   INDICADORES
+===================================== */
+
 .indicadores {
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     gap: 6px;
+
     min-height: 30px;
-    padding: 14px 0 6px;
+
+    padding:
+        14px
+        0
+        6px;
 }
+
 
 .punto {
     width: 7px;
+
     height: 7px;
+
+    border: 0;
+
+    padding: 0;
+
     border-radius: 50%;
-    background: #d8cec2;
-    transition: 0.2s;
+
+    background:
+        #d8cec2;
+
+    cursor: pointer;
+
+    transition:
+        0.2s;
 }
+
 
 .punto.activo {
     width: 22px;
-    border-radius: 999px;
-    background: var(--dorado);
+
+    border-radius:
+        999px;
+
+    background:
+        var(--dorado);
 }
 
+
+/* =====================================
+   INFORMACIÓN
+===================================== */
+
 .informacion {
-    padding: 6px 20px 34px;
+    padding:
+        6px
+        20px
+        34px;
 }
+
 
 .submarca-modal {
     font-size: 12px;
+
     text-transform: uppercase;
+
     letter-spacing: 2px;
-    color: #a28669;
+
+    color:
+        #a28669;
+
     margin-bottom: 8px;
+
     font-weight: 700;
 }
 
+
 .informacion h2 {
-    font-family: "Cormorant Garamond", serif;
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
     font-size: 34px;
+
     line-height: 1;
+
     font-weight: 600;
-    color: #2b1d14;
+
+    color:
+        #2b1d14;
+
     margin-bottom: 8px;
 }
+
+
+/* =====================================
+   PRECIO
+===================================== */
 
 .precio-producto {
     margin-bottom: 14px;
+
     font-size: 28px;
+
     font-weight: 800;
-    color: var(--dorado);
+
+    color:
+        var(--dorado);
 }
+
+
+/* =====================================
+   ETIQUETAS
+===================================== */
 
 .etiquetas {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 8px;
+
     margin-bottom: 16px;
 }
 
+
 .etiqueta {
-    padding: 7px 12px;
-    border-radius: 999px;
-    background: #f1e4d6;
-    color: #6c503a;
+    padding:
+        7px
+        12px;
+
+    border-radius:
+        999px;
+
+    background:
+        #f1e4d6;
+
+    color:
+        #6c503a;
+
     font-size: 12px;
+
     font-weight: 700;
-    letter-spacing: 0.2px;
+
+    letter-spacing:
+        0.2px;
 }
+
+
+/* =====================================
+   DESCRIPCIÓN
+===================================== */
 
 .descripcion-producto {
     margin-bottom: 24px;
+
     font-size: 14px;
+
     line-height: 1.7;
-    color: #5b5148;
+
+    color:
+        #5b5148;
 }
+
+
+/* =====================================
+   WHATSAPP PRODUCTO
+===================================== */
 
 .whatsapp {
     width: 100%;
+
     height: 52px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     border-radius: 14px;
-    background: linear-gradient(180deg, #c89a58 0%, #b98336 100%);
-    color: #fffaf4;
+
+    background:
+        linear-gradient(
+            180deg,
+            #c89a58 0%,
+            #b98336 100%
+        );
+
+    color:
+        #fffaf4;
+
     text-decoration: none;
+
     font-size: 15px;
+
     font-weight: 800;
-    letter-spacing: 0.2px;
-    box-shadow: 0 8px 18px rgba(185, 131, 54, 0.22);
+
+    letter-spacing:
+        0.2px;
+
+    box-shadow:
+        0
+        8px
+        18px
+        rgba(
+            185,
+            131,
+            54,
+            0.22
+        );
 }
+
 
 .whatsapp:active {
-    transform: scale(0.99);
+    transform:
+        scale(0.99);
 }
 
+
+/* =====================================
+   CELULARES PEQUEÑOS
+===================================== */
+
+@media (max-width: 390px) {
+
+    .capa-portada {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+
+    .logo {
+        width: 118px;
+        height: 118px;
+
+        left: -4px;
+    }
+
+
+    .nuestro {
+        font-size: 23px;
+
+        letter-spacing:
+            5px;
+    }
+
+
+    .catalogo-titulo {
+        font-size:
+            clamp(
+                40px,
+                11vw,
+                48px
+            );
+
+        letter-spacing:
+            1px;
+    }
+
+
+    .velas-titulo {
+        font-size:
+            clamp(
+                74px,
+                22vw,
+                88px
+            );
+    }
+
+
+    .botones-redes {
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+        gap: 12px;
+    }
+
+
+    .boton-red {
+        font-size: 13px;
+    }
+
+
+    .catalogo {
+        gap: 8px;
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+    }
+
+}
+
+
+/* =====================================
+   COMPUTADOR = VISTA TIPO CELULAR
+===================================== */
+
 @media (min-width: 431px) {
+
     .app,
     .modal-contenido {
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+        box-shadow:
+            0
+            0
+            30px
+            rgba(
+                0,
+                0,
+                0,
+                0.08
+            );
     }
+
 }

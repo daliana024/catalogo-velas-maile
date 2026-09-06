@@ -14,11 +14,13 @@
 
 :root {
     --dorado: #b9822f;
+    --dorado-suave: #d7b07c;
     --texto: #231912;
     --marron: #5e4533;
     --fondo-exterior: #e8e1d7;
     --crema: #f8f1e8;
     --crema-oscuro: #efe2d3;
+    --blanco-suave: #fffdf9;
     --sombra: 0 8px 24px rgba(72, 48, 26, 0.10);
 }
 
@@ -28,15 +30,15 @@ html, body {
     overflow-x: hidden;
 }
 
-html { background: var(--fondo-exterior); }
-
-body {
-    font-family: "Manrope", Arial, sans-serif;
-    color: var(--texto);
+html {
     background: var(--fondo-exterior);
 }
 
-button, a { -webkit-tap-highlight-color: transparent; }
+body {
+    font-family: "Manrope", Arial, Helvetica, sans-serif;
+    color: var(--texto);
+    background: var(--fondo-exterior);
+}
 
 .app {
     width: 100%;
@@ -46,6 +48,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
     background: var(--crema);
     overflow: hidden;
 }
+
+/* =====================================
+   PORTADA
+===================================== */
 
 .portada {
     width: 100%;
@@ -69,10 +75,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-    background: linear-gradient(180deg, rgba(255,250,243,.03), rgba(255,250,243,.05) 50%, rgba(255,250,243,.01));
+    background: linear-gradient(
+        180deg,
+        rgba(255, 250, 243, 0.03) 0%,
+        rgba(255, 250, 243, 0.05) 50%,
+        rgba(255, 250, 243, 0.01) 100%
+    );
 }
 
+/* =====================================
+   LOGO
+===================================== */
+
 .logo {
+    display: block;
     width: 120px;
     height: 120px;
     object-fit: contain;
@@ -81,6 +97,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
     left: -5px;
     border-radius: 50%;
 }
+
+/* =====================================
+   TITULOS
+===================================== */
 
 .nuestro {
     width: 100%;
@@ -91,6 +111,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     letter-spacing: clamp(4px, 1.5vw, 7px);
     line-height: 1;
     color: #6a4e39;
+    text-align: center;
 }
 
 .catalogo-titulo {
@@ -98,9 +119,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(42px, 11vw, 58px);
     font-weight: 500;
-    letter-spacing: clamp(1px, .8vw, 4px);
-    line-height: .95;
+    letter-spacing: clamp(1px, 0.8vw, 4px);
+    line-height: 0.95;
     color: #231912;
+    text-align: center;
     white-space: nowrap;
 }
 
@@ -109,10 +131,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
     margin-top: 6px;
     font-family: "Hello Honey", cursive;
     font-size: clamp(72px, 20vw, 90px);
-    font-weight: 400;
+    font-weight: normal;
     line-height: 1;
     color: var(--dorado);
+    text-align: center;
 }
+
+/* =====================================
+   REDES
+===================================== */
 
 .botones-redes {
     width: 100%;
@@ -120,6 +147,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     grid-template-columns: 1fr 1fr;
     gap: 14px;
     padding: 0 32px;
+    margin: 0;
     position: relative;
     z-index: 10;
     transform: translateY(-64px);
@@ -131,15 +159,23 @@ button, a { -webkit-tap-highlight-color: transparent; }
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: 1px solid rgba(255,255,255,.85);
+    border: 1px solid rgba(255, 255, 255, 0.85);
     border-radius: 14px;
-    background: rgba(255,255,255,.92);
+    background: rgba(255, 255, 255, 0.92);
     color: var(--marron);
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;
-    box-shadow: 0 5px 16px rgba(0,0,0,.08);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.boton-red:active {
+    transform: scale(0.97);
 }
 
 .icono-red {
@@ -149,15 +185,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
     fill: currentColor;
 }
 
+/* =====================================
+   CATÁLOGO
+===================================== */
+
 .catalogo {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin-top: -34px;
     padding: 10px 10px 18px;
     background: var(--crema);
+    position: relative;
+    z-index: 1;
 }
+
+/* =====================================
+   PUBLICACIONES
+===================================== */
 
 .publicacion {
     position: relative;
@@ -165,11 +211,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
     aspect-ratio: 1 / 1;
     border: 0;
     padding: 0;
+    margin: 0;
     background: var(--crema-oscuro);
     overflow: hidden;
     cursor: pointer;
     border-radius: 18px;
+    display: block;
     box-shadow: var(--sombra);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .publicacion img {
@@ -178,14 +229,33 @@ button, a { -webkit-tap-highlight-color: transparent; }
     height: 100%;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.18s ease, filter 0.18s ease;
+    pointer-events: none;
 }
 
 .publicacion::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,.02), transparent 48%, rgba(0,0,0,.38));
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0) 48%,
+        rgba(0, 0, 0, 0.38) 100%
+    );
     pointer-events: none;
+}
+
+/* EFECTO TÁCTIL */
+
+.publicacion:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(72, 48, 26, 0.16);
+}
+
+.publicacion:active img {
+    transform: scale(1.04);
+    filter: brightness(0.90);
 }
 
 .ver-detalle {
@@ -195,7 +265,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     z-index: 2;
     padding: 6px 11px;
     border-radius: 999px;
-    background: rgba(255,253,249,.92);
+    background: rgba(255, 253, 249, 0.92);
     color: var(--marron);
     font-size: 12px;
     font-weight: 700;
@@ -211,25 +281,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: #795f49;
 }
 
+/* =====================================
+   MODAL
+===================================== */
+
 .modal {
     display: none;
     position: fixed;
     inset: 0;
+    width: 100%;
+    height: 100%;
     z-index: 1000;
-    background: rgba(30,19,10,.52);
+    background: rgba(30, 19, 10, 0.52);
     overflow-y: auto;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
-
-.modal.abierto { display: block; }
 
 .modal-contenido {
     width: 100%;
     max-width: 430px;
     min-height: 100vh;
     margin: 0 auto;
-    background: linear-gradient(180deg, #fffdf9, #fbf4ec);
+    background: linear-gradient(180deg, #fffdf9 0%, #fbf4ec 100%);
 }
+
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
 
 .barra-superior {
     width: 100%;
@@ -237,21 +316,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
     display: flex;
     align-items: center;
     padding: 0 16px;
+    background: rgba(255, 253, 249, 0.92);
+    border-bottom: 1px solid #efe2d4;
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(255,253,249,.94);
-    border-bottom: 1px solid #efe2d4;
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .barra-superior span {
     margin-left: 12px;
-    font-family: "Cormorant Garamond", serif;
     font-size: 20px;
+    font-family: "Cormorant Garamond", serif;
     font-weight: 600;
     color: #2f2015;
 }
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
 
 .volver {
     width: 44px;
@@ -265,8 +349,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: #4f3a2b;
     font-size: 28px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease;
 }
+
+.volver:active {
+    transform: scale(0.92);
+}
+
+/* =====================================
+   CARRUSEL
+===================================== */
 
 .carrusel-wrapper {
     position: relative;
@@ -281,19 +376,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: linear-gradient(180deg, #f8efe6, #f2e5d8);
+    background: linear-gradient(180deg, #f8efe6 0%, #f2e5d8 100%);
     border-radius: 24px;
     box-shadow: var(--sombra);
     touch-action: pan-y;
 }
 
 .carrusel img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
     user-select: none;
     -webkit-user-drag: none;
+    transition: opacity 0.15s ease;
 }
+
+/* =====================================
+   FLECHAS
+===================================== */
 
 .flecha {
     position: absolute;
@@ -303,20 +404,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
     height: 42px;
     border: 0;
     border-radius: 50%;
-    background: rgba(255,253,249,.88);
+    background: rgba(255, 253, 249, 0.88);
     color: #5d4431;
     font-size: 28px;
+    line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,.09);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.09);
     z-index: 5;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.flecha-izquierda { left: 24px; }
-.flecha-derecha { right: 24px; }
-.flecha:disabled { opacity: .3; cursor: default; }
+.flecha:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.flecha-izquierda {
+    left: 24px;
+}
+
+.flecha-derecha {
+    right: 24px;
+}
+
+/* =====================================
+   INDICADORES
+===================================== */
 
 .indicadores {
     display: flex;
@@ -335,6 +450,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     border-radius: 50%;
     background: #d8cec2;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .punto.activo {
@@ -343,7 +459,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
     background: var(--dorado);
 }
 
-.informacion { padding: 8px 22px 34px; }
+/* =====================================
+   INFORMACIÓN
+===================================== */
+
+.informacion {
+    padding: 8px 22px 34px;
+}
 
 .submarca-modal {
     margin-bottom: 8px;
@@ -362,7 +484,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: #2b1d14;
 }
 
-.bloque-precio { margin-bottom: 18px; }
+/* =====================================
+   PRECIO
+===================================== */
+
+.bloque-precio {
+    margin-bottom: 18px;
+}
 
 .texto-precio {
     display: block;
@@ -380,6 +508,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: var(--dorado);
 }
 
+/* =====================================
+   ETIQUETAS
+===================================== */
+
 .etiquetas {
     display: flex;
     flex-wrap: wrap;
@@ -396,7 +528,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
     font-weight: 700;
 }
 
-.bloque-empaque { margin-bottom: 26px; }
+/* =====================================
+   EMPAQUE
+===================================== */
+
+.bloque-empaque {
+    margin-bottom: 26px;
+}
 
 .titulo-empaque {
     display: block;
@@ -412,6 +550,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: #6b5a4d;
 }
 
+/* =====================================
+   WHATSAPP PRODUCTO
+===================================== */
+
 .whatsapp {
     width: 100%;
     height: 52px;
@@ -424,21 +566,78 @@ button, a { -webkit-tap-highlight-color: transparent; }
     text-decoration: none;
     font-size: 15px;
     font-weight: 800;
-    box-shadow: 0 8px 18px rgba(185,131,54,.20);
+    box-shadow: 0 8px 18px rgba(185, 131, 54, 0.20);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease;
 }
+
+.whatsapp:active {
+    transform: scale(0.98);
+}
+
+/* =====================================
+   CELULARES PEQUEÑOS
+===================================== */
 
 @media (max-width: 390px) {
-    .portada, .capa-portada { min-height: 580px; }
-    .capa-portada { padding-left: 14px; padding-right: 14px; }
-    .logo { width: 112px; height: 112px; left: -4px; margin-bottom: 14px; }
-    .nuestro { font-size: 22px; letter-spacing: 5px; }
-    .catalogo-titulo { font-size: clamp(40px, 11vw, 48px); letter-spacing: 1px; }
-    .velas-titulo { font-size: clamp(70px, 21vw, 84px); }
-    .botones-redes { padding-left: 20px; padding-right: 20px; gap: 12px; transform: translateY(-58px); }
-    .boton-red { font-size: 13px; }
-    .catalogo { gap: 8px; padding-left: 8px; padding-right: 8px; margin-top: -30px; }
+    .portada {
+        min-height: 580px;
+    }
+
+    .capa-portada {
+        min-height: 580px;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .logo {
+        width: 112px;
+        height: 112px;
+        left: -4px;
+        margin-bottom: 14px;
+    }
+
+    .nuestro {
+        font-size: 22px;
+        letter-spacing: 5px;
+    }
+
+    .catalogo-titulo {
+        font-size: clamp(40px, 11vw, 48px);
+        letter-spacing: 1px;
+    }
+
+    .velas-titulo {
+        font-size: clamp(70px, 21vw, 84px);
+    }
+
+    .botones-redes {
+        padding-left: 20px;
+        padding-right: 20px;
+        gap: 12px;
+        transform: translateY(-58px);
+    }
+
+    .boton-red {
+        font-size: 13px;
+    }
+
+    .catalogo {
+        gap: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-top: -30px;
+    }
 }
 
+/* =====================================
+   COMPUTADOR
+===================================== */
+
 @media (min-width: 431px) {
-    .app, .modal-contenido { box-shadow: 0 0 30px rgba(0,0,0,.08); }
+    .app,
+    .modal-contenido {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+    }
 }

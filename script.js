@@ -1,258 +1,822 @@
-const productos = [
-    {
-        titulo: "Vela personalizada",
-        precio: "$12.000",
-        descripcion: "Vela artesanal personalizada para momentos especiales. Ideal como detalle decorativo o recuerdo para celebraciones.",
-        etiquetas: ["Personalizada", "Recuerdos", "Detalles"],
-        imagenes: [
-            "imagenes/vela1.jpg",
-            "imagenes/vela1.jpg",
-            "imagenes/vela1.jpg"
-        ]
-    },
+/* =====================================
+   ELEMENTOS DEL HTML
+===================================== */
 
-    {
-        titulo: "Vela religiosa",
-        precio: "$18.000",
-        descripcion: "Diseño especial con temática religiosa, elaborado con mucho cuidado para un detalle significativo y elegante.",
-        etiquetas: ["Religiosa", "Bautizo", "Primera Comunión"],
-        imagenes: [
-            "imagenes/vela2.png",
-            "imagenes/vela2.png",
-            "imagenes/vela2.png"
-        ]
-    },
+const catalogo =
+    document.getElementById("catalogo");
 
-    {
-        titulo: "Vela clásica blanca",
-        precio: "$10.000",
-        descripcion: "Una vela de estilo clásico y limpio, perfecta para celebraciones, recordatorios o decoración especial.",
-        etiquetas: ["Clásica", "Decoración", "Eventos"],
-        imagenes: [
-            "imagenes/vela3.png",
-            "imagenes/vela3.png",
-            "imagenes/vela3.png"
-        ]
-    },
+const modal =
+    document.getElementById("modal");
 
-    {
-        titulo: "Vela de grado",
-        precio: "$11.000",
-        descripcion: "Detalle especial para grados y logros académicos. Personalizable con nombre, color y ocasión.",
-        etiquetas: ["Grado", "Personalizada", "Souvenir"],
-        imagenes: [
-            "imagenes/vela4.png",
-            "imagenes/vela4.png",
-            "imagenes/vela4.png"
-        ]
-    },
+const tituloProducto =
+    document.getElementById("tituloProducto");
 
-    {
-        titulo: "Vela decorativa",
-        precio: "$11.500",
-        descripcion: "Diseño decorativo artesanal con acabado elegante, pensado para regalar o decorar celebraciones.",
-        etiquetas: ["Decorativa", "Regalo", "Eventos"],
-        imagenes: [
-            "imagenes/vela5.png",
-            "imagenes/vela5.png",
-            "imagenes/vela5.png"
-        ]
-    },
+const precioProducto =
+    document.getElementById("precioProducto");
 
-    {
-        titulo: "Vela para recuerdo",
-        precio: "$13.000",
-        descripcion: "Vela personalizada para recuerdos de eventos especiales, con presentación delicada y elegante.",
-        etiquetas: ["Baby Shower", "Bautizo", "Cumpleaños"],
-        imagenes: [
-            "imagenes/vela6.png",
-            "imagenes/vela6.png",
-            "imagenes/vela6.png"
-        ]
-    }
-];
+const descripcionProducto =
+    document.getElementById("descripcionProducto");
 
-const catalogo = document.getElementById("catalogo");
-const modal = document.getElementById("modal");
-const tituloProducto = document.getElementById("tituloProducto");
-const precioProducto = document.getElementById("precioProducto");
-const descripcionProducto = document.getElementById("descripcionProducto");
-const etiquetasProducto = document.getElementById("etiquetasProducto");
-const imagenGrande = document.getElementById("imagenGrande");
-const indicadores = document.getElementById("indicadores");
-const botonWhatsapp = document.getElementById("botonWhatsapp");
-const carrusel = document.getElementById("carrusel");
+const etiquetasProducto =
+    document.getElementById("etiquetasProducto");
+
+const imagenGrande =
+    document.getElementById("imagenGrande");
+
+const indicadores =
+    document.getElementById("indicadores");
+
+const botonWhatsapp =
+    document.getElementById("botonWhatsapp");
+
+const carrusel =
+    document.getElementById("carrusel");
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let productos = [];
 
 let productoActual = 0;
+
 let fotoActual = 0;
 
 let inicioX = 0;
+
 let finX = 0;
 
-renderizarCatalogo();
 
-function renderizarCatalogo() {
-    catalogo.innerHTML = "";
+/* =====================================
+   INICIAR CATÁLOGO
+===================================== */
 
-    productos.forEach((producto, indice) => {
-        const boton = document.createElement("button");
-        boton.className = "publicacion";
-        boton.setAttribute("aria-label", `Abrir ${producto.titulo}`);
-        boton.onclick = () => abrirPublicacion(indice);
+cargarProductos();
 
-        boton.innerHTML = `
-            <img src="${producto.imagenes[0]}" alt="${producto.titulo}">
-            <span class="ver-detalle">Toca para ver</span>
+
+/* =====================================
+   CARGAR PRODUCTOS DESDE SUPABASE
+===================================== */
+
+async function cargarProductos() {
+
+    catalogo.innerHTML = `
+        <div class="mensaje-catalogo">
+            Cargando catálogo...
+        </div>
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("productos")
+            .select("*")
+            .order(
+                "orden",
+                {
+                    ascending: true
+                }
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
+
+        catalogo.innerHTML = `
+            <div class="mensaje-catalogo">
+                No se pudo cargar el catálogo.
+            </div>
         `;
 
-        catalogo.appendChild(boton);
-    });
-}
-
-function abrirPublicacion(indice) {
-    productoActual = indice;
-    fotoActual = 0;
-
-    const producto = productos[productoActual];
-
-    tituloProducto.textContent = producto.titulo;
-    precioProducto.textContent = producto.precio;
-    descripcionProducto.textContent = producto.descripcion;
-
-    renderizarEtiquetas(producto.etiquetas);
-    crearIndicadores();
-    actualizarImagen();
-
-    const mensaje = `Hola, vi su catálogo de Velas MAILE y estoy interesada en ${producto.titulo}, con precio ${producto.precio}. ¿Me puedes dar más información?`;
-
-    botonWhatsapp.href =
-        "https://wa.me/573008866132?text=" +
-        encodeURIComponent(mensaje);
-
-    modal.style.display = "block";
-    document.body.style.overflow = "hidden";
-}
-
-function cerrarPublicacion() {
-    modal.style.display = "none";
-    document.body.style.overflow = "";
-}
-
-function renderizarEtiquetas(listaEtiquetas) {
-    etiquetasProducto.innerHTML = "";
-
-    listaEtiquetas.forEach((texto) => {
-        const span = document.createElement("span");
-        span.className = "etiqueta";
-        span.textContent = texto;
-        etiquetasProducto.appendChild(span);
-    });
-}
-
-function actualizarImagen() {
-    const producto = productos[productoActual];
-
-    imagenGrande.style.opacity = "0";
-
-    setTimeout(() => {
-        imagenGrande.src = producto.imagenes[fotoActual];
-        imagenGrande.alt = producto.titulo + " - foto " + (fotoActual + 1);
-        imagenGrande.style.opacity = "1";
-    }, 90);
-
-    actualizarIndicadores();
-}
-
-function fotoSiguiente() {
-    const total = productos[productoActual].imagenes.length;
-
-    fotoActual++;
-
-    if (fotoActual >= total) {
-        fotoActual = 0;
-    }
-
-    actualizarImagen();
-}
-
-function fotoAnterior() {
-    const total = productos[productoActual].imagenes.length;
-
-    fotoActual--;
-
-    if (fotoActual < 0) {
-        fotoActual = total - 1;
-    }
-
-    actualizarImagen();
-}
-
-function crearIndicadores() {
-    indicadores.innerHTML = "";
-
-    const total = productos[productoActual].imagenes.length;
-
-    for (let i = 0; i < total; i++) {
-        const punto = document.createElement("div");
-        punto.className = "punto";
-        indicadores.appendChild(punto);
-    }
-
-    actualizarIndicadores();
-}
-
-function actualizarIndicadores() {
-    const puntos = document.querySelectorAll(".punto");
-
-    puntos.forEach((punto, indice) => {
-        punto.classList.toggle("activo", indice === fotoActual);
-    });
-}
-
-carrusel.addEventListener(
-    "touchstart",
-    function(evento) {
-        inicioX = evento.touches[0].clientX;
-    },
-    { passive: true }
-);
-
-carrusel.addEventListener(
-    "touchend",
-    function(evento) {
-        finX = evento.changedTouches[0].clientX;
-        detectarDeslizamiento();
-    },
-    { passive: true }
-);
-
-function detectarDeslizamiento() {
-    const distancia = finX - inicioX;
-    const minimo = 50;
-
-    if (Math.abs(distancia) < minimo) {
         return;
     }
 
-    if (distancia < 0) {
-        fotoSiguiente();
-    } else {
-        fotoAnterior();
+
+    productos =
+        (data || [])
+        .map(normalizarProducto);
+
+
+    if (productos.length === 0) {
+
+        catalogo.innerHTML = `
+            <div class="mensaje-catalogo">
+                Próximamente encontrarás nuestros productos aquí.
+            </div>
+        `;
+
+        return;
     }
+
+
+    renderizarCatalogo();
 }
 
-document.addEventListener("keydown", function(evento) {
-    if (evento.key === "Escape") {
-        cerrarPublicacion();
+
+/* =====================================
+   NORMALIZAR DATOS
+===================================== */
+
+function normalizarProducto(producto) {
+
+    return {
+
+        id:
+            producto.id,
+
+        titulo:
+            producto.titulo || "Vela Maile",
+
+        precio:
+            Number(producto.precio) || 0,
+
+        descripcion:
+            producto.descripcion || "",
+
+        etiquetas:
+            convertirALista(
+                producto.etiquetas
+            ),
+
+        imagenes:
+            convertirALista(
+                producto.imagenes
+            ),
+
+        orden:
+            producto.orden || 0
+
+    };
+
+}
+
+
+/* =====================================
+   CONVERTIR JSON A ARRAY
+===================================== */
+
+function convertirALista(valor) {
+
+    if (Array.isArray(valor)) {
+
+        return valor;
     }
 
-    if (modal.style.display === "block") {
-        if (evento.key === "ArrowRight") {
+
+    if (!valor) {
+
+        return [];
+    }
+
+
+    if (typeof valor === "string") {
+
+        try {
+
+            const convertido =
+                JSON.parse(valor);
+
+
+            if (
+                Array.isArray(
+                    convertido
+                )
+            ) {
+
+                return convertido;
+            }
+
+        } catch (error) {
+
+            return [
+                valor
+            ];
+        }
+
+    }
+
+
+    return [];
+}
+
+
+/* =====================================
+   MOSTRAR CATÁLOGO
+===================================== */
+
+function renderizarCatalogo() {
+
+    catalogo.innerHTML = "";
+
+
+    productos.forEach(
+        (producto, indice) => {
+
+            if (
+                producto.imagenes.length === 0
+            ) {
+
+                return;
+            }
+
+
+            const publicacion =
+                document.createElement(
+                    "button"
+                );
+
+
+            publicacion.className =
+                "publicacion";
+
+
+            publicacion.type =
+                "button";
+
+
+            publicacion.setAttribute(
+                "aria-label",
+                `Abrir ${producto.titulo}`
+            );
+
+
+            /*
+               SOLO LA PRIMERA FOTO
+               SE USA COMO PORTADA
+            */
+
+            publicacion.innerHTML = `
+
+                <img
+                    src="${producto.imagenes[0]}"
+                    alt="${escaparHTML(producto.titulo)}"
+                    loading="lazy"
+                >
+
+                <span class="ver-detalle">
+                    Toca para ver
+                </span>
+
+            `;
+
+
+            publicacion.addEventListener(
+                "click",
+
+                () =>
+                    abrirPublicacion(
+                        indice
+                    )
+            );
+
+
+            catalogo.appendChild(
+                publicacion
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   ABRIR PRODUCTO
+===================================== */
+
+function abrirPublicacion(indice) {
+
+    productoActual = indice;
+
+    fotoActual = 0;
+
+
+    const producto =
+        productos[
+            productoActual
+        ];
+
+
+    tituloProducto.textContent =
+        producto.titulo;
+
+
+    precioProducto.textContent =
+        formatearPrecio(
+            producto.precio
+        );
+
+
+    descripcionProducto.textContent =
+        producto.descripcion;
+
+
+    renderizarEtiquetas(
+        producto.etiquetas
+    );
+
+
+    crearIndicadores();
+
+
+    actualizarImagen();
+
+
+    actualizarBotonWhatsapp(
+        producto
+    );
+
+
+    modal.style.display =
+        "block";
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    modal.scrollTop = 0;
+}
+
+
+/* =====================================
+   CERRAR PRODUCTO
+===================================== */
+
+function cerrarPublicacion() {
+
+    modal.style.display =
+        "none";
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =====================================
+   ETIQUETAS
+===================================== */
+
+function renderizarEtiquetas(lista) {
+
+    etiquetasProducto.innerHTML =
+        "";
+
+
+    lista.forEach(
+        etiqueta => {
+
+            const elemento =
+                document.createElement(
+                    "span"
+                );
+
+
+            elemento.className =
+                "etiqueta";
+
+
+            elemento.textContent =
+                etiqueta;
+
+
+            etiquetasProducto
+                .appendChild(
+                    elemento
+                );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   ACTUALIZAR FOTO
+===================================== */
+
+function actualizarImagen() {
+
+    const producto =
+        productos[
+            productoActual
+        ];
+
+
+    if (
+        producto.imagenes.length === 0
+    ) {
+
+        return;
+    }
+
+
+    imagenGrande.style.opacity =
+        "0";
+
+
+    setTimeout(
+        () => {
+
+            imagenGrande.src =
+                producto.imagenes[
+                    fotoActual
+                ];
+
+
+            imagenGrande.alt =
+                `${producto.titulo} - Foto ${fotoActual + 1}`;
+
+
+            imagenGrande.style.opacity =
+                "1";
+
+        },
+
+        90
+    );
+
+
+    actualizarIndicadores();
+
+}
+
+
+/* =====================================
+   FOTO SIGUIENTE
+===================================== */
+
+function fotoSiguiente() {
+
+    const producto =
+        productos[
+            productoActual
+        ];
+
+
+    /*
+       IMPORTANTE:
+       SOLO AVANZA ENTRE LAS FOTOS
+       DE ESTE MISMO PRODUCTO.
+    */
+
+    if (
+        fotoActual <
+        producto.imagenes.length - 1
+    ) {
+
+        fotoActual++;
+
+        actualizarImagen();
+    }
+
+}
+
+
+/* =====================================
+   FOTO ANTERIOR
+===================================== */
+
+function fotoAnterior() {
+
+    if (
+        fotoActual > 0
+    ) {
+
+        fotoActual--;
+
+        actualizarImagen();
+    }
+
+}
+
+
+/* =====================================
+   INDICADORES
+===================================== */
+
+function crearIndicadores() {
+
+    indicadores.innerHTML =
+        "";
+
+
+    const producto =
+        productos[
+            productoActual
+        ];
+
+
+    producto.imagenes.forEach(
+        (_, indice) => {
+
+            const punto =
+                document.createElement(
+                    "button"
+                );
+
+
+            punto.type =
+                "button";
+
+
+            punto.className =
+                "punto";
+
+
+            punto.setAttribute(
+                "aria-label",
+                `Ver foto ${indice + 1}`
+            );
+
+
+            punto.addEventListener(
+                "click",
+
+                () => {
+
+                    fotoActual =
+                        indice;
+
+
+                    actualizarImagen();
+
+                }
+            );
+
+
+            indicadores.appendChild(
+                punto
+            );
+
+        }
+    );
+
+
+    actualizarIndicadores();
+}
+
+
+/* =====================================
+   ACTUALIZAR PUNTOS
+===================================== */
+
+function actualizarIndicadores() {
+
+    const puntos =
+        indicadores.querySelectorAll(
+            ".punto"
+        );
+
+
+    puntos.forEach(
+        (punto, indice) => {
+
+            punto.classList.toggle(
+                "activo",
+                indice === fotoActual
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   WHATSAPP
+===================================== */
+
+function actualizarBotonWhatsapp(
+    producto
+) {
+
+    const mensaje =
+        `Hola, vi el catálogo de Velas Maile y estoy interesada en "${producto.titulo}" por ${formatearPrecio(producto.precio)}. ¿Me puedes dar más información?`;
+
+
+    botonWhatsapp.href =
+        "https://wa.me/573008866132?text=" +
+        encodeURIComponent(
+            mensaje
+        );
+
+}
+
+
+/* =====================================
+   DESLIZAR CON EL DEDO
+===================================== */
+
+carrusel.addEventListener(
+    "touchstart",
+
+    function(evento) {
+
+        inicioX =
+            evento.touches[0]
+                .clientX;
+
+    },
+
+    {
+        passive: true
+    }
+);
+
+
+carrusel.addEventListener(
+    "touchend",
+
+    function(evento) {
+
+        finX =
+            evento.changedTouches[0]
+                .clientX;
+
+
+        detectarDeslizamiento();
+
+    },
+
+    {
+        passive: true
+    }
+);
+
+
+/* =====================================
+   DIRECCIÓN DEL SWIPE
+===================================== */
+
+function detectarDeslizamiento() {
+
+    const distancia =
+        finX - inicioX;
+
+
+    const minimo =
+        45;
+
+
+    if (
+        Math.abs(distancia) <
+        minimo
+    ) {
+
+        return;
+    }
+
+
+    /*
+       IZQUIERDA =
+       SIGUIENTE FOTO DE LA MISMA VELA
+    */
+
+    if (
+        distancia < 0
+    ) {
+
+        fotoSiguiente();
+
+    }
+
+
+    /*
+       DERECHA =
+       FOTO ANTERIOR DE LA MISMA VELA
+    */
+
+    else {
+
+        fotoAnterior();
+
+    }
+
+}
+
+
+/* =====================================
+   TECLADO
+===================================== */
+
+document.addEventListener(
+    "keydown",
+
+    function(evento) {
+
+        if (
+            modal.style.display !==
+            "block"
+        ) {
+
+            return;
+        }
+
+
+        if (
+            evento.key ===
+            "Escape"
+        ) {
+
+            cerrarPublicacion();
+
+        }
+
+
+        if (
+            evento.key ===
+            "ArrowRight"
+        ) {
+
             fotoSiguiente();
+
         }
 
-        if (evento.key === "ArrowLeft") {
+
+        if (
+            evento.key ===
+            "ArrowLeft"
+        ) {
+
             fotoAnterior();
+
         }
+
     }
-});
+);
+
+
+/* =====================================
+   FORMATEAR PRECIO COLOMBIANO
+===================================== */
+
+function formatearPrecio(precio) {
+
+    return new Intl.NumberFormat(
+        "es-CO",
+
+        {
+            style:
+                "currency",
+
+            currency:
+                "COP",
+
+            maximumFractionDigits:
+                0
+        }
+
+    ).format(
+        Number(precio)
+    );
+
+}
+
+
+/* =====================================
+   SEGURIDAD TEXTO HTML
+===================================== */
+
+function escaparHTML(texto) {
+
+    return String(texto)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}

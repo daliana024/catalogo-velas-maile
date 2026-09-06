@@ -10,73 +10,64 @@ const fotosInput = document.getElementById("fotos");
 const cancelarEdicion = document.getElementById("cancelarEdicion");
 const guardarProducto = document.getElementById("guardarProducto");
 const cerrarSesion = document.getElementById("cerrarSesion");
+const posicionXInput = document.getElementById("posicionX");
+const posicionYInput = document.getElementById("posicionY");
+const valorPosicionX = document.getElementById("valorPosicionX");
+const valorPosicionY = document.getElementById("valorPosicionY");
+const previewPrincipal = document.getElementById("previewPrincipal");
+const restablecerPosicion = document.getElementById("restablecerPosicion");
 
 let imagenesActuales = [];
-let nuevosArchivos = [];
 let categoriasSeleccionadas = [];
 let empaqueSeleccionado = "";
+let urlTemporalPrincipal = null;
 
-iniciar();
+document.addEventListener("DOMContentLoaded", comprobarSesion);
 
-async function iniciar() {
-    configurarSelectores();
-    configurarEventos();
-    await comprobarSesion();
-}
+document.querySelectorAll(".opcion-categoria").forEach(function (boton) {
+    boton.addEventListener("click", function () {
+        const valor = boton.dataset.valor;
 
-function configurarSelectores() {
-    document.querySelectorAll(".opcion-categoria").forEach(boton => {
-        boton.addEventListener("click", () => {
-            const valor = boton.dataset.valor;
-            if (categoriasSeleccionadas.includes(valor)) {
-                categoriasSeleccionadas = categoriasSeleccionadas.filter(item => item !== valor);
-                boton.classList.remove("seleccionada");
-            } else {
-                categoriasSeleccionadas.push(valor);
-                boton.classList.add("seleccionada");
-            }
-        });
-    });
-
-    document.querySelectorAll(".opcion-empaque").forEach(boton => {
-        boton.addEventListener("click", () => {
-            document.querySelectorAll(".opcion-empaque").forEach(item => item.classList.remove("seleccionada"));
+        if (categoriasSeleccionadas.includes(valor)) {
+            categoriasSeleccionadas = categoriasSeleccionadas.filter(function (categoria) {
+                return categoria !== valor;
+            });
+            boton.classList.remove("seleccionada");
+        } else {
+            categoriasSeleccionadas.push(valor);
             boton.classList.add("seleccionada");
-            empaqueSeleccionado = boton.dataset.valor;
+        }
+    });
+});
+
+document.querySelectorAll(".opcion-empaque").forEach(function (boton) {
+    boton.addEventListener("click", function () {
+        document.querySelectorAll(".opcion-empaque").forEach(function (otro) {
+            otro.classList.remove("seleccionada");
         });
+        boton.classList.add("seleccionada");
+        empaqueSeleccionado = boton.dataset.valor;
     });
-}
-
-function configurarEventos() {
-    loginForm.addEventListener("submit", iniciarSesion);
-    cerrarSesion.addEventListener("click", salir);
-    productoForm.addEventListener("submit", guardar);
-    cancelarEdicion.addEventListener("click", limpiarFormulario);
-
-    fotosInput.addEventListener("change", () => {
-        nuevosArchivos = Array.from(fotosInput.files || []);
-        renderPreview();
-    });
-}
+});
 
 async function comprobarSesion() {
     try {
         const { data, error } = await supabaseClient.auth.getSession();
         if (error) throw error;
-        data.session ? mostrarAdmin() : mostrarLogin();
+        if (data.session) mostrarAdmin();
+        else mostrarLogin();
     } catch (error) {
         console.error("Error comprobando sesión:", error);
         mostrarLogin();
-        mensajeLogin.textContent = "No se pudo comprobar la sesión.";
     }
 }
 
-async function iniciarSesion(evento) {
+loginForm.addEventListener("submit", async function (evento) {
     evento.preventDefault();
-    mensajeLogin.textContent = "Ingresando...";
 
     const email = document.getElementById("correo").value.trim();
     const password = document.getElementById("contrasena").value;
+    mensajeLogin.textContent = "Ingresando...";
 
     try {
         const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
@@ -86,15 +77,17 @@ async function iniciarSesion(evento) {
         mostrarAdmin();
     } catch (error) {
         console.error("Error de inicio de sesión:", error);
-        mensajeLogin.textContent = "No fue posible ingresar. Revisa el correo y la contraseña.";
+        mensajeLogin.textContent = "Correo o contraseña incorrectos.";
     }
-}
+});
 
-async function salir() {
-    await supabaseClient.auth.signOut();
-    limpiarFormulario();
-    mostrarLogin();
-}
+cerrarSesion.addEventListener("click", async function () {
+    try {
+        await supabaseClient.auth.signOut();
+    } finally {
+        mostrarLogin();
+    }
+});
 
 function mostrarAdmin() {
     loginPanel.classList.add("oculto");
@@ -107,54 +100,82 @@ function mostrarLogin() {
     loginPanel.classList.remove("oculto");
 }
 
-function renderPreview() {
+fotosInput.addEventListener("change", function () {
+    mostrarPreviewCompleto();
+    actualizarImagenPrincipalDesdeFormulario();
+});
+
+function mostrarPreviewCompleto() {
     previewFotos.innerHTML = "";
 
-    imagenesActuales.forEach((url, indice) => {
-        previewFotos.appendChild(crearPreview(url, () => {
-            imagenesActuales.splice(indice, 1);
-            renderPreview();
-        }));
+    imagenesActuales.forEach(function (url) {
+        agregarPreview(url);
     });
 
-    nuevosArchivos.forEach((archivo, indice) => {
-        const url = URL.createObjectURL(archivo);
-        previewFotos.appendChild(crearPreview(url, () => {
-            URL.revokeObjectURL(url);
-            nuevosArchivos.splice(indice, 1);
-            renderPreview();
-        }));
+    Array.from(fotosInput.files).forEach(function (archivo) {
+        agregarPreview(URL.createObjectURL(archivo));
     });
 }
 
-function crearPreview(url, quitar) {
-    const contenedor = document.createElement("div");
-    contenedor.className = "preview-foto";
-
+function agregarPreview(url) {
     const img = document.createElement("img");
     img.src = url;
-    img.alt = "Vista previa";
-
-    const boton = document.createElement("button");
-    boton.type = "button";
-    boton.className = "quitar-foto";
-    boton.textContent = "×";
-    boton.setAttribute("aria-label", "Quitar foto");
-    boton.addEventListener("click", quitar);
-
-    contenedor.append(img, boton);
-    return contenedor;
+    img.alt = "Foto del producto";
+    previewFotos.appendChild(img);
 }
 
-async function guardar(evento) {
+function actualizarImagenPrincipalDesdeFormulario() {
+    if (urlTemporalPrincipal) {
+        URL.revokeObjectURL(urlTemporalPrincipal);
+        urlTemporalPrincipal = null;
+    }
+
+    const archivos = Array.from(fotosInput.files);
+
+    if (imagenesActuales.length > 0) {
+        establecerPreviewPrincipal(imagenesActuales[0]);
+        return;
+    }
+
+    if (archivos.length > 0) {
+        urlTemporalPrincipal = URL.createObjectURL(archivos[0]);
+        establecerPreviewPrincipal(urlTemporalPrincipal);
+        return;
+    }
+
+    previewPrincipal.removeAttribute("src");
+    previewPrincipal.style.display = "none";
+}
+
+function establecerPreviewPrincipal(url) {
+    previewPrincipal.src = url;
+    previewPrincipal.style.display = "block";
+    actualizarPosicionPreview();
+}
+
+posicionXInput.addEventListener("input", actualizarPosicionPreview);
+posicionYInput.addEventListener("input", actualizarPosicionPreview);
+
+function actualizarPosicionPreview() {
+    const x = limitarPorcentaje(posicionXInput.value);
+    const y = limitarPorcentaje(posicionYInput.value);
+
+    valorPosicionX.textContent = `${x}%`;
+    valorPosicionY.textContent = `${y}%`;
+    previewPrincipal.style.objectPosition = `${x}% ${y}%`;
+}
+
+restablecerPosicion.addEventListener("click", function () {
+    posicionXInput.value = 50;
+    posicionYInput.value = 50;
+    actualizarPosicionPreview();
+});
+
+productoForm.addEventListener("submit", async function (evento) {
     evento.preventDefault();
+    mensajeProducto.textContent = "Guardando producto...";
 
-    const productoId = document.getElementById("productoId").value;
-    const titulo = document.getElementById("titulo").value.trim();
-    const precio = Number(document.getElementById("precio").value);
-    const orden = Number(document.getElementById("orden").value) || 0;
-
-    if (!categoriasSeleccionadas.length) {
+    if (categoriasSeleccionadas.length === 0) {
         mensajeProducto.textContent = "Selecciona al menos una categoría.";
         return;
     }
@@ -164,72 +185,83 @@ async function guardar(evento) {
         return;
     }
 
-    if (!titulo || !Number.isFinite(precio)) {
-        mensajeProducto.textContent = "Completa el título y el precio.";
+    const productoId = document.getElementById("productoId").value;
+    const titulo = document.getElementById("titulo").value.trim();
+    const precio = Number(document.getElementById("precio").value);
+    const orden = Number(document.getElementById("orden").value) || 0;
+    const posicion_x = limitarPorcentaje(posicionXInput.value);
+    const posicion_y = limitarPorcentaje(posicionYInput.value);
+
+    let urlsImagenes = [...imagenesActuales];
+    const nuevasFotos = Array.from(fotosInput.files);
+
+    if (nuevasFotos.length > 0) {
+        const urlsNuevas = await subirFotos(nuevasFotos);
+        if (!urlsNuevas) {
+            mensajeProducto.textContent = "No se pudieron subir las fotos.";
+            return;
+        }
+        urlsImagenes = [...urlsImagenes, ...urlsNuevas];
+    }
+
+    if (urlsImagenes.length === 0) {
+        mensajeProducto.textContent = "Debes agregar al menos una fotografía.";
         return;
     }
 
-    guardarProducto.disabled = true;
-    mensajeProducto.textContent = "Guardando producto...";
+    const datos = {
+        titulo,
+        precio,
+        etiquetas: categoriasSeleccionadas,
+        descripcion: empaqueSeleccionado,
+        imagenes: urlsImagenes,
+        orden,
+        posicion_x,
+        posicion_y
+    };
 
     try {
-        let urlsImagenes = [...imagenesActuales];
+        let resultado;
 
-        if (nuevosArchivos.length) {
-            const nuevasUrls = await subirFotos(nuevosArchivos);
-            urlsImagenes = [...urlsImagenes, ...nuevasUrls];
-        }
-
-        if (!urlsImagenes.length) throw new Error("Debes agregar al menos una fotografía.");
-
-        // Se usa la columna original 'descripcion' para guardar el empaque.
-        // Así el proyecto funciona con tu tabla actual sin exigir una columna nueva.
-        const datos = {
-            titulo,
-            precio,
-            descripcion: empaqueSeleccionado,
-            etiquetas: categoriasSeleccionadas,
-            imagenes: urlsImagenes,
-            orden
-        };
-
-        let respuesta;
         if (productoId) {
-            respuesta = await supabaseClient.from("productos").update(datos).eq("id", productoId);
+            resultado = await supabaseClient.from("productos").update(datos).eq("id", productoId);
         } else {
-            respuesta = await supabaseClient.from("productos").insert([datos]);
+            resultado = await supabaseClient.from("productos").insert([datos]);
         }
 
-        if (respuesta.error) throw respuesta.error;
+        if (resultado.error) throw resultado.error;
 
-        mensajeProducto.textContent = productoId ? "Producto actualizado correctamente." : "Producto publicado correctamente.";
-        limpiarFormulario(false);
+        mensajeProducto.textContent = productoId
+            ? "Producto actualizado correctamente."
+            : "Producto publicado correctamente.";
+
+        limpiarFormulario();
         await cargarProductos();
     } catch (error) {
         console.error("Error guardando producto:", error);
-        mensajeProducto.textContent = `No se pudo guardar. ${error.message || "Revisa Supabase."}`;
-    } finally {
-        guardarProducto.disabled = false;
+        mensajeProducto.textContent = "No se pudo guardar. " + (error.message || "Revisa Supabase.");
     }
-}
+});
 
 async function subirFotos(archivos) {
     const urls = [];
 
     for (const archivo of archivos) {
         const extension = (archivo.name.split(".").pop() || "jpg").toLowerCase();
-        const id = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-        const ruta = `catalogo/${Date.now()}-${id}.${extension}`;
+        const nombre = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
+        const ruta = `catalogo/${nombre}`;
 
-        const { error } = await supabaseClient.storage
+        const { error: errorSubida } = await supabaseClient.storage
             .from("productos")
             .upload(ruta, archivo, { cacheControl: "3600", upsert: false });
 
-        if (error) throw error;
+        if (errorSubida) {
+            console.error("Error subiendo foto:", errorSubida);
+            return null;
+        }
 
         const { data } = supabaseClient.storage.from("productos").getPublicUrl(ruta);
-        if (!data?.publicUrl) throw new Error("No se pudo obtener la URL pública de una foto.");
-        urls.push(data.publicUrl);
+        if (data && data.publicUrl) urls.push(data.publicUrl);
     }
 
     return urls;
@@ -248,89 +280,101 @@ async function cargarProductos() {
         if (error) throw error;
 
         listaProductos.innerHTML = "";
-        if (!data?.length) {
+
+        if (!data || data.length === 0) {
             listaProductos.innerHTML = "<p>No hay productos publicados todavía.</p>";
             return;
         }
 
-        data.forEach(producto => listaProductos.appendChild(crearProductoAdmin(producto)));
+        data.forEach(function (producto) {
+            const imagenes = convertirALista(producto.imagenes);
+            const imagenPrincipal = imagenes[0] || "";
+            const x = limitarPorcentaje(producto.posicion_x ?? 50);
+            const y = limitarPorcentaje(producto.posicion_y ?? 50);
+            const empaque = producto.empaque || producto.descripcion || "Sin empaque";
+
+            const item = document.createElement("article");
+            item.className = "producto-admin";
+
+            const miniatura = document.createElement("div");
+            miniatura.className = "producto-miniatura";
+
+            const img = document.createElement("img");
+            img.src = imagenPrincipal;
+            img.alt = producto.titulo || "Producto";
+            img.style.objectPosition = `${x}% ${y}%`;
+
+            const logo = document.createElement("img");
+            logo.className = "producto-logo-mini";
+            logo.src = "imagenes/logo-maile.png";
+            logo.alt = "";
+
+            miniatura.appendChild(img);
+            miniatura.appendChild(logo);
+
+            const info = document.createElement("div");
+            info.innerHTML = `
+                <h3>${escaparHTML(producto.titulo || "Vela Maile")}</h3>
+                <p class="precio">${formatearPrecio(producto.precio)}</p>
+                <p class="empaque-mini">${escaparHTML(empaque)}</p>
+                <div class="acciones-producto">
+                    <button class="editar" type="button">Editar</button>
+                    <button class="eliminar" type="button">Eliminar</button>
+                </div>
+            `;
+
+            info.querySelector(".editar").addEventListener("click", function () {
+                editarProducto(producto);
+            });
+
+            info.querySelector(".eliminar").addEventListener("click", function () {
+                eliminarProducto(producto);
+            });
+
+            item.appendChild(miniatura);
+            item.appendChild(info);
+            listaProductos.appendChild(item);
+        });
     } catch (error) {
         console.error("Error cargando productos:", error);
-        listaProductos.innerHTML = `<p>No se pudieron cargar. ${escaparHTML(error.message || "")}</p>`;
+        listaProductos.innerHTML = "<p>No se pudieron cargar los productos.</p>";
     }
-}
-
-function crearProductoAdmin(producto) {
-    const imagenes = convertirALista(producto.imagenes);
-    const item = document.createElement("article");
-    item.className = "producto-admin";
-
-    const img = document.createElement("img");
-    img.src = imagenes[0] || "";
-    img.alt = producto.titulo || "Producto";
-
-    const info = document.createElement("div");
-    const titulo = document.createElement("h3");
-    titulo.textContent = producto.titulo || "Vela Maile";
-
-    const precio = document.createElement("p");
-    precio.className = "precio";
-    precio.textContent = formatearPrecio(producto.precio);
-
-    const empaque = document.createElement("p");
-    empaque.className = "empaque-mini";
-    empaque.textContent = producto.empaque || producto.descripcion || "Sin empaque";
-
-    const acciones = document.createElement("div");
-    acciones.className = "acciones-producto";
-
-    const editar = document.createElement("button");
-    editar.type = "button";
-    editar.className = "editar";
-    editar.textContent = "Editar";
-    editar.addEventListener("click", () => editarProducto(producto));
-
-    const eliminar = document.createElement("button");
-    eliminar.type = "button";
-    eliminar.className = "eliminar";
-    eliminar.textContent = "Eliminar";
-    eliminar.addEventListener("click", () => eliminarProducto(producto));
-
-    acciones.append(editar, eliminar);
-    info.append(titulo, precio, empaque, acciones);
-    item.append(img, info);
-    return item;
 }
 
 function editarProducto(producto) {
     document.getElementById("productoId").value = producto.id;
     document.getElementById("titulo").value = producto.titulo || "";
-    document.getElementById("precio").value = producto.precio ?? "";
+    document.getElementById("precio").value = producto.precio || "";
     document.getElementById("orden").value = producto.orden || 0;
 
     categoriasSeleccionadas = convertirALista(producto.etiquetas);
-    document.querySelectorAll(".opcion-categoria").forEach(boton => {
+    document.querySelectorAll(".opcion-categoria").forEach(function (boton) {
         boton.classList.toggle("seleccionada", categoriasSeleccionadas.includes(boton.dataset.valor));
     });
 
     empaqueSeleccionado = producto.empaque || producto.descripcion || "";
-    document.querySelectorAll(".opcion-empaque").forEach(boton => {
+    document.querySelectorAll(".opcion-empaque").forEach(function (boton) {
         boton.classList.toggle("seleccionada", boton.dataset.valor === empaqueSeleccionado);
     });
 
     imagenesActuales = convertirALista(producto.imagenes);
-    nuevosArchivos = [];
+    posicionXInput.value = limitarPorcentaje(producto.posicion_x ?? 50);
+    posicionYInput.value = limitarPorcentaje(producto.posicion_y ?? 50);
     fotosInput.value = "";
-    renderPreview();
+
+    mostrarPreviewCompleto();
+    actualizarImagenPrincipalDesdeFormulario();
+    actualizarPosicionPreview();
 
     guardarProducto.textContent = "Guardar cambios";
     cancelarEdicion.classList.remove("oculto");
     mensajeProducto.textContent = "Editando producto.";
+
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 async function eliminarProducto(producto) {
-    if (!confirm(`¿Eliminar "${producto.titulo}"?`)) return;
+    if (!confirm(`¿Seguro que quieres eliminar "${producto.titulo}"?`)) return;
 
     try {
         const { error } = await supabaseClient.from("productos").delete().eq("id", producto.id);
@@ -338,38 +382,66 @@ async function eliminarProducto(producto) {
         await cargarProductos();
     } catch (error) {
         console.error("Error eliminando producto:", error);
-        alert(`No se pudo eliminar. ${error.message || ""}`);
+        alert("No se pudo eliminar el producto.");
     }
 }
 
-function limpiarFormulario(limpiarMensaje = true) {
+cancelarEdicion.addEventListener("click", function () {
+    limpiarFormulario();
+    mensajeProducto.textContent = "";
+});
+
+function limpiarFormulario() {
     productoForm.reset();
     document.getElementById("productoId").value = "";
     document.getElementById("orden").value = 0;
+
     categoriasSeleccionadas = [];
     empaqueSeleccionado = "";
     imagenesActuales = [];
-    nuevosArchivos = [];
+    fotosInput.value = "";
+    posicionXInput.value = 50;
+    posicionYInput.value = 50;
 
-    document.querySelectorAll(".opcion-categoria, .opcion-empaque").forEach(boton => boton.classList.remove("seleccionada"));
+    document.querySelectorAll(".opcion-categoria, .opcion-empaque").forEach(function (boton) {
+        boton.classList.remove("seleccionada");
+    });
+
     previewFotos.innerHTML = "";
+
+    if (urlTemporalPrincipal) {
+        URL.revokeObjectURL(urlTemporalPrincipal);
+        urlTemporalPrincipal = null;
+    }
+
+    previewPrincipal.removeAttribute("src");
+    previewPrincipal.style.display = "none";
+    actualizarPosicionPreview();
+
     guardarProducto.textContent = "Publicar producto";
     cancelarEdicion.classList.add("oculto");
-    if (limpiarMensaje) mensajeProducto.textContent = "";
 }
 
 function convertirALista(valor) {
-    if (Array.isArray(valor)) return valor.filter(Boolean);
+    if (Array.isArray(valor)) return valor;
     if (!valor) return [];
+
     if (typeof valor === "string") {
         try {
             const convertido = JSON.parse(valor);
-            return Array.isArray(convertido) ? convertido.filter(Boolean) : [valor];
-        } catch (_) {
+            if (Array.isArray(convertido)) return convertido;
+        } catch (error) {
             return [valor];
         }
     }
+
     return [];
+}
+
+function limitarPorcentaje(valor) {
+    const numero = Number(valor);
+    if (!Number.isFinite(numero)) return 50;
+    return Math.max(0, Math.min(100, numero));
 }
 
 function formatearPrecio(precio) {
@@ -377,7 +449,7 @@ function formatearPrecio(precio) {
         style: "currency",
         currency: "COP",
         maximumFractionDigits: 0
-    }).format(Number(precio) || 0);
+    }).format(Number(precio));
 }
 
 function escaparHTML(texto) {

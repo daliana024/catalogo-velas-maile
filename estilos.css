@@ -227,6 +227,8 @@ body {
 .catalogo-titulo {
     width: 100%;
 
+    margin-bottom: 9px;
+    
     font-family:
         "Cormorant Garamond",
         serif;
@@ -235,7 +237,7 @@ body {
         clamp(
             42px,
             11vw,
-            60px
+            53px
         );
 
     font-weight: 500;

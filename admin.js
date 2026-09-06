@@ -588,7 +588,9 @@ productoForm.addEventListener(
             etiquetas:
                 categoriasSeleccionadas,
 
-            empaque:
+            // Usamos la columna existente "descripcion" para guardar el empaque.
+            // Así no dependemos de crear una columna nueva en Supabase.
+            descripcion:
                 empaqueSeleccionado,
 
             imagenes:
@@ -649,7 +651,7 @@ productoForm.addEventListener(
 
 
             mensajeProducto.textContent =
-                "No se pudo guardar el producto.";
+                `No se pudo guardar: ${error.message || "error desconocido"}`;
 
             return;
         }
@@ -869,9 +871,9 @@ async function cargarProductos() {
 
                     <p class="empaque-mini">
                         ${
-                            producto.empaque
+                            (producto.empaque || producto.descripcion)
                                 ? escaparHTML(
-                                    producto.empaque
+                                    producto.empaque || producto.descripcion
                                 )
                                 : "Sin empaque"
                         }
@@ -1011,7 +1013,9 @@ function editarProducto(
     /* EMPAQUE */
 
     empaqueSeleccionado =
-        producto.empaque || "";
+        producto.empaque ||
+        producto.descripcion ||
+        "";
 
 
     document

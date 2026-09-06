@@ -165,8 +165,12 @@ function normalizarProducto(producto) {
                 producto.imagenes
             ),
 
+        // Compatible con ambas versiones de la base de datos:
+        // si existe "empaque" lo usa; si no, usa la antigua columna "descripcion".
         empaque:
-            producto.empaque || "Sin especificar",
+            producto.empaque ||
+            producto.descripcion ||
+            "Sin especificar",
 
         orden:
             Number(producto.orden) || 0

@@ -10,6 +10,7 @@ const fotosInput = document.getElementById("fotos");
 const cancelarEdicion = document.getElementById("cancelarEdicion");
 const guardarProducto = document.getElementById("guardarProducto");
 const cerrarSesion = document.getElementById("cerrarSesion");
+
 const posicionXInput = document.getElementById("posicionX");
 const posicionYInput = document.getElementById("posicionY");
 const valorPosicionX = document.getElementById("valorPosicionX");
@@ -24,14 +25,12 @@ let urlTemporalPrincipal = null;
 
 document.addEventListener("DOMContentLoaded", comprobarSesion);
 
-document.querySelectorAll(".opcion-categoria").forEach(function (boton) {
-    boton.addEventListener("click", function () {
+document.querySelectorAll(".opcion-categoria").forEach(boton => {
+    boton.addEventListener("click", () => {
         const valor = boton.dataset.valor;
 
         if (categoriasSeleccionadas.includes(valor)) {
-            categoriasSeleccionadas = categoriasSeleccionadas.filter(function (categoria) {
-                return categoria !== valor;
-            });
+            categoriasSeleccionadas = categoriasSeleccionadas.filter(x => x !== valor);
             boton.classList.remove("seleccionada");
         } else {
             categoriasSeleccionadas.push(valor);
@@ -40,53 +39,46 @@ document.querySelectorAll(".opcion-categoria").forEach(function (boton) {
     });
 });
 
-document.querySelectorAll(".opcion-empaque").forEach(function (boton) {
-    boton.addEventListener("click", function () {
-        document.querySelectorAll(".opcion-empaque").forEach(function (otro) {
-            otro.classList.remove("seleccionada");
-        });
+document.querySelectorAll(".opcion-empaque").forEach(boton => {
+    boton.addEventListener("click", () => {
+        document.querySelectorAll(".opcion-empaque").forEach(x => x.classList.remove("seleccionada"));
         boton.classList.add("seleccionada");
         empaqueSeleccionado = boton.dataset.valor;
     });
 });
 
 async function comprobarSesion() {
-    try {
-        const { data, error } = await supabaseClient.auth.getSession();
-        if (error) throw error;
-        if (data.session) mostrarAdmin();
-        else mostrarLogin();
-    } catch (error) {
-        console.error("Error comprobando sesión:", error);
-        mostrarLogin();
-    }
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) console.error(error);
+
+    if (data && data.session) mostrarAdmin();
+    else mostrarLogin();
 }
 
-loginForm.addEventListener("submit", async function (evento) {
+loginForm.addEventListener("submit", async evento => {
     evento.preventDefault();
 
     const email = document.getElementById("correo").value.trim();
     const password = document.getElementById("contrasena").value;
+
     mensajeLogin.textContent = "Ingresando...";
 
-    try {
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        mensajeLogin.textContent = "";
-        loginForm.reset();
-        mostrarAdmin();
-    } catch (error) {
-        console.error("Error de inicio de sesión:", error);
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+    if (error) {
+        console.error(error);
         mensajeLogin.textContent = "Correo o contraseña incorrectos.";
+        return;
     }
+
+    mensajeLogin.textContent = "";
+    mostrarAdmin();
 });
 
-cerrarSesion.addEventListener("click", async function () {
-    try {
-        await supabaseClient.auth.signOut();
-    } finally {
-        mostrarLogin();
-    }
+cerrarSesion.addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    mostrarLogin();
 });
 
 function mostrarAdmin() {
@@ -100,56 +92,53 @@ function mostrarLogin() {
     loginPanel.classList.remove("oculto");
 }
 
-fotosInput.addEventListener("change", function () {
+fotosInput.addEventListener("change", () => {
     mostrarPreviewCompleto();
-    actualizarImagenPrincipalDesdeFormulario();
+    actualizarImagenPrincipal();
 });
 
 function mostrarPreviewCompleto() {
     previewFotos.innerHTML = "";
 
-    imagenesActuales.forEach(function (url) {
-        agregarPreview(url);
-    });
+    imagenesActuales.forEach(url => agregarPreview(url));
 
-    Array.from(fotosInput.files).forEach(function (archivo) {
+    Array.from(fotosInput.files).forEach(archivo => {
         agregarPreview(URL.createObjectURL(archivo));
     });
 }
 
 function agregarPreview(url) {
+    const div = document.createElement("div");
+    div.className = "preview-foto";
+
     const img = document.createElement("img");
     img.src = url;
     img.alt = "Foto del producto";
-    previewFotos.appendChild(img);
+
+    div.appendChild(img);
+    previewFotos.appendChild(div);
 }
 
-function actualizarImagenPrincipalDesdeFormulario() {
+function actualizarImagenPrincipal() {
     if (urlTemporalPrincipal) {
         URL.revokeObjectURL(urlTemporalPrincipal);
         urlTemporalPrincipal = null;
     }
 
-    const archivos = Array.from(fotosInput.files);
+    const nuevas = Array.from(fotosInput.files);
 
-    if (imagenesActuales.length > 0) {
-        establecerPreviewPrincipal(imagenesActuales[0]);
-        return;
+    if (imagenesActuales.length) {
+        previewPrincipal.src = imagenesActuales[0];
+        previewPrincipal.style.display = "block";
+    } else if (nuevas.length) {
+        urlTemporalPrincipal = URL.createObjectURL(nuevas[0]);
+        previewPrincipal.src = urlTemporalPrincipal;
+        previewPrincipal.style.display = "block";
+    } else {
+        previewPrincipal.removeAttribute("src");
+        previewPrincipal.style.display = "none";
     }
 
-    if (archivos.length > 0) {
-        urlTemporalPrincipal = URL.createObjectURL(archivos[0]);
-        establecerPreviewPrincipal(urlTemporalPrincipal);
-        return;
-    }
-
-    previewPrincipal.removeAttribute("src");
-    previewPrincipal.style.display = "none";
-}
-
-function establecerPreviewPrincipal(url) {
-    previewPrincipal.src = url;
-    previewPrincipal.style.display = "block";
     actualizarPosicionPreview();
 }
 
@@ -162,20 +151,22 @@ function actualizarPosicionPreview() {
 
     valorPosicionX.textContent = `${x}%`;
     valorPosicionY.textContent = `${y}%`;
+
     previewPrincipal.style.objectPosition = `${x}% ${y}%`;
 }
 
-restablecerPosicion.addEventListener("click", function () {
+restablecerPosicion.addEventListener("click", () => {
     posicionXInput.value = 50;
     posicionYInput.value = 50;
     actualizarPosicionPreview();
 });
 
-productoForm.addEventListener("submit", async function (evento) {
+productoForm.addEventListener("submit", async evento => {
     evento.preventDefault();
+
     mensajeProducto.textContent = "Guardando producto...";
 
-    if (categoriasSeleccionadas.length === 0) {
+    if (!categoriasSeleccionadas.length) {
         mensajeProducto.textContent = "Selecciona al menos una categoría.";
         return;
     }
@@ -193,54 +184,66 @@ productoForm.addEventListener("submit", async function (evento) {
     const posicion_y = limitarPorcentaje(posicionYInput.value);
 
     let urlsImagenes = [...imagenesActuales];
+
     const nuevasFotos = Array.from(fotosInput.files);
 
-    if (nuevasFotos.length > 0) {
-        const urlsNuevas = await subirFotos(nuevasFotos);
-        if (!urlsNuevas) {
-            mensajeProducto.textContent = "No se pudieron subir las fotos.";
+    if (nuevasFotos.length) {
+        const nuevasUrls = await subirFotos(nuevasFotos);
+
+        if (!nuevasUrls) {
+            mensajeProducto.textContent = "No se pudieron subir las fotos. Revisa las políticas de Storage.";
             return;
         }
-        urlsImagenes = [...urlsImagenes, ...urlsNuevas];
+
+        urlsImagenes = [...urlsImagenes, ...nuevasUrls];
     }
 
-    if (urlsImagenes.length === 0) {
+    if (!urlsImagenes.length) {
         mensajeProducto.textContent = "Debes agregar al menos una fotografía.";
         return;
     }
 
+    // IMPORTANTE:
+    // El empaque se guarda en 'descripcion', porque esa columna ya existe en tu tabla.
     const datos = {
         titulo,
         precio,
-        etiquetas: categoriasSeleccionadas,
         descripcion: empaqueSeleccionado,
+        etiquetas: categoriasSeleccionadas,
         imagenes: urlsImagenes,
         orden,
         posicion_x,
         posicion_y
     };
 
-    try {
-        let resultado;
+    let resultado;
 
-        if (productoId) {
-            resultado = await supabaseClient.from("productos").update(datos).eq("id", productoId);
+    if (productoId) {
+        resultado = await supabaseClient.from("productos").update(datos).eq("id", productoId);
+    } else {
+        resultado = await supabaseClient.from("productos").insert([datos]);
+    }
+
+    if (resultado.error) {
+        console.error("ERROR SUPABASE:", resultado.error);
+
+        const mensaje = resultado.error.message || "";
+
+        if (mensaje.includes("posicion_x") || mensaje.includes("posicion_y")) {
+            mensajeProducto.textContent = "Faltan las columnas posicion_x y posicion_y en Supabase. Ejecuta el archivo supabase-posicion.sql.";
         } else {
-            resultado = await supabaseClient.from("productos").insert([datos]);
+            mensajeProducto.textContent = "No se pudo guardar: " + mensaje;
         }
 
-        if (resultado.error) throw resultado.error;
-
-        mensajeProducto.textContent = productoId
-            ? "Producto actualizado correctamente."
-            : "Producto publicado correctamente.";
-
-        limpiarFormulario();
-        await cargarProductos();
-    } catch (error) {
-        console.error("Error guardando producto:", error);
-        mensajeProducto.textContent = "No se pudo guardar. " + (error.message || "Revisa Supabase.");
+        return;
     }
+
+    mensajeProducto.textContent = productoId
+        ? "Producto actualizado correctamente."
+        : "Producto publicado correctamente.";
+
+    limpiarFormulario();
+    await cargarProductos();
 });
 
 async function subirFotos(archivos) {
@@ -248,20 +251,26 @@ async function subirFotos(archivos) {
 
     for (const archivo of archivos) {
         const extension = (archivo.name.split(".").pop() || "jpg").toLowerCase();
-        const nombre = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
-        const ruta = `catalogo/${nombre}`;
+        const ruta = `catalogo/${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
-        const { error: errorSubida } = await supabaseClient.storage
+        const { error } = await supabaseClient.storage
             .from("productos")
-            .upload(ruta, archivo, { cacheControl: "3600", upsert: false });
+            .upload(ruta, archivo, {
+                cacheControl: "3600",
+                upsert: false
+            });
 
-        if (errorSubida) {
-            console.error("Error subiendo foto:", errorSubida);
+        if (error) {
+            console.error("ERROR STORAGE:", error);
+            mensajeProducto.textContent = "Error subiendo imagen: " + (error.message || "Storage rechazó el archivo.");
             return null;
         }
 
-        const { data } = supabaseClient.storage.from("productos").getPublicUrl(ruta);
-        if (data && data.publicUrl) urls.push(data.publicUrl);
+        const { data } = supabaseClient.storage
+            .from("productos")
+            .getPublicUrl(ruta);
+
+        urls.push(data.publicUrl);
     }
 
     return urls;
@@ -270,75 +279,60 @@ async function subirFotos(archivos) {
 async function cargarProductos() {
     listaProductos.innerHTML = "<p>Cargando productos...</p>";
 
-    try {
-        const { data, error } = await supabaseClient
-            .from("productos")
-            .select("*")
-            .order("orden", { ascending: true })
-            .order("created_at", { ascending: false });
+    const { data, error } = await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("orden", { ascending: true })
+        .order("created_at", { ascending: false });
 
-        if (error) throw error;
-
-        listaProductos.innerHTML = "";
-
-        if (!data || data.length === 0) {
-            listaProductos.innerHTML = "<p>No hay productos publicados todavía.</p>";
-            return;
-        }
-
-        data.forEach(function (producto) {
-            const imagenes = convertirALista(producto.imagenes);
-            const imagenPrincipal = imagenes[0] || "";
-            const x = limitarPorcentaje(producto.posicion_x ?? 50);
-            const y = limitarPorcentaje(producto.posicion_y ?? 50);
-            const empaque = producto.empaque || producto.descripcion || "Sin empaque";
-
-            const item = document.createElement("article");
-            item.className = "producto-admin";
-
-            const miniatura = document.createElement("div");
-            miniatura.className = "producto-miniatura";
-
-            const img = document.createElement("img");
-            img.src = imagenPrincipal;
-            img.alt = producto.titulo || "Producto";
-            img.style.objectPosition = `${x}% ${y}%`;
-
-            const logo = document.createElement("img");
-            logo.className = "producto-logo-mini";
-            logo.src = "imagenes/logo-maile.png";
-            logo.alt = "";
-
-            miniatura.appendChild(img);
-            miniatura.appendChild(logo);
-
-            const info = document.createElement("div");
-            info.innerHTML = `
-                <h3>${escaparHTML(producto.titulo || "Vela Maile")}</h3>
-                <p class="precio">${formatearPrecio(producto.precio)}</p>
-                <p class="empaque-mini">${escaparHTML(empaque)}</p>
-                <div class="acciones-producto">
-                    <button class="editar" type="button">Editar</button>
-                    <button class="eliminar" type="button">Eliminar</button>
-                </div>
-            `;
-
-            info.querySelector(".editar").addEventListener("click", function () {
-                editarProducto(producto);
-            });
-
-            info.querySelector(".eliminar").addEventListener("click", function () {
-                eliminarProducto(producto);
-            });
-
-            item.appendChild(miniatura);
-            item.appendChild(info);
-            listaProductos.appendChild(item);
-        });
-    } catch (error) {
-        console.error("Error cargando productos:", error);
+    if (error) {
+        console.error(error);
         listaProductos.innerHTML = "<p>No se pudieron cargar los productos.</p>";
+        return;
     }
+
+    listaProductos.innerHTML = "";
+
+    if (!data || !data.length) {
+        listaProductos.innerHTML = "<p>No hay productos publicados todavía.</p>";
+        return;
+    }
+
+    data.forEach(producto => {
+        const imagenes = convertirALista(producto.imagenes);
+        const x = limitarPorcentaje(producto.posicion_x ?? 50);
+        const y = limitarPorcentaje(producto.posicion_y ?? 50);
+
+        const item = document.createElement("article");
+        item.className = "producto-admin";
+
+        item.innerHTML = `
+            <div class="producto-miniatura">
+                <img src="${imagenes[0] || ""}" alt="" style="object-position:${x}% ${y}%;">
+                <img class="producto-logo-mini" src="imagenes/logo-maile.png" alt="">
+            </div>
+
+            <div>
+                <h3></h3>
+                <p class="precio"></p>
+                <p class="empaque-mini"></p>
+
+                <div class="acciones-producto">
+                    <button type="button" class="editar">Editar</button>
+                    <button type="button" class="eliminar">Eliminar</button>
+                </div>
+            </div>
+        `;
+
+        item.querySelector("h3").textContent = producto.titulo || "Vela Maile";
+        item.querySelector(".precio").textContent = formatearPrecio(producto.precio);
+        item.querySelector(".empaque-mini").textContent = producto.descripcion || producto.empaque || "Sin empaque";
+
+        item.querySelector(".editar").addEventListener("click", () => editarProducto(producto));
+        item.querySelector(".eliminar").addEventListener("click", () => eliminarProducto(producto));
+
+        listaProductos.appendChild(item);
+    });
 }
 
 function editarProducto(producto) {
@@ -348,74 +342,76 @@ function editarProducto(producto) {
     document.getElementById("orden").value = producto.orden || 0;
 
     categoriasSeleccionadas = convertirALista(producto.etiquetas);
-    document.querySelectorAll(".opcion-categoria").forEach(function (boton) {
+
+    document.querySelectorAll(".opcion-categoria").forEach(boton => {
         boton.classList.toggle("seleccionada", categoriasSeleccionadas.includes(boton.dataset.valor));
     });
 
-    empaqueSeleccionado = producto.empaque || producto.descripcion || "";
-    document.querySelectorAll(".opcion-empaque").forEach(function (boton) {
+    empaqueSeleccionado = producto.descripcion || producto.empaque || "";
+
+    document.querySelectorAll(".opcion-empaque").forEach(boton => {
         boton.classList.toggle("seleccionada", boton.dataset.valor === empaqueSeleccionado);
     });
 
     imagenesActuales = convertirALista(producto.imagenes);
+
     posicionXInput.value = limitarPorcentaje(producto.posicion_x ?? 50);
     posicionYInput.value = limitarPorcentaje(producto.posicion_y ?? 50);
+
     fotosInput.value = "";
 
     mostrarPreviewCompleto();
-    actualizarImagenPrincipalDesdeFormulario();
-    actualizarPosicionPreview();
+    actualizarImagenPrincipal();
 
     guardarProducto.textContent = "Guardar cambios";
     cancelarEdicion.classList.remove("oculto");
-    mensajeProducto.textContent = "Editando producto.";
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 async function eliminarProducto(producto) {
-    if (!confirm(`¿Seguro que quieres eliminar "${producto.titulo}"?`)) return;
+    if (!confirm(`¿Eliminar "${producto.titulo}"?`)) return;
 
-    try {
-        const { error } = await supabaseClient.from("productos").delete().eq("id", producto.id);
-        if (error) throw error;
-        await cargarProductos();
-    } catch (error) {
-        console.error("Error eliminando producto:", error);
-        alert("No se pudo eliminar el producto.");
+    const { error } = await supabaseClient
+        .from("productos")
+        .delete()
+        .eq("id", producto.id);
+
+    if (error) {
+        alert("No se pudo eliminar.");
+        console.error(error);
+        return;
     }
+
+    cargarProductos();
 }
 
-cancelarEdicion.addEventListener("click", function () {
+cancelarEdicion.addEventListener("click", () => {
     limpiarFormulario();
     mensajeProducto.textContent = "";
 });
 
 function limpiarFormulario() {
     productoForm.reset();
+
     document.getElementById("productoId").value = "";
     document.getElementById("orden").value = 0;
 
     categoriasSeleccionadas = [];
     empaqueSeleccionado = "";
     imagenesActuales = [];
-    fotosInput.value = "";
+
     posicionXInput.value = 50;
     posicionYInput.value = 50;
 
-    document.querySelectorAll(".opcion-categoria, .opcion-empaque").forEach(function (boton) {
+    document.querySelectorAll(".opcion-categoria, .opcion-empaque").forEach(boton => {
         boton.classList.remove("seleccionada");
     });
 
     previewFotos.innerHTML = "";
-
-    if (urlTemporalPrincipal) {
-        URL.revokeObjectURL(urlTemporalPrincipal);
-        urlTemporalPrincipal = null;
-    }
-
     previewPrincipal.removeAttribute("src");
     previewPrincipal.style.display = "none";
+
     actualizarPosicionPreview();
 
     guardarProducto.textContent = "Publicar producto";
@@ -430,7 +426,7 @@ function convertirALista(valor) {
         try {
             const convertido = JSON.parse(valor);
             if (Array.isArray(convertido)) return convertido;
-        } catch (error) {
+        } catch (_) {
             return [valor];
         }
     }
@@ -450,13 +446,4 @@ function formatearPrecio(precio) {
         currency: "COP",
         maximumFractionDigits: 0
     }).format(Number(precio));
-}
-
-function escaparHTML(texto) {
-    return String(texto || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 }

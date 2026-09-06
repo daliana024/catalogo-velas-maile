@@ -31,7 +31,7 @@ input:focus { border-color:var(--dorado); box-shadow:0 0 0 3px rgba(189,135,54,.
 .boton-restablecer { min-height:38px; padding:0 14px; background:#efe3d7; color:var(--marron); }
 .preview-cuadrado { position:relative; width:min(100%,430px); aspect-ratio:1/1; margin:0 auto 18px; overflow:hidden; border-radius:20px; background:#eee3d8; box-shadow:0 8px 24px rgba(72,48,26,.10); }
 .preview-principal { display:none; width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
-.preview-logo { position: absolute; top: 12px; left: 12px; width: 68px; height: 68px; object-fit: contain; border-radius: 50%; background: transparent; padding: 0; box-shadow: none; pointer-events: none; }
+.preview-logo { position:absolute; top:12px; left:12px; width:68px; height:68px; object-fit:contain; border-radius:50%; background:rgba(221,244,237,.92); padding:4px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
 .preview-etiqueta { position:absolute; left:12px; bottom:12px; padding:7px 12px; border-radius:999px; background:rgba(255,253,249,.92); color:var(--marron); font-size:12px; font-weight:700; }
 .control-posicion { margin-top:14px; }
 .control-cabecera { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
@@ -52,3 +52,6 @@ input[type="range"] { width:100%; accent-color:var(--dorado); cursor:pointer; }
 .editar { background:#eee2d6; color:#5b4030; }
 .eliminar { background:#f3dddd; color:#8d3434; }
 @media(max-width:520px){ .admin{width:100%;margin:0}.panel{min-height:100vh;border-radius:0;padding:22px 18px}.encabezado-admin{align-items:flex-start}.titulo-ajuste{flex-direction:column}.boton-restablecer{width:100%}.preview-logo{width:58px;height:58px} }
+
+.preview-logo { position: absolute; top: 8px; left: 8px; width: 30px; height: 30px; object-fit: contain; border-radius: 50%; background: transparent; padding: 0; box-shadow: none; pointer-events: none; }
+.producto-logo-mini { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; object-fit: contain; border-radius: 50%; background: transparent; padding: 0; box-shadow: none; pointer-events: none; }

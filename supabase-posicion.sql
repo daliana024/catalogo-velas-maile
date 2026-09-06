@@ -1,3 +1,5 @@
+-- EJECUTA ESTO UNA SOLA VEZ EN SUPABASE > SQL EDITOR
+
 alter table public.productos
 add column if not exists posicion_x int4 default 50;
 

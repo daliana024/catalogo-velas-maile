@@ -1,15 +1,24 @@
-VELAS MAILE - LOGO AUTOMÁTICO Y AJUSTE DE FOTO
+VELAS MAILE - VERSIÓN CORREGIDA
 
-ANTES DE USAR ESTA VERSIÓN:
+PASO OBLIGATORIO ANTES DE PUBLICAR PRODUCTOS:
 
-1. En Supabase abre SQL Editor.
-2. Ejecuta el archivo supabase-posicion.sql UNA sola vez.
-3. Después usa admin.html normalmente.
+1. Abre Supabase.
+2. Ve a SQL Editor.
+3. Abre el archivo supabase-posicion.sql incluido en este proyecto.
+4. Copia todo su contenido.
+5. Pulsa RUN.
 
-QUÉ HACE ESTA VERSIÓN:
-- Todas las tarjetas del catálogo son cuadradas.
-- Las fotos verticales u horizontales usan object-fit: cover para llenar el cuadro.
-- El administrador permite mover el encuadre horizontal y verticalmente.
-- El logo de Velas Maile aparece automáticamente en la esquina superior izquierda.
-- El archivo original de la foto NO se modifica.
-- El empaque sigue guardándose en la columna descripcion para mantener compatibilidad con tu base actual.
+Eso crea:
+- posicion_x
+- posicion_y
+
+Sin esas dos columnas, el administrador mostrará un error al publicar.
+
+ESTRUCTURA UTILIZADA:
+- descripcion = empaque
+- etiquetas = categorías
+- imagenes = lista de URLs
+- posicion_x / posicion_y = encuadre de la foto
+
+PRUEBA:
+Usa Live Server o GitHub Pages. Evita probar funciones de historial desde file:/// cuando sea posible.

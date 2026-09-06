@@ -1,53 +1,47 @@
+/* =====================================
+   ELEMENTOS DEL HTML
+===================================== */
+
 const catalogo =
-    document.getElementById(
-        "catalogo"
-    );
+    document.getElementById("catalogo");
 
 const modal =
-    document.getElementById(
-        "modal"
-    );
+    document.getElementById("modal");
 
 const tituloProducto =
-    document.getElementById(
-        "tituloProducto"
-    );
+    document.getElementById("tituloProducto");
 
 const precioProducto =
-    document.getElementById(
-        "precioProducto"
-    );
+    document.getElementById("precioProducto");
 
 const etiquetasProducto =
-    document.getElementById(
-        "etiquetasProducto"
-    );
+    document.getElementById("etiquetasProducto");
 
 const empaqueProducto =
-    document.getElementById(
-        "empaqueProducto"
-    );
+    document.getElementById("empaqueProducto");
 
 const imagenGrande =
-    document.getElementById(
-        "imagenGrande"
-    );
+    document.getElementById("imagenGrande");
 
 const indicadores =
-    document.getElementById(
-        "indicadores"
-    );
+    document.getElementById("indicadores");
 
 const botonWhatsapp =
-    document.getElementById(
-        "botonWhatsapp"
-    );
+    document.getElementById("botonWhatsapp");
 
 const carrusel =
-    document.getElementById(
-        "carrusel"
-    );
+    document.getElementById("carrusel");
 
+const flechaIzquierda =
+    document.querySelector(".flecha-izquierda");
+
+const flechaDerecha =
+    document.querySelector(".flecha-derecha");
+
+
+/* =====================================
+   VARIABLES
+===================================== */
 
 let productos = [];
 
@@ -60,78 +54,95 @@ let inicioX = 0;
 let finX = 0;
 
 
+/* =====================================
+   INICIAR
+===================================== */
+
 cargarProductos();
 
 
 /* =====================================
-   CARGAR PRODUCTOS
+   CARGAR PRODUCTOS DE SUPABASE
 ===================================== */
 
 async function cargarProductos() {
 
-    catalogo.innerHTML =
-        `
+    catalogo.innerHTML = `
         <div class="mensaje-catalogo">
             Cargando catálogo...
         </div>
-        `;
+    `;
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("productos")
+                .select("*")
+                .order(
+                    "orden",
+                    {
+                        ascending: true
+                    }
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
 
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("productos")
-            .select("*")
-            .order(
-                "orden",
-                {
-                    ascending: true
-                }
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+        if (error) {
+            throw error;
+        }
 
 
-    if (error) {
+        productos =
+            (data || [])
+                .map(normalizarProducto);
 
-        console.error(error);
 
-        catalogo.innerHTML =
-            `
+        if (productos.length === 0) {
+
+            catalogo.innerHTML = `
+                <div class="mensaje-catalogo">
+                    Próximamente encontrarás nuestros productos aquí.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        renderizarCatalogo();
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando catálogo:",
+            error
+        );
+
+        catalogo.innerHTML = `
             <div class="mensaje-catalogo">
                 No se pudo cargar el catálogo.
             </div>
-            `;
+        `;
 
-        return;
     }
-
-
-    productos =
-        (data || [])
-            .map(
-                normalizarProducto
-            );
-
-
-    renderizarCatalogo();
 
 }
 
 
 /* =====================================
-   NORMALIZAR
+   NORMALIZAR DATOS
 ===================================== */
 
-function normalizarProducto(
-    producto
-) {
+function normalizarProducto(producto) {
 
     return {
 
@@ -139,13 +150,10 @@ function normalizarProducto(
             producto.id,
 
         titulo:
-            producto.titulo ||
-            "Vela Maile",
+            producto.titulo || "Vela Maile",
 
         precio:
-            Number(
-                producto.precio
-            ) || 0,
+            Number(producto.precio) || 0,
 
         etiquetas:
             convertirALista(
@@ -158,10 +166,10 @@ function normalizarProducto(
             ),
 
         empaque:
-            producto.empaque || "",
+            producto.empaque || "Sin especificar",
 
         orden:
-            producto.orden || 0
+            Number(producto.orden) || 0
 
     };
 
@@ -169,7 +177,44 @@ function normalizarProducto(
 
 
 /* =====================================
-   CATÁLOGO
+   CONVERTIR A LISTA
+===================================== */
+
+function convertirALista(valor) {
+
+    if (Array.isArray(valor)) {
+        return valor;
+    }
+
+    if (!valor) {
+        return [];
+    }
+
+    if (typeof valor === "string") {
+
+        try {
+
+            const convertido =
+                JSON.parse(valor);
+
+            if (Array.isArray(convertido)) {
+                return convertido;
+            }
+
+        } catch (error) {
+
+            return [valor];
+
+        }
+
+    }
+
+    return [];
+}
+
+
+/* =====================================
+   RENDERIZAR CATÁLOGO
 ===================================== */
 
 function renderizarCatalogo() {
@@ -178,14 +223,11 @@ function renderizarCatalogo() {
 
 
     productos.forEach(
-        (
-            producto,
-            indice
-        ) => {
+        (producto, indice) => {
 
             if (
-                producto.imagenes
-                    .length === 0
+                !producto.imagenes ||
+                producto.imagenes.length === 0
             ) {
                 return;
             }
@@ -197,15 +239,24 @@ function renderizarCatalogo() {
                 );
 
 
+            publicacion.type =
+                "button";
+
+
             publicacion.className =
                 "publicacion";
 
 
-            publicacion.innerHTML = `
+            publicacion.setAttribute(
+                "aria-label",
+                `Abrir ${producto.titulo}`
+            );
 
+
+            publicacion.innerHTML = `
                 <img
                     src="${producto.imagenes[0]}"
-                    alt="${producto.titulo}"
+                    alt="${escaparHTML(producto.titulo)}"
                     loading="lazy"
                 >
 
@@ -236,17 +287,16 @@ function renderizarCatalogo() {
 
 
 /* =====================================
-   ABRIR
+   ABRIR PRODUCTO
 ===================================== */
 
-function abrirPublicacion(
-    indice
-) {
+function abrirPublicacion(indice) {
 
     productoActual =
         indice;
 
-    fotoActual = 0;
+    fotoActual =
+        0;
 
 
     const producto =
@@ -288,13 +338,14 @@ function abrirPublicacion(
         "hidden";
 
 
-    modal.scrollTop = 0;
+    modal.scrollTop =
+        0;
 
 }
 
 
 /* =====================================
-   CERRAR
+   CERRAR PRODUCTO
 ===================================== */
 
 function cerrarPublicacion() {
@@ -313,35 +364,32 @@ function cerrarPublicacion() {
    ETIQUETAS
 ===================================== */
 
-function renderizarEtiquetas(
-    lista
-) {
+function renderizarEtiquetas(lista) {
 
     etiquetasProducto.innerHTML =
         "";
 
 
     lista.forEach(
-        etiqueta => {
+        (etiqueta) => {
 
-            const span =
+            const elemento =
                 document.createElement(
                     "span"
                 );
 
 
-            span.className =
+            elemento.className =
                 "etiqueta";
 
 
-            span.textContent =
+            elemento.textContent =
                 etiqueta;
 
 
-            etiquetasProducto
-                .appendChild(
-                    span
-                );
+            etiquetasProducto.appendChild(
+                elemento
+            );
 
         }
     );
@@ -350,7 +398,7 @@ function renderizarEtiquetas(
 
 
 /* =====================================
-   IMAGEN
+   IMAGEN ACTUAL
 ===================================== */
 
 function actualizarImagen() {
@@ -359,6 +407,13 @@ function actualizarImagen() {
         productos[
             productoActual
         ];
+
+
+    if (
+        producto.imagenes.length === 0
+    ) {
+        return;
+    }
 
 
     imagenGrande.src =
@@ -373,11 +428,9 @@ function actualizarImagen() {
 
     actualizarIndicadores();
 
-
     actualizarWhatsapp(
         producto
     );
-
 
     actualizarFlechas();
 
@@ -385,7 +438,7 @@ function actualizarImagen() {
 
 
 /* =====================================
-   SIGUIENTE
+   SIGUIENTE FOTO
 ===================================== */
 
 function fotoSiguiente() {
@@ -398,8 +451,7 @@ function fotoSiguiente() {
 
     if (
         fotoActual <
-        producto.imagenes
-            .length - 1
+        producto.imagenes.length - 1
     ) {
 
         fotoActual++;
@@ -412,7 +464,7 @@ function fotoSiguiente() {
 
 
 /* =====================================
-   ANTERIOR
+   FOTO ANTERIOR
 ===================================== */
 
 function fotoAnterior() {
@@ -442,35 +494,44 @@ function actualizarFlechas() {
         ];
 
 
-    const izquierda =
-        document.querySelector(
-            ".flecha-izquierda"
-        );
+    if (
+        !flechaIzquierda ||
+        !flechaDerecha
+    ) {
+        return;
+    }
 
 
-    const derecha =
-        document.querySelector(
-            ".flecha-derecha"
-        );
-
-
-    izquierda.style.opacity =
+    flechaIzquierda.style.opacity =
         fotoActual === 0
             ? "0.3"
             : "1";
 
 
-    derecha.style.opacity =
+    flechaDerecha.style.opacity =
         fotoActual ===
         producto.imagenes.length - 1
             ? "0.3"
             : "1";
 
+
+    flechaIzquierda.style.pointerEvents =
+        fotoActual === 0
+            ? "none"
+            : "auto";
+
+
+    flechaDerecha.style.pointerEvents =
+        fotoActual ===
+        producto.imagenes.length - 1
+            ? "none"
+            : "auto";
+
 }
 
 
 /* =====================================
-   PUNTOS
+   INDICADORES
 ===================================== */
 
 function crearIndicadores() {
@@ -494,8 +555,18 @@ function crearIndicadores() {
                 );
 
 
+            punto.type =
+                "button";
+
+
             punto.className =
                 "punto";
+
+
+            punto.setAttribute(
+                "aria-label",
+                `Ver foto ${indice + 1}`
+            );
 
 
             punto.addEventListener(
@@ -526,20 +597,20 @@ function crearIndicadores() {
 }
 
 
+/* =====================================
+   ACTUALIZAR INDICADORES
+===================================== */
+
 function actualizarIndicadores() {
 
     const puntos =
-        indicadores
-            .querySelectorAll(
-                ".punto"
-            );
+        indicadores.querySelectorAll(
+            ".punto"
+        );
 
 
     puntos.forEach(
-        (
-            punto,
-            indice
-        ) => {
+        (punto, indice) => {
 
             punto.classList.toggle(
                 "activo",
@@ -556,9 +627,7 @@ function actualizarIndicadores() {
    WHATSAPP
 ===================================== */
 
-function actualizarWhatsapp(
-    producto
-) {
+function actualizarWhatsapp(producto) {
 
     const fotoVisible =
         producto.imagenes[
@@ -596,120 +665,139 @@ ${fotoVisible}
    SWIPE
 ===================================== */
 
-carrusel.addEventListener(
-    "touchstart",
+if (carrusel) {
 
-    evento => {
+    carrusel.addEventListener(
+        "touchstart",
 
-        inicioX =
-            evento.touches[0]
-                .clientX;
+        (evento) => {
 
-    },
+            inicioX =
+                evento.touches[0]
+                    .clientX;
 
-    {
-        passive: true
+        },
+
+        {
+            passive: true
+        }
+    );
+
+
+    carrusel.addEventListener(
+        "touchend",
+
+        (evento) => {
+
+            finX =
+                evento.changedTouches[0]
+                    .clientX;
+
+
+            detectarDeslizamiento();
+
+        },
+
+        {
+            passive: true
+        }
+    );
+
+}
+
+
+/* =====================================
+   DETECTAR SWIPE
+===================================== */
+
+function detectarDeslizamiento() {
+
+    const distancia =
+        finX - inicioX;
+
+
+    const minimo =
+        45;
+
+
+    if (
+        Math.abs(distancia) <
+        minimo
+    ) {
+        return;
     }
-);
 
 
-carrusel.addEventListener(
-    "touchend",
+    if (
+        distancia < 0
+    ) {
 
-    evento => {
+        fotoSiguiente();
 
-        finX =
-            evento.changedTouches[0]
-                .clientX;
+    } else {
+
+        fotoAnterior();
+
+    }
+
+}
 
 
-        const distancia =
-            finX - inicioX;
+/* =====================================
+   TECLADO
+===================================== */
 
+document.addEventListener(
+    "keydown",
+
+    (evento) => {
 
         if (
-            Math.abs(distancia)
-            < 45
+            modal.style.display !==
+            "block"
         ) {
             return;
         }
 
 
         if (
-            distancia < 0
+            evento.key ===
+            "Escape"
+        ) {
+
+            cerrarPublicacion();
+
+        }
+
+
+        if (
+            evento.key ===
+            "ArrowRight"
         ) {
 
             fotoSiguiente();
 
-        } else {
+        }
+
+
+        if (
+            evento.key ===
+            "ArrowLeft"
+        ) {
 
             fotoAnterior();
 
         }
 
-    },
-
-    {
-        passive: true
     }
 );
 
 
 /* =====================================
-   UTILIDADES
+   PRECIO
 ===================================== */
 
-function convertirALista(
-    valor
-) {
-
-    if (
-        Array.isArray(valor)
-    ) {
-        return valor;
-    }
-
-
-    if (!valor) {
-        return [];
-    }
-
-
-    if (
-        typeof valor ===
-        "string"
-    ) {
-
-        try {
-
-            const convertido =
-                JSON.parse(
-                    valor
-                );
-
-
-            return Array.isArray(
-                convertido
-            )
-                ? convertido
-                : [];
-
-        } catch {
-
-            return [valor];
-
-        }
-
-    }
-
-
-    return [];
-}
-
-
-function formatearPrecio(
-    precio
-) {
+function formatearPrecio(precio) {
 
     return new Intl.NumberFormat(
         "es-CO",
@@ -721,5 +809,38 @@ function formatearPrecio(
     ).format(
         Number(precio)
     );
+
+}
+
+
+/* =====================================
+   ESCAPAR HTML
+===================================== */
+
+function escaparHTML(texto) {
+
+    return String(
+        texto || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }

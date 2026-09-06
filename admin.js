@@ -1,3 +1,7 @@
+/* =====================================
+   ELEMENTOS DEL HTML
+===================================== */
+
 const loginPanel =
     document.getElementById("loginPanel");
 
@@ -28,6 +32,16 @@ const fotosInput =
 const cancelarEdicion =
     document.getElementById("cancelarEdicion");
 
+const guardarProducto =
+    document.getElementById("guardarProducto");
+
+const cerrarSesion =
+    document.getElementById("cerrarSesion");
+
+
+/* =====================================
+   VARIABLES
+===================================== */
 
 let imagenesActuales = [];
 
@@ -48,54 +62,50 @@ comprobarSesion();
 ===================================== */
 
 document
-    .querySelectorAll(
-        ".opcion-categoria"
-    )
-    .forEach(
-        boton => {
+    .querySelectorAll(".opcion-categoria")
+    .forEach((boton) => {
 
-            boton.addEventListener(
-                "click",
-                () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-                    const valor =
-                        boton.dataset.valor;
+                const valor =
+                    boton.dataset.valor;
 
 
-                    if (
-                        categoriasSeleccionadas
-                            .includes(valor)
-                    ) {
+                if (
+                    categoriasSeleccionadas.includes(
+                        valor
+                    )
+                ) {
 
-                        categoriasSeleccionadas =
-                            categoriasSeleccionadas
-                                .filter(
-                                    categoria =>
-                                        categoria !== valor
-                                );
-
-
-                        boton.classList.remove(
-                            "seleccionada"
+                    categoriasSeleccionadas =
+                        categoriasSeleccionadas.filter(
+                            (categoria) =>
+                                categoria !== valor
                         );
 
-                    } else {
 
-                        categoriasSeleccionadas
-                            .push(valor);
+                    boton.classList.remove(
+                        "seleccionada"
+                    );
+
+                } else {
+
+                    categoriasSeleccionadas.push(
+                        valor
+                    );
 
 
-                        boton.classList.add(
-                            "seleccionada"
-                        );
-
-                    }
-
+                    boton.classList.add(
+                        "seleccionada"
+                    );
                 }
-            );
 
-        }
-    );
+            }
+        );
+
+    });
 
 
 /* =====================================
@@ -103,54 +113,64 @@ document
 ===================================== */
 
 document
-    .querySelectorAll(
-        ".opcion-empaque"
-    )
-    .forEach(
-        boton => {
+    .querySelectorAll(".opcion-empaque")
+    .forEach((boton) => {
 
-            boton.addEventListener(
-                "click",
-                () => {
+        boton.addEventListener(
+            "click",
+            () => {
 
-                    document
-                        .querySelectorAll(
-                            ".opcion-empaque"
-                        )
-                        .forEach(
-                            otro =>
-                                otro.classList.remove(
-                                    "seleccionada"
-                                )
-                        );
+                document
+                    .querySelectorAll(
+                        ".opcion-empaque"
+                    )
+                    .forEach(
+                        (otroBoton) => {
 
+                            otroBoton.classList.remove(
+                                "seleccionada"
+                            );
 
-                    boton.classList.add(
-                        "seleccionada"
+                        }
                     );
 
 
-                    empaqueSeleccionado =
-                        boton.dataset.valor;
+                boton.classList.add(
+                    "seleccionada"
+                );
 
-                }
-            );
 
-        }
-    );
+                empaqueSeleccionado =
+                    boton.dataset.valor;
+
+            }
+        );
+
+    });
 
 
 /* =====================================
-   SESIÓN
+   COMPROBAR SESIÓN
 ===================================== */
 
 async function comprobarSesion() {
 
     const {
-        data: { session }
+        data: { session },
+        error
     } =
         await supabaseClient.auth
             .getSession();
+
+
+    if (error) {
+
+        console.error(
+            "Error comprobando sesión:",
+            error
+        );
+
+    }
 
 
     if (session) {
@@ -167,31 +187,27 @@ async function comprobarSesion() {
 
 
 /* =====================================
-   LOGIN
+   INICIAR SESIÓN
 ===================================== */
 
 loginForm.addEventListener(
     "submit",
 
-    async evento => {
+    async (evento) => {
 
         evento.preventDefault();
 
 
         const email =
             document
-                .getElementById(
-                    "correo"
-                )
+                .getElementById("correo")
                 .value
                 .trim();
 
 
         const password =
             document
-                .getElementById(
-                    "contrasena"
-                )
+                .getElementById("contrasena")
                 .value;
 
 
@@ -211,17 +227,25 @@ loginForm.addEventListener(
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Error de inicio de sesión:",
+                error
+            );
+
 
             mensajeLogin.textContent =
                 "Correo o contraseña incorrectos.";
 
             return;
-
         }
 
 
-        mensajeLogin.textContent = "";
+        mensajeLogin.textContent =
+            "";
+
+
+        loginForm.reset();
+
 
         mostrarAdmin();
 
@@ -233,35 +257,49 @@ loginForm.addEventListener(
    CERRAR SESIÓN
 ===================================== */
 
-document
-    .getElementById(
-        "cerrarSesion"
-    )
-    .addEventListener(
-        "click",
+cerrarSesion.addEventListener(
+    "click",
 
-        async () => {
+    async () => {
 
+        const {
+            error
+        } =
             await supabaseClient.auth
                 .signOut();
 
 
-            mostrarLogin();
+        if (error) {
 
+            console.error(
+                "Error cerrando sesión:",
+                error
+            );
+
+            return;
         }
-    );
 
+
+        mostrarLogin();
+
+    }
+);
+
+
+/* =====================================
+   MOSTRAR ADMINISTRADOR
+===================================== */
 
 function mostrarAdmin() {
 
-    loginPanel
-        .classList
-        .add("oculto");
+    loginPanel.classList.add(
+        "oculto"
+    );
 
 
-    adminPanel
-        .classList
-        .remove("oculto");
+    adminPanel.classList.remove(
+        "oculto"
+    );
 
 
     cargarProductos();
@@ -269,16 +307,20 @@ function mostrarAdmin() {
 }
 
 
+/* =====================================
+   MOSTRAR LOGIN
+===================================== */
+
 function mostrarLogin() {
 
-    adminPanel
-        .classList
-        .add("oculto");
+    adminPanel.classList.add(
+        "oculto"
+    );
 
 
-    loginPanel
-        .classList
-        .remove("oculto");
+    loginPanel.classList.remove(
+        "oculto"
+    );
 
 }
 
@@ -298,13 +340,30 @@ fotosInput.addEventListener(
 );
 
 
+/* =====================================
+   MOSTRAR TODAS LAS FOTOS
+===================================== */
+
 function mostrarPreviewCompleto() {
 
-    previewFotos.innerHTML = "";
+    previewFotos.innerHTML =
+        "";
 
+
+    /* FOTOS QUE YA EXISTEN */
 
     imagenesActuales.forEach(
-        url => {
+        (url) => {
+
+            const contenedor =
+                document.createElement(
+                    "div"
+                );
+
+
+            contenedor.className =
+                "preview-foto";
+
 
             const img =
                 document.createElement(
@@ -312,16 +371,28 @@ function mostrarPreviewCompleto() {
                 );
 
 
-            img.src = url;
+            img.src =
+                url;
+
+
+            img.alt =
+                "Foto del producto";
+
+
+            contenedor.appendChild(
+                img
+            );
 
 
             previewFotos.appendChild(
-                img
+                contenedor
             );
 
         }
     );
 
+
+    /* FOTOS NUEVAS */
 
     const archivos =
         Array.from(
@@ -330,12 +401,22 @@ function mostrarPreviewCompleto() {
 
 
     archivos.forEach(
-        archivo => {
+        (archivo) => {
 
             const url =
                 URL.createObjectURL(
                     archivo
                 );
+
+
+            const contenedor =
+                document.createElement(
+                    "div"
+                );
+
+
+            contenedor.className =
+                "preview-foto";
 
 
             const img =
@@ -344,11 +425,21 @@ function mostrarPreviewCompleto() {
                 );
 
 
-            img.src = url;
+            img.src =
+                url;
+
+
+            img.alt =
+                "Nueva foto";
+
+
+            contenedor.appendChild(
+                img
+            );
 
 
             previewFotos.appendChild(
-                img
+                contenedor
             );
 
         }
@@ -364,7 +455,7 @@ function mostrarPreviewCompleto() {
 productoForm.addEventListener(
     "submit",
 
-    async evento => {
+    async (evento) => {
 
         evento.preventDefault();
 
@@ -372,6 +463,8 @@ productoForm.addEventListener(
         mensajeProducto.textContent =
             "Guardando producto...";
 
+
+        /* VALIDAR CATEGORÍA */
 
         if (
             categoriasSeleccionadas.length === 0
@@ -383,6 +476,8 @@ productoForm.addEventListener(
             return;
         }
 
+
+        /* VALIDAR EMPAQUE */
 
         if (!empaqueSeleccionado) {
 
@@ -440,6 +535,8 @@ productoForm.addEventListener(
             );
 
 
+        /* SUBIR FOTOS NUEVAS */
+
         if (
             nuevasFotos.length > 0
         ) {
@@ -467,16 +564,20 @@ productoForm.addEventListener(
         }
 
 
+        /* AL MENOS UNA FOTO */
+
         if (
             urlsImagenes.length === 0
         ) {
 
             mensajeProducto.textContent =
-                "Agrega al menos una fotografía.";
+                "Debes agregar al menos una fotografía.";
 
             return;
         }
 
+
+        /* DATOS */
 
         const datos = {
 
@@ -501,6 +602,8 @@ productoForm.addEventListener(
         let error;
 
 
+        /* EDITAR PRODUCTO */
+
         if (productoId) {
 
             const resultado =
@@ -516,12 +619,19 @@ productoForm.addEventListener(
             error =
                 resultado.error;
 
-        } else {
+        }
+
+
+        /* CREAR PRODUCTO */
+
+        else {
 
             const resultado =
                 await supabaseClient
                     .from("productos")
-                    .insert(datos);
+                    .insert([
+                        datos
+                    ]);
 
 
             error =
@@ -532,7 +642,11 @@ productoForm.addEventListener(
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Error guardando producto:",
+                error
+            );
+
 
             mensajeProducto.textContent =
                 "No se pudo guardar el producto.";
@@ -542,26 +656,30 @@ productoForm.addEventListener(
 
 
         mensajeProducto.textContent =
-            "Producto guardado correctamente.";
+            productoId
+                ? "Producto actualizado correctamente."
+                : "Producto publicado correctamente.";
 
 
         limpiarFormulario();
 
-        cargarProductos();
+
+        await cargarProductos();
 
     }
 );
 
 
 /* =====================================
-   SUBIR FOTOS
+   SUBIR FOTOS A SUPABASE STORAGE
 ===================================== */
 
 async function subirFotos(
     archivos
 ) {
 
-    const urls = [];
+    const urls =
+        [];
 
 
     for (
@@ -572,7 +690,8 @@ async function subirFotos(
         const extension =
             archivo.name
                 .split(".")
-                .pop();
+                .pop()
+                .toLowerCase();
 
 
         const nombre =
@@ -584,22 +703,30 @@ async function subirFotos(
 
 
         const {
-            error
+            error: errorSubida
         } =
             await supabaseClient.storage
                 .from("productos")
                 .upload(
                     ruta,
-                    archivo
+                    archivo,
+                    {
+                        cacheControl:
+                            "3600",
+
+                        upsert:
+                            false
+                    }
                 );
 
 
-        if (error) {
+        if (errorSubida) {
 
             console.error(
                 "Error subiendo foto:",
-                error
+                errorSubida
             );
+
 
             return null;
         }
@@ -615,9 +742,16 @@ async function subirFotos(
                 );
 
 
-        urls.push(
+        if (
+            data &&
             data.publicUrl
-        );
+        ) {
+
+            urls.push(
+                data.publicUrl
+            );
+
+        }
 
     }
 
@@ -634,7 +768,7 @@ async function subirFotos(
 async function cargarProductos() {
 
     listaProductos.innerHTML =
-        "Cargando...";
+        "<p>Cargando productos...</p>";
 
 
     const {
@@ -660,16 +794,21 @@ async function cargarProductos() {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Error cargando productos:",
+            error
+        );
+
 
         listaProductos.innerHTML =
-            "No se pudieron cargar.";
+            "<p>No se pudieron cargar los productos.</p>";
 
         return;
     }
 
 
-    listaProductos.innerHTML = "";
+    listaProductos.innerHTML =
+        "";
 
 
     if (
@@ -678,14 +817,14 @@ async function cargarProductos() {
     ) {
 
         listaProductos.innerHTML =
-            "<p>No hay productos todavía.</p>";
+            "<p>No hay productos publicados todavía.</p>";
 
         return;
     }
 
 
     data.forEach(
-        producto => {
+        (producto) => {
 
             const imagenes =
                 convertirALista(
@@ -703,17 +842,23 @@ async function cargarProductos() {
                 "producto-admin";
 
 
+            const imagenPrincipal =
+                imagenes.length > 0
+                    ? imagenes[0]
+                    : "";
+
+
             item.innerHTML = `
 
                 <img
-                    src="${imagenes[0] || ""}"
-                    alt="${producto.titulo}"
+                    src="${imagenPrincipal}"
+                    alt="${escaparHTML(producto.titulo)}"
                 >
 
                 <div>
 
                     <h3>
-                        ${producto.titulo}
+                        ${escaparHTML(producto.titulo)}
                     </h3>
 
                     <p class="precio">
@@ -723,7 +868,13 @@ async function cargarProductos() {
                     </p>
 
                     <p class="empaque-mini">
-                        ${producto.empaque || ""}
+                        ${
+                            producto.empaque
+                                ? escaparHTML(
+                                    producto.empaque
+                                )
+                                : "Sin empaque"
+                        }
                     </p>
 
                     <div class="acciones-producto">
@@ -754,6 +905,7 @@ async function cargarProductos() {
                 )
                 .addEventListener(
                     "click",
+
                     () =>
                         editarProducto(
                             producto
@@ -767,6 +919,7 @@ async function cargarProductos() {
                 )
                 .addEventListener(
                     "click",
+
                     () =>
                         eliminarProducto(
                             producto
@@ -774,10 +927,9 @@ async function cargarProductos() {
                 );
 
 
-            listaProductos
-                .appendChild(
-                    item
-                );
+            listaProductos.appendChild(
+                item
+            );
 
         }
     );
@@ -786,7 +938,7 @@ async function cargarProductos() {
 
 
 /* =====================================
-   EDITAR
+   EDITAR PRODUCTO
 ===================================== */
 
 function editarProducto(
@@ -825,6 +977,8 @@ function editarProducto(
         producto.orden || 0;
 
 
+    /* CATEGORÍAS */
+
     categoriasSeleccionadas =
         convertirALista(
             producto.etiquetas
@@ -836,19 +990,25 @@ function editarProducto(
             ".opcion-categoria"
         )
         .forEach(
-            boton => {
+            (boton) => {
 
-                boton.classList.toggle(
-                    "seleccionada",
+                const activa =
                     categoriasSeleccionadas
                         .includes(
                             boton.dataset.valor
-                        )
+                        );
+
+
+                boton.classList.toggle(
+                    "seleccionada",
+                    activa
                 );
 
             }
         );
 
+
+    /* EMPAQUE */
 
     empaqueSeleccionado =
         producto.empaque || "";
@@ -859,17 +1019,23 @@ function editarProducto(
             ".opcion-empaque"
         )
         .forEach(
-            boton => {
+            (boton) => {
+
+                const activo =
+                    boton.dataset.valor ===
+                    empaqueSeleccionado;
+
 
                 boton.classList.toggle(
                     "seleccionada",
-                    boton.dataset.valor ===
-                    empaqueSeleccionado
+                    activo
                 );
 
             }
         );
 
+
+    /* IMÁGENES */
 
     imagenesActuales =
         convertirALista(
@@ -877,20 +1043,24 @@ function editarProducto(
         );
 
 
+    fotosInput.value =
+        "";
+
+
     mostrarPreviewCompleto();
 
 
-    document
-        .getElementById(
-            "guardarProducto"
-        )
-        .textContent =
+    guardarProducto.textContent =
         "Guardar cambios";
 
 
-    cancelarEdicion
-        .classList
-        .remove("oculto");
+    cancelarEdicion.classList.remove(
+        "oculto"
+    );
+
+
+    mensajeProducto.textContent =
+        "Editando producto.";
 
 
     window.scrollTo({
@@ -902,7 +1072,7 @@ function editarProducto(
 
 
 /* =====================================
-   ELIMINAR
+   ELIMINAR PRODUCTO
 ===================================== */
 
 async function eliminarProducto(
@@ -911,7 +1081,7 @@ async function eliminarProducto(
 
     const confirmar =
         confirm(
-            `¿Eliminar "${producto.titulo}"?`
+            `¿Seguro que quieres eliminar "${producto.titulo}"?`
         );
 
 
@@ -934,17 +1104,21 @@ async function eliminarProducto(
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Error eliminando producto:",
+            error
+        );
+
 
         alert(
-            "No se pudo eliminar."
+            "No se pudo eliminar el producto."
         );
 
         return;
     }
 
 
-    cargarProductos();
+    await cargarProductos();
 
 }
 
@@ -955,12 +1129,20 @@ async function eliminarProducto(
 
 cancelarEdicion.addEventListener(
     "click",
-    limpiarFormulario
+
+    () => {
+
+        limpiarFormulario();
+
+        mensajeProducto.textContent =
+            "";
+
+    }
 );
 
 
 /* =====================================
-   LIMPIAR
+   LIMPIAR FORMULARIO
 ===================================== */
 
 function limpiarFormulario() {
@@ -972,56 +1154,70 @@ function limpiarFormulario() {
         .getElementById(
             "productoId"
         )
-        .value = "";
+        .value =
+        "";
 
 
     document
         .getElementById(
             "orden"
         )
-        .value = 0;
+        .value =
+        0;
 
 
-    categoriasSeleccionadas = [];
+    categoriasSeleccionadas =
+        [];
 
-    empaqueSeleccionado = "";
 
-    imagenesActuales = [];
+    empaqueSeleccionado =
+        "";
 
+
+    imagenesActuales =
+        [];
+
+
+    fotosInput.value =
+        "";
+
+
+    /* CORRECCIÓN IMPORTANTE:
+       TODO EN UNA MISMA LÍNEA
+    */
 
     document
         .querySelectorAll(
-            ".opcion-categoria,
-             .opcion-empaque"
+            ".opcion-categoria, .opcion-empaque"
         )
         .forEach(
-            boton =>
+            (boton) => {
+
                 boton.classList.remove(
                     "seleccionada"
-                )
+                );
+
+            }
         );
 
 
-    previewFotos.innerHTML = "";
+    previewFotos.innerHTML =
+        "";
 
 
-    document
-        .getElementById(
-            "guardarProducto"
-        )
-        .textContent =
+    guardarProducto.textContent =
         "Publicar producto";
 
 
-    cancelarEdicion
-        .classList
-        .add("oculto");
+    cancelarEdicion.classList.add(
+        "oculto"
+    );
 
 }
 
 
 /* =====================================
-   UTILIDADES
+   CONVERTIR JSON A ARRAY
 ===================================== */
 
 function convertirALista(
@@ -1031,11 +1227,13 @@ function convertirALista(
     if (
         Array.isArray(valor)
     ) {
+
         return valor;
     }
 
 
     if (!valor) {
+
         return [];
     }
 
@@ -1048,27 +1246,39 @@ function convertirALista(
         try {
 
             const convertido =
-                JSON.parse(valor);
+                JSON.parse(
+                    valor
+                );
 
 
-            return Array.isArray(
-                convertido
-            )
-                ? convertido
-                : [];
+            if (
+                Array.isArray(
+                    convertido
+                )
+            ) {
 
-        } catch {
+                return convertido;
+            }
 
-            return [valor];
 
+        } catch (error) {
+
+            return [
+                valor
+            ];
         }
 
     }
 
 
     return [];
+
 }
 
+
+/* =====================================
+   FORMATEAR PRECIO
+===================================== */
 
 function formatearPrecio(
     precio
@@ -1077,12 +1287,52 @@ function formatearPrecio(
     return new Intl.NumberFormat(
         "es-CO",
         {
-            style: "currency",
-            currency: "COP",
-            maximumFractionDigits: 0
+            style:
+                "currency",
+
+            currency:
+                "COP",
+
+            maximumFractionDigits:
+                0
         }
     ).format(
         Number(precio)
     );
+
+}
+
+
+/* =====================================
+   ESCAPAR TEXTO HTML
+===================================== */
+
+function escaparHTML(
+    texto
+) {
+
+    return String(
+        texto || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }

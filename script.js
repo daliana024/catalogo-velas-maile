@@ -109,7 +109,7 @@ async function cargarProductos() {
 
     productos =
         (data || [])
-        .map(normalizarProducto);
+            .map(normalizarProducto);
 
 
     if (productos.length === 0) {
@@ -129,7 +129,7 @@ async function cargarProductos() {
 
 
 /* =====================================
-   NORMALIZAR DATOS
+   NORMALIZAR PRODUCTO
 ===================================== */
 
 function normalizarProducto(producto) {
@@ -173,13 +173,11 @@ function normalizarProducto(producto) {
 function convertirALista(valor) {
 
     if (Array.isArray(valor)) {
-
         return valor;
     }
 
 
     if (!valor) {
-
         return [];
     }
 
@@ -192,20 +190,14 @@ function convertirALista(valor) {
                 JSON.parse(valor);
 
 
-            if (
-                Array.isArray(
-                    convertido
-                )
-            ) {
-
+            if (Array.isArray(convertido)) {
                 return convertido;
             }
 
         } catch (error) {
 
-            return [
-                valor
-            ];
+            return [valor];
+
         }
 
     }
@@ -216,7 +208,7 @@ function convertirALista(valor) {
 
 
 /* =====================================
-   MOSTRAR CATÁLOGO
+   RENDERIZAR CATÁLOGO
 ===================================== */
 
 function renderizarCatalogo() {
@@ -230,7 +222,6 @@ function renderizarCatalogo() {
             if (
                 producto.imagenes.length === 0
             ) {
-
                 return;
             }
 
@@ -254,11 +245,6 @@ function renderizarCatalogo() {
                 `Abrir ${producto.titulo}`
             );
 
-
-            /*
-               SOLO LA PRIMERA FOTO
-               SE USA COMO PORTADA
-            */
 
             publicacion.innerHTML = `
 
@@ -307,9 +293,7 @@ function abrirPublicacion(indice) {
 
 
     const producto =
-        productos[
-            productoActual
-        ];
+        productos[productoActual];
 
 
     tituloProducto.textContent =
@@ -335,11 +319,6 @@ function abrirPublicacion(indice) {
 
 
     actualizarImagen();
-
-
-    actualizarBotonWhatsapp(
-        producto
-    );
 
 
     modal.style.display =
@@ -409,21 +388,18 @@ function renderizarEtiquetas(lista) {
 
 
 /* =====================================
-   ACTUALIZAR FOTO
+   ACTUALIZAR IMAGEN
 ===================================== */
 
 function actualizarImagen() {
 
     const producto =
-        productos[
-            productoActual
-        ];
+        productos[productoActual];
 
 
     if (
         producto.imagenes.length === 0
     ) {
-
         return;
     }
 
@@ -456,6 +432,17 @@ function actualizarImagen() {
 
     actualizarIndicadores();
 
+
+    /*
+       MUY IMPORTANTE:
+       Actualiza el enlace de WhatsApp
+       con la foto visible actualmente.
+    */
+
+    actualizarBotonWhatsapp(
+        producto
+    );
+
 }
 
 
@@ -466,16 +453,8 @@ function actualizarImagen() {
 function fotoSiguiente() {
 
     const producto =
-        productos[
-            productoActual
-        ];
+        productos[productoActual];
 
-
-    /*
-       IMPORTANTE:
-       SOLO AVANZA ENTRE LAS FOTOS
-       DE ESTE MISMO PRODUCTO.
-    */
 
     if (
         fotoActual <
@@ -519,9 +498,7 @@ function crearIndicadores() {
 
 
     const producto =
-        productos[
-            productoActual
-        ];
+        productos[productoActual];
 
 
     producto.imagenes.forEach(
@@ -575,7 +552,7 @@ function crearIndicadores() {
 
 
 /* =====================================
-   ACTUALIZAR PUNTOS
+   ACTUALIZAR INDICADORES
 ===================================== */
 
 function actualizarIndicadores() {
@@ -602,14 +579,29 @@ function actualizarIndicadores() {
 
 /* =====================================
    WHATSAPP
+   ENVÍA LA FOTO QUE SE ESTÁ VIENDO
 ===================================== */
 
-function actualizarBotonWhatsapp(
-    producto
-) {
+function actualizarBotonWhatsapp(producto) {
+
+    const fotoVisible =
+        producto.imagenes[
+            fotoActual
+        ];
+
 
     const mensaje =
-        `Hola, vi el catálogo de Velas Maile y estoy interesada en "${producto.titulo}" por ${formatearPrecio(producto.precio)}. ¿Me puedes dar más información?`;
+`Hola, vi el catálogo de Velas Maile y estoy interesada en:
+
+🕯️ ${producto.titulo}
+
+💰 ${formatearPrecio(producto.precio)}
+
+Esta es la vela que estoy viendo:
+
+${fotoVisible}
+
+¿Me puedes dar más información?`;
 
 
     botonWhatsapp.href =
@@ -622,7 +614,7 @@ function actualizarBotonWhatsapp(
 
 
 /* =====================================
-   DESLIZAR CON EL DEDO
+   SWIPE CON EL DEDO
 ===================================== */
 
 carrusel.addEventListener(
@@ -680,15 +672,9 @@ function detectarDeslizamiento() {
         Math.abs(distancia) <
         minimo
     ) {
-
         return;
     }
 
-
-    /*
-       IZQUIERDA =
-       SIGUIENTE FOTO DE LA MISMA VELA
-    */
 
     if (
         distancia < 0
@@ -696,15 +682,7 @@ function detectarDeslizamiento() {
 
         fotoSiguiente();
 
-    }
-
-
-    /*
-       DERECHA =
-       FOTO ANTERIOR DE LA MISMA VELA
-    */
-
-    else {
+    } else {
 
         fotoAnterior();
 
@@ -726,7 +704,6 @@ document.addEventListener(
             modal.style.display !==
             "block"
         ) {
-
             return;
         }
 
@@ -765,14 +742,13 @@ document.addEventListener(
 
 
 /* =====================================
-   FORMATEAR PRECIO COLOMBIANO
+   FORMATEAR PRECIO
 ===================================== */
 
 function formatearPrecio(precio) {
 
     return new Intl.NumberFormat(
         "es-CO",
-
         {
             style:
                 "currency",
@@ -783,7 +759,6 @@ function formatearPrecio(precio) {
             maximumFractionDigits:
                 0
         }
-
     ).format(
         Number(precio)
     );
@@ -792,7 +767,7 @@ function formatearPrecio(precio) {
 
 
 /* =====================================
-   SEGURIDAD TEXTO HTML
+   ESCAPAR HTML
 ===================================== */
 
 function escaparHTML(texto) {

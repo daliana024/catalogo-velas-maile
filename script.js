@@ -44,6 +44,11 @@ cargarProductos();
 
 async function cargarProductos() {
 
+    if (!catalogo) {
+        console.error("No se encontró el elemento #catalogo.");
+        return;
+    }
+
     catalogo.innerHTML = `
         <div class="mensaje-catalogo">
             Cargando catálogo...
@@ -112,16 +117,6 @@ function normalizarProducto(producto) {
         imagenes:
             convertirALista(producto.imagenes),
 
-        /*
-           COMPATIBILIDAD:
-
-           Si existe la columna "empaque",
-           la utiliza.
-
-           Si el proyecto todavía está
-           guardando el empaque en
-           "descripcion", también funciona.
-        */
         empaque:
             producto.empaque ||
             producto.descripcion ||
@@ -188,10 +183,10 @@ function renderizarCatalogo() {
 
         productosMostrados++;
 
-        const publicacion = document.createElement("button");
+        const publicacion =
+            document.createElement("button");
 
         publicacion.type = "button";
-
         publicacion.className = "publicacion";
 
         publicacion.setAttribute(
@@ -213,7 +208,9 @@ function renderizarCatalogo() {
 
         publicacion.addEventListener(
             "click",
-            () => abrirPublicacion(indice)
+            function () {
+                abrirPublicacion(indice);
+            }
         );
 
         catalogo.appendChild(publicacion);
@@ -237,88 +234,162 @@ function renderizarCatalogo() {
 
 function abrirPublicacion(indice) {
 
+    const producto = productos[indice];
+
+    if (!producto) {
+        console.error("Producto no encontrado:", indice);
+        return;
+    }
+
     productoActual = indice;
     fotoActual = 0;
 
-    const producto = productos[productoActual];
 
-    tituloProducto.textContent =
-        producto.titulo;
+    /* INFORMACIÓN */
 
-    precioProducto.textContent =
-        formatearPrecio(producto.precio);
+    if (tituloProducto) {
+        tituloProducto.textContent =
+            producto.titulo;
+    }
 
-    empaqueProducto.textContent =
-        producto.empaque;
+    if (precioProducto) {
+        precioProducto.textContent =
+            formatearPrecio(producto.precio);
+    }
+
+    if (empaqueProducto) {
+        empaqueProducto.textContent =
+            producto.empaque;
+    }
+
+
+    /* ETIQUETAS */
 
     renderizarEtiquetas(
         producto.etiquetas
     );
 
+
+    /* CARRUSEL */
+
     crearIndicadores();
 
     actualizarImagen();
 
-    modal.style.display = "block";
 
-    document.body.style.overflow = "hidden";
+    /* =====================================
+       ABRIR PRIMERO EL MODAL
+    ===================================== */
 
-    modal.scrollTop = 0;
+    if (modal) {
+
+        modal.style.display =
+            "block";
+
+        modal.scrollTop =
+            0;
+    }
+
+    document.body.style.overflow =
+        "hidden";
 
 
     /* =====================================
-       HISTORIAL PARA GESTO ATRÁS
+       HISTORIAL SEGURO
     ===================================== */
 
     if (!modalTieneHistorial) {
 
-        history.pushState(
-            {
-                modalVelasMaile: true,
-                producto: indice
-            },
-            "",
-            window.location.href
-        );
+        try {
 
-        modalTieneHistorial = true;
+            history.pushState(
+                {
+                    modalVelasMaile: true,
+                    producto: indice
+                },
+                "",
+                window.location.href
+            );
+
+            modalTieneHistorial =
+                true;
+
+        } catch (error) {
+
+            /*
+               Si estás abriendo la página
+               como file:///C:/...
+               algunos navegadores pueden
+               bloquear pushState.
+
+               El producto ya quedó abierto,
+               así que simplemente continuamos.
+            */
+
+            console.warn(
+                "Historial no disponible en este modo:",
+                error
+            );
+
+            modalTieneHistorial =
+                false;
+        }
     }
 }
 
 
 /* =====================================
-   CERRAR PUBLICACIÓN VISUALMENTE
+   CERRAR MODAL VISUALMENTE
 ===================================== */
 
 function cerrarModalVisualmente() {
 
-    modal.style.display = "none";
+    if (modal) {
+        modal.style.display =
+            "none";
+    }
 
-    document.body.style.overflow = "";
+    document.body.style.overflow =
+        "";
 
-    modalTieneHistorial = false;
+    modalTieneHistorial =
+        false;
 }
 
 
 /* =====================================
-   BOTÓN VOLVER
+   VOLVER AL CATÁLOGO
 ===================================== */
 
 function volverCatalogo() {
 
+    if (!modal) {
+        return;
+    }
+
     if (
-        modal.style.display === "block" &&
-        modalTieneHistorial
+        modal.style.display !== "block"
     ) {
+        return;
+    }
+
+
+    if (modalTieneHistorial) {
 
         /*
-           Esto genera un popstate.
-           El popstate cerrará el modal.
+           Esto dispara el evento popstate.
+           Allí se cierra el producto.
         */
 
         history.back();
 
     } else {
+
+        /*
+           Si estás usando file:/// o
+           el historial no está disponible,
+           simplemente cerramos el modal.
+        */
 
         cerrarModalVisualmente();
     }
@@ -326,14 +397,17 @@ function volverCatalogo() {
 
 
 /* =====================================
-   GESTO / BOTÓN ATRÁS DEL NAVEGADOR
+   GESTO ATRÁS / BOTÓN DEL NAVEGADOR
 ===================================== */
 
 window.addEventListener(
     "popstate",
-    () => {
+    function () {
 
-        if (modal.style.display === "block") {
+        if (
+            modal &&
+            modal.style.display === "block"
+        ) {
 
             cerrarModalVisualmente();
         }
@@ -347,7 +421,18 @@ window.addEventListener(
 
 function renderizarEtiquetas(lista) {
 
+    if (!etiquetasProducto) {
+        return;
+    }
+
     etiquetasProducto.innerHTML = "";
+
+    if (
+        !Array.isArray(lista) ||
+        lista.length === 0
+    ) {
+        return;
+    }
 
     lista.forEach((etiqueta) => {
 
@@ -378,16 +463,30 @@ function actualizarImagen() {
 
     if (
         !producto ||
+        !producto.imagenes ||
         producto.imagenes.length === 0
     ) {
         return;
     }
 
-    imagenGrande.src =
-        producto.imagenes[fotoActual];
 
-    imagenGrande.alt =
-        `${producto.titulo} - Foto ${fotoActual + 1}`;
+    if (
+        fotoActual < 0 ||
+        fotoActual >= producto.imagenes.length
+    ) {
+        fotoActual = 0;
+    }
+
+
+    if (imagenGrande) {
+
+        imagenGrande.src =
+            producto.imagenes[fotoActual];
+
+        imagenGrande.alt =
+            `${producto.titulo} - Foto ${fotoActual + 1}`;
+    }
+
 
     actualizarIndicadores();
 
@@ -438,7 +537,7 @@ function fotoAnterior() {
 
 
 /* =====================================
-   FLECHAS
+   ACTUALIZAR FLECHAS
 ===================================== */
 
 function actualizarFlechas() {
@@ -446,55 +545,57 @@ function actualizarFlechas() {
     const producto =
         productos[productoActual];
 
-    if (
-        !producto ||
-        !flechaIzquierda ||
-        !flechaDerecha
-    ) {
+    if (!producto) {
         return;
     }
 
 
     /* IZQUIERDA */
 
-    if (fotoActual === 0) {
+    if (flechaIzquierda) {
 
-        flechaIzquierda.style.opacity =
-            "0.3";
+        if (fotoActual === 0) {
 
-        flechaIzquierda.style.pointerEvents =
-            "none";
+            flechaIzquierda.style.opacity =
+                "0.3";
 
-    } else {
+            flechaIzquierda.style.pointerEvents =
+                "none";
 
-        flechaIzquierda.style.opacity =
-            "1";
+        } else {
 
-        flechaIzquierda.style.pointerEvents =
-            "auto";
+            flechaIzquierda.style.opacity =
+                "1";
+
+            flechaIzquierda.style.pointerEvents =
+                "auto";
+        }
     }
 
 
     /* DERECHA */
 
-    if (
-        fotoActual ===
-        producto.imagenes.length - 1
-    ) {
+    if (flechaDerecha) {
 
-        flechaDerecha.style.opacity =
-            "0.3";
+        if (
+            fotoActual ===
+            producto.imagenes.length - 1
+        ) {
 
-        flechaDerecha.style.pointerEvents =
-            "none";
+            flechaDerecha.style.opacity =
+                "0.3";
 
-    } else {
+            flechaDerecha.style.pointerEvents =
+                "none";
 
-        flechaDerecha.style.opacity =
-            "1";
+        } else {
 
-        flechaDerecha.style.pointerEvents =
-            "auto";
+            flechaDerecha.style.opacity =
+                "1";
+
+            flechaDerecha.style.pointerEvents =
+                "auto";
+        }
     }
 }
 
@@ -505,14 +606,23 @@ function actualizarFlechas() {
 
 function crearIndicadores() {
 
-    indicadores.innerHTML = "";
+    if (!indicadores) {
+        return;
+    }
+
+    indicadores.innerHTML =
+        "";
 
     const producto =
         productos[productoActual];
 
-    if (!producto) {
+    if (
+        !producto ||
+        !producto.imagenes
+    ) {
         return;
     }
+
 
     producto.imagenes.forEach(
         (_, indice) => {
@@ -522,9 +632,11 @@ function crearIndicadores() {
                     "button"
                 );
 
-            punto.type = "button";
+            punto.type =
+                "button";
 
-            punto.className = "punto";
+            punto.className =
+                "punto";
 
             punto.setAttribute(
                 "aria-label",
@@ -533,9 +645,10 @@ function crearIndicadores() {
 
             punto.addEventListener(
                 "click",
-                () => {
+                function () {
 
-                    fotoActual = indice;
+                    fotoActual =
+                        indice;
 
                     actualizarImagen();
                 }
@@ -547,6 +660,7 @@ function crearIndicadores() {
         }
     );
 
+
     actualizarIndicadores();
 }
 
@@ -556,6 +670,10 @@ function crearIndicadores() {
 ===================================== */
 
 function actualizarIndicadores() {
+
+    if (!indicadores) {
+        return;
+    }
 
     const puntos =
         indicadores.querySelectorAll(
@@ -580,8 +698,13 @@ function actualizarIndicadores() {
 
 function actualizarWhatsapp(producto) {
 
+    if (!botonWhatsapp) {
+        return;
+    }
+
     if (
         !producto ||
+        !producto.imagenes ||
         producto.imagenes.length === 0
     ) {
         return;
@@ -641,10 +764,11 @@ if (carrusel) {
 
     carrusel.addEventListener(
         "touchstart",
-        (evento) => {
+        function (evento) {
 
             inicioX =
-                evento.touches[0].clientX;
+                evento.touches[0]
+                    .clientX;
         },
         {
             passive: true
@@ -654,7 +778,7 @@ if (carrusel) {
 
     carrusel.addEventListener(
         "touchend",
-        (evento) => {
+        function (evento) {
 
             finX =
                 evento.changedTouches[0]
@@ -706,28 +830,35 @@ function detectarDeslizamiento() {
 
 document.addEventListener(
     "keydown",
-    (evento) => {
+    function (evento) {
 
         if (
+            !modal ||
             modal.style.display !== "block"
         ) {
             return;
         }
 
 
-        if (evento.key === "Escape") {
+        if (
+            evento.key === "Escape"
+        ) {
 
             volverCatalogo();
         }
 
 
-        if (evento.key === "ArrowRight") {
+        if (
+            evento.key === "ArrowRight"
+        ) {
 
             fotoSiguiente();
         }
 
 
-        if (evento.key === "ArrowLeft") {
+        if (
+            evento.key === "ArrowLeft"
+        ) {
 
             fotoAnterior();
         }

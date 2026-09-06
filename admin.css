@@ -65,3 +65,7 @@ input[type="range"] { width:100%; accent-color:var(--dorado); cursor:pointer; }
 .eliminar-foto { position: absolute; top: 5px; right: 5px; width: 28px; height: 28px; border: 0; border-radius: 50%; background: rgba(120,45,45,.88); color: #fff; font-size: 20px; font-weight: 700; line-height: 1; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
 
 .eliminar-foto:active { transform: scale(.92); }
+/* ELIMINAR FOTOS AL EDITAR */
+.preview-foto { position: relative; }
+.eliminar-foto { position: absolute; top: 5px; right: 5px; width: 28px; height: 28px; border: 0; border-radius: 50%; background: rgba(120,45,45,.92); color: #fff; font-size: 20px; font-weight: 700; line-height: 1; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+.eliminar-foto:active { transform: scale(.92); }

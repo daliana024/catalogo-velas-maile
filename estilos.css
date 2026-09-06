@@ -28,7 +28,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .app { width: 100%; max-width: 430px; min-height: 100vh; margin: 0 auto; background: var(--crema); overflow: hidden; }
 
 .portada {
-  width: 100%; min-height: 700px; position: relative;
+  width: 100%; min-height: 400px; position: relative;
   display: flex; justify-content: center; align-items: flex-start;
   background: url("imagenes/portada.png") center bottom / cover no-repeat;
 }

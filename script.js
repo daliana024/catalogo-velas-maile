@@ -1,850 +1,249 @@
-/* =====================================
-   ELEMENTOS DEL HTML
-===================================== */
+(() => {
+  "use strict";
 
-const catalogo =
-    document.getElementById("catalogo");
+  const $ = (id) => document.getElementById(id);
 
-const modal =
-    document.getElementById("modal");
+  const catalogo = $("catalogo");
+  const modal = $("modal");
+  const cerrarModal = $("cerrarModal");
+  const tituloProducto = $("tituloProducto");
+  const precioProducto = $("precioProducto");
+  const etiquetasProducto = $("etiquetasProducto");
+  const empaqueProducto = $("empaqueProducto");
+  const imagenGrande = $("imagenGrande");
+  const indicadores = $("indicadores");
+  const botonWhatsapp = $("botonWhatsapp");
+  const carrusel = $("carrusel");
+  const botonAnterior = $("fotoAnterior");
+  const botonSiguiente = $("fotoSiguiente");
 
-const tituloProducto =
-    document.getElementById("tituloProducto");
+  let productos = [];
+  let productoActual = 0;
+  let fotoActual = 0;
+  let inicioX = 0;
 
-const precioProducto =
-    document.getElementById("precioProducto");
+  function convertirALista(valor) {
+    if (Array.isArray(valor)) return valor.filter(Boolean);
+    if (!valor) return [];
+    if (typeof valor === "string") {
+      try {
+        const parseado = JSON.parse(valor);
+        return Array.isArray(parseado) ? parseado.filter(Boolean) : [valor];
+      } catch {
+        return [valor];
+      }
+    }
+    return [];
+  }
 
-const etiquetasProducto =
-    document.getElementById("etiquetasProducto");
+  function normalizarProducto(p) {
+    return {
+      id: p.id,
+      titulo: p.titulo || "Vela Maile",
+      precio: Number(p.precio) || 0,
+      etiquetas: convertirALista(p.etiquetas),
+      imagenes: convertirALista(p.imagenes),
+      // Para que funcione con tu tabla actual, el empaque se guarda en descripcion.
+      // Si luego creas una columna empaque, también la leerá automáticamente.
+      empaque: p.empaque || p.descripcion || "Sin especificar",
+      orden: Number(p.orden) || 0
+    };
+  }
 
-const empaqueProducto =
-    document.getElementById("empaqueProducto");
+  async function cargarProductos() {
+    catalogo.innerHTML = '<div class="mensaje-catalogo">Cargando catálogo...</div>';
 
-const imagenGrande =
-    document.getElementById("imagenGrande");
-
-const indicadores =
-    document.getElementById("indicadores");
-
-const botonWhatsapp =
-    document.getElementById("botonWhatsapp");
-
-const carrusel =
-    document.getElementById("carrusel");
-
-const flechaIzquierda =
-    document.querySelector(".flecha-izquierda");
-
-const flechaDerecha =
-    document.querySelector(".flecha-derecha");
-
-
-/* =====================================
-   VARIABLES
-===================================== */
-
-let productos = [];
-
-let productoActual = 0;
-
-let fotoActual = 0;
-
-let inicioX = 0;
-
-let finX = 0;
-
-
-/* =====================================
-   INICIAR
-===================================== */
-
-cargarProductos();
-
-
-/* =====================================
-   CARGAR PRODUCTOS DE SUPABASE
-===================================== */
-
-async function cargarProductos() {
-
-    catalogo.innerHTML = `
-        <div class="mensaje-catalogo">
-            Cargando catálogo...
-        </div>
-    `;
+    if (typeof supabaseClient === "undefined") {
+      catalogo.innerHTML = '<div class="mensaje-catalogo">No se pudo conectar con el catálogo.</div>';
+      console.error("supabaseClient no está definido. Revisa supabase-config.js");
+      return;
+    }
 
     try {
+      const { data, error } = await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("orden", { ascending: true })
+        .order("created_at", { ascending: false });
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("productos")
-                .select("*")
-                .order(
-                    "orden",
-                    {
-                        ascending: true
-                    }
-                )
-                .order(
-                    "created_at",
-                    {
-                        ascending: false
-                    }
-                );
+      if (error) throw error;
 
-
-        if (error) {
-            throw error;
-        }
-
-
-        productos =
-            (data || [])
-                .map(normalizarProducto);
-
-
-        if (productos.length === 0) {
-
-            catalogo.innerHTML = `
-                <div class="mensaje-catalogo">
-                    Próximamente encontrarás nuestros productos aquí.
-                </div>
-            `;
-
-            return;
-        }
-
-
-        renderizarCatalogo();
-
+      productos = (data || []).map(normalizarProducto);
+      renderizarCatalogo();
     } catch (error) {
-
-        console.error(
-            "Error cargando catálogo:",
-            error
-        );
-
-        catalogo.innerHTML = `
-            <div class="mensaje-catalogo">
-                No se pudo cargar el catálogo.
-            </div>
-        `;
-
+      console.error("Error cargando catálogo:", error);
+      catalogo.innerHTML = `<div class="mensaje-catalogo">No se pudo cargar el catálogo.<br><small>${escaparHTML(error.message || "Error desconocido")}</small></div>`;
     }
+  }
 
-}
-
-
-/* =====================================
-   NORMALIZAR DATOS
-===================================== */
-
-function normalizarProducto(producto) {
-
-    return {
-
-        id:
-            producto.id,
-
-        titulo:
-            producto.titulo || "Vela Maile",
-
-        precio:
-            Number(producto.precio) || 0,
-
-        etiquetas:
-            convertirALista(
-                producto.etiquetas
-            ),
-
-        imagenes:
-            convertirALista(
-                producto.imagenes
-            ),
-
-        // Compatible con ambas versiones de la base de datos:
-        // si existe "empaque" lo usa; si no, usa la antigua columna "descripcion".
-        empaque:
-            producto.empaque ||
-            producto.descripcion ||
-            "Sin especificar",
-
-        orden:
-            Number(producto.orden) || 0
-
-    };
-
-}
-
-
-/* =====================================
-   CONVERTIR A LISTA
-===================================== */
-
-function convertirALista(valor) {
-
-    if (Array.isArray(valor)) {
-        return valor;
-    }
-
-    if (!valor) {
-        return [];
-    }
-
-    if (typeof valor === "string") {
-
-        try {
-
-            const convertido =
-                JSON.parse(valor);
-
-            if (Array.isArray(convertido)) {
-                return convertido;
-            }
-
-        } catch (error) {
-
-            return [valor];
-
-        }
-
-    }
-
-    return [];
-}
-
-
-/* =====================================
-   RENDERIZAR CATÁLOGO
-===================================== */
-
-function renderizarCatalogo() {
-
+  function renderizarCatalogo() {
     catalogo.innerHTML = "";
 
+    const visibles = productos.filter((p) => p.imagenes.length > 0);
+    if (!visibles.length) {
+      catalogo.innerHTML = '<div class="mensaje-catalogo">Próximamente encontrarás nuestros productos aquí.</div>';
+      return;
+    }
 
-    productos.forEach(
-        (producto, indice) => {
+    productos.forEach((producto, indice) => {
+      if (!producto.imagenes.length) return;
 
-            if (
-                !producto.imagenes ||
-                producto.imagenes.length === 0
-            ) {
-                return;
-            }
+      const boton = document.createElement("button");
+      boton.type = "button";
+      boton.className = "publicacion";
+      boton.setAttribute("aria-label", `Abrir ${producto.titulo}`);
+      boton.innerHTML = `
+        <img src="${escaparAtributo(producto.imagenes[0])}" alt="${escaparAtributo(producto.titulo)}" loading="lazy">
+        <span class="ver-detalle">Toca para ver</span>
+      `;
+      boton.addEventListener("click", () => abrirPublicacion(indice));
+      catalogo.appendChild(boton);
+    });
+  }
 
+  function abrirPublicacion(indice) {
+    productoActual = indice;
+    fotoActual = 0;
+    const producto = productos[productoActual];
 
-            const publicacion =
-                document.createElement(
-                    "button"
-                );
-
-
-            publicacion.type =
-                "button";
-
-
-            publicacion.className =
-                "publicacion";
-
-
-            publicacion.setAttribute(
-                "aria-label",
-                `Abrir ${producto.titulo}`
-            );
-
-
-            publicacion.innerHTML = `
-                <img
-                    src="${producto.imagenes[0]}"
-                    alt="${escaparHTML(producto.titulo)}"
-                    loading="lazy"
-                >
-
-                <span class="ver-detalle">
-                    Toca para ver
-                </span>
-            `;
-
-
-            publicacion.addEventListener(
-                "click",
-
-                () =>
-                    abrirPublicacion(
-                        indice
-                    )
-            );
-
-
-            catalogo.appendChild(
-                publicacion
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   ABRIR PRODUCTO
-===================================== */
-
-function abrirPublicacion(indice) {
-
-    productoActual =
-        indice;
-
-    fotoActual =
-        0;
-
-
-    const producto =
-        productos[
-            productoActual
-        ];
-
-
-    tituloProducto.textContent =
-        producto.titulo;
-
-
-    precioProducto.textContent =
-        formatearPrecio(
-            producto.precio
-        );
-
-
-    empaqueProducto.textContent =
-        producto.empaque;
-
-
-    renderizarEtiquetas(
-        producto.etiquetas
-    );
-
-
+    tituloProducto.textContent = producto.titulo;
+    precioProducto.textContent = formatearPrecio(producto.precio);
+    empaqueProducto.textContent = producto.empaque;
+    renderizarEtiquetas(producto.etiquetas);
     crearIndicadores();
-
-
     actualizarImagen();
 
+    modal.classList.add("abierto");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    modal.scrollTop = 0;
+  }
 
-    modal.style.display =
-        "block";
+  function cerrarPublicacion() {
+    modal.classList.remove("abierto");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
 
+  function renderizarEtiquetas(lista) {
+    etiquetasProducto.innerHTML = "";
+    lista.forEach((texto) => {
+      const span = document.createElement("span");
+      span.className = "etiqueta";
+      span.textContent = texto;
+      etiquetasProducto.appendChild(span);
+    });
+  }
 
-    document.body.style.overflow =
-        "hidden";
+  function actualizarImagen() {
+    const producto = productos[productoActual];
+    if (!producto || !producto.imagenes.length) return;
 
-
-    modal.scrollTop =
-        0;
-
-}
-
-
-/* =====================================
-   CERRAR PRODUCTO
-===================================== */
-
-function cerrarPublicacion() {
-
-    modal.style.display =
-        "none";
-
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-/* =====================================
-   ETIQUETAS
-===================================== */
-
-function renderizarEtiquetas(lista) {
-
-    etiquetasProducto.innerHTML =
-        "";
-
-
-    lista.forEach(
-        (etiqueta) => {
-
-            const elemento =
-                document.createElement(
-                    "span"
-                );
-
-
-            elemento.className =
-                "etiqueta";
-
-
-            elemento.textContent =
-                etiqueta;
-
-
-            etiquetasProducto.appendChild(
-                elemento
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   IMAGEN ACTUAL
-===================================== */
-
-function actualizarImagen() {
-
-    const producto =
-        productos[
-            productoActual
-        ];
-
-
-    if (
-        producto.imagenes.length === 0
-    ) {
-        return;
-    }
-
-
-    imagenGrande.src =
-        producto.imagenes[
-            fotoActual
-        ];
-
-
-    imagenGrande.alt =
-        `${producto.titulo} - Foto ${fotoActual + 1}`;
-
-
+    imagenGrande.src = producto.imagenes[fotoActual];
+    imagenGrande.alt = `${producto.titulo} - Foto ${fotoActual + 1}`;
     actualizarIndicadores();
-
-    actualizarWhatsapp(
-        producto
-    );
-
     actualizarFlechas();
+    actualizarWhatsapp(producto);
+  }
 
-}
+  function fotoSiguiente() {
+    const producto = productos[productoActual];
+    if (producto && fotoActual < producto.imagenes.length - 1) {
+      fotoActual++;
+      actualizarImagen();
+    }
+  }
 
+  function fotoAnterior() {
+    if (fotoActual > 0) {
+      fotoActual--;
+      actualizarImagen();
+    }
+  }
 
-/* =====================================
-   SIGUIENTE FOTO
-===================================== */
+  function crearIndicadores() {
+    indicadores.innerHTML = "";
+    const producto = productos[productoActual];
+    if (!producto) return;
 
-function fotoSiguiente() {
-
-    const producto =
-        productos[
-            productoActual
-        ];
-
-
-    if (
-        fotoActual <
-        producto.imagenes.length - 1
-    ) {
-
-        fotoActual++;
-
+    producto.imagenes.forEach((_, indice) => {
+      const punto = document.createElement("button");
+      punto.type = "button";
+      punto.className = "punto";
+      punto.setAttribute("aria-label", `Ver foto ${indice + 1}`);
+      punto.addEventListener("click", () => {
+        fotoActual = indice;
         actualizarImagen();
-
-    }
-
-}
-
-
-/* =====================================
-   FOTO ANTERIOR
-===================================== */
-
-function fotoAnterior() {
-
-    if (
-        fotoActual > 0
-    ) {
-
-        fotoActual--;
-
-        actualizarImagen();
-
-    }
-
-}
-
-
-/* =====================================
-   FLECHAS
-===================================== */
-
-function actualizarFlechas() {
-
-    const producto =
-        productos[
-            productoActual
-        ];
-
-
-    if (
-        !flechaIzquierda ||
-        !flechaDerecha
-    ) {
-        return;
-    }
-
-
-    flechaIzquierda.style.opacity =
-        fotoActual === 0
-            ? "0.3"
-            : "1";
-
-
-    flechaDerecha.style.opacity =
-        fotoActual ===
-        producto.imagenes.length - 1
-            ? "0.3"
-            : "1";
-
-
-    flechaIzquierda.style.pointerEvents =
-        fotoActual === 0
-            ? "none"
-            : "auto";
-
-
-    flechaDerecha.style.pointerEvents =
-        fotoActual ===
-        producto.imagenes.length - 1
-            ? "none"
-            : "auto";
-
-}
-
-
-/* =====================================
-   INDICADORES
-===================================== */
-
-function crearIndicadores() {
-
-    indicadores.innerHTML =
-        "";
-
-
-    const producto =
-        productos[
-            productoActual
-        ];
-
-
-    producto.imagenes.forEach(
-        (_, indice) => {
-
-            const punto =
-                document.createElement(
-                    "button"
-                );
-
-
-            punto.type =
-                "button";
-
-
-            punto.className =
-                "punto";
-
-
-            punto.setAttribute(
-                "aria-label",
-                `Ver foto ${indice + 1}`
-            );
-
-
-            punto.addEventListener(
-                "click",
-
-                () => {
-
-                    fotoActual =
-                        indice;
-
-
-                    actualizarImagen();
-
-                }
-            );
-
-
-            indicadores.appendChild(
-                punto
-            );
-
-        }
-    );
-
-
-    actualizarIndicadores();
-
-}
-
-
-/* =====================================
-   ACTUALIZAR INDICADORES
-===================================== */
-
-function actualizarIndicadores() {
-
-    const puntos =
-        indicadores.querySelectorAll(
-            ".punto"
-        );
-
-
-    puntos.forEach(
-        (punto, indice) => {
-
-            punto.classList.toggle(
-                "activo",
-                indice === fotoActual
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   WHATSAPP
-===================================== */
-
-function actualizarWhatsapp(producto) {
-
-    const fotoVisible =
-        producto.imagenes[
-            fotoActual
-        ];
-
-
-    const mensaje =
-`Hola, vi el catálogo de Velas Maile y estoy interesada en:
-
-🕯️ ${producto.titulo}
-
-💰 Precio por docena:
-${formatearPrecio(producto.precio)}
-
-📦 Empaque:
-${producto.empaque}
-
-📷 Foto:
-${fotoVisible}
-
-¿Me puedes dar más información?`;
-
-
-    botonWhatsapp.href =
-        "https://wa.me/573008866132?text=" +
-        encodeURIComponent(
-            mensaje
-        );
-
-}
-
-
-/* =====================================
-   SWIPE
-===================================== */
-
-if (carrusel) {
-
-    carrusel.addEventListener(
-        "touchstart",
-
-        (evento) => {
-
-            inicioX =
-                evento.touches[0]
-                    .clientX;
-
-        },
-
-        {
-            passive: true
-        }
-    );
-
-
-    carrusel.addEventListener(
-        "touchend",
-
-        (evento) => {
-
-            finX =
-                evento.changedTouches[0]
-                    .clientX;
-
-
-            detectarDeslizamiento();
-
-        },
-
-        {
-            passive: true
-        }
-    );
-
-}
-
-
-/* =====================================
-   DETECTAR SWIPE
-===================================== */
-
-function detectarDeslizamiento() {
-
-    const distancia =
-        finX - inicioX;
-
-
-    const minimo =
-        45;
-
-
-    if (
-        Math.abs(distancia) <
-        minimo
-    ) {
-        return;
-    }
-
-
-    if (
-        distancia < 0
-    ) {
-
-        fotoSiguiente();
-
-    } else {
-
-        fotoAnterior();
-
-    }
-
-}
-
-
-/* =====================================
-   TECLADO
-===================================== */
-
-document.addEventListener(
-    "keydown",
-
-    (evento) => {
-
-        if (
-            modal.style.display !==
-            "block"
-        ) {
-            return;
-        }
-
-
-        if (
-            evento.key ===
-            "Escape"
-        ) {
-
-            cerrarPublicacion();
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowRight"
-        ) {
-
-            fotoSiguiente();
-
-        }
-
-
-        if (
-            evento.key ===
-            "ArrowLeft"
-        ) {
-
-            fotoAnterior();
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   PRECIO
-===================================== */
-
-function formatearPrecio(precio) {
-
-    return new Intl.NumberFormat(
-        "es-CO",
-        {
-            style: "currency",
-            currency: "COP",
-            maximumFractionDigits: 0
-        }
-    ).format(
-        Number(precio)
-    );
-
-}
-
-
-/* =====================================
-   ESCAPAR HTML
-===================================== */
-
-function escaparHTML(texto) {
-
-    return String(
-        texto || ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
+      });
+      indicadores.appendChild(punto);
+    });
+  }
+
+  function actualizarIndicadores() {
+    indicadores.querySelectorAll(".punto").forEach((punto, indice) => {
+      punto.classList.toggle("activo", indice === fotoActual);
+    });
+  }
+
+  function actualizarFlechas() {
+    const producto = productos[productoActual];
+    if (!producto) return;
+    botonAnterior.disabled = fotoActual === 0;
+    botonSiguiente.disabled = fotoActual === producto.imagenes.length - 1;
+    const mostrar = producto.imagenes.length > 1;
+    botonAnterior.style.display = mostrar ? "flex" : "none";
+    botonSiguiente.style.display = mostrar ? "flex" : "none";
+  }
+
+  function actualizarWhatsapp(producto) {
+    const fotoVisible = producto.imagenes[fotoActual] || "";
+    const categorias = producto.etiquetas.length ? producto.etiquetas.join(", ") : "";
+    const mensaje = `Hola, vi el catálogo de Velas Maile y estoy interesada en:\n\n🕯️ ${producto.titulo}\n💰 Precio por docena: ${formatearPrecio(producto.precio)}\n📦 Empaque: ${producto.empaque}${categorias ? `\n🏷️ Categoría: ${categorias}` : ""}\n\n📷 Esta es la foto que estoy viendo:\n${fotoVisible}\n\n¿Me puedes dar más información?`;
+    botonWhatsapp.href = "https://wa.me/573008866132?text=" + encodeURIComponent(mensaje);
+  }
+
+  function formatearPrecio(precio) {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0
+    }).format(Number(precio) || 0);
+  }
+
+  function escaparHTML(texto) {
+    return String(texto ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function escaparAtributo(texto) {
+    return escaparHTML(texto);
+  }
+
+  cerrarModal.addEventListener("click", cerrarPublicacion);
+  botonAnterior.addEventListener("click", fotoAnterior);
+  botonSiguiente.addEventListener("click", fotoSiguiente);
+
+  carrusel.addEventListener("touchstart", (e) => {
+    inicioX = e.touches[0].clientX;
+  }, { passive: true });
+
+  carrusel.addEventListener("touchend", (e) => {
+    const finX = e.changedTouches[0].clientX;
+    const distancia = finX - inicioX;
+    if (Math.abs(distancia) < 45) return;
+    distancia < 0 ? fotoSiguiente() : fotoAnterior();
+  }, { passive: true });
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("abierto")) return;
+    if (e.key === "Escape") cerrarPublicacion();
+    if (e.key === "ArrowRight") fotoSiguiente();
+    if (e.key === "ArrowLeft") fotoAnterior();
+  });
+
+  cargarProductos();
+})();

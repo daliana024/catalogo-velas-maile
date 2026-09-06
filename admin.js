@@ -1,1342 +1,330 @@
-/* =====================================
-   ELEMENTOS DEL HTML
-===================================== */
+(() => {
+  "use strict";
 
-const loginPanel =
-    document.getElementById("loginPanel");
+  const $ = (id) => document.getElementById(id);
 
-const adminPanel =
-    document.getElementById("adminPanel");
+  const loginPanel = $("loginPanel");
+  const adminPanel = $("adminPanel");
+  const loginForm = $("loginForm");
+  const mensajeLogin = $("mensajeLogin");
+  const productoForm = $("productoForm");
+  const mensajeProducto = $("mensajeProducto");
+  const listaProductos = $("listaProductos");
+  const previewFotos = $("previewFotos");
+  const fotosInput = $("fotos");
+  const cancelarEdicion = $("cancelarEdicion");
+  const guardarProducto = $("guardarProducto");
+  const cerrarSesion = $("cerrarSesion");
 
-const loginForm =
-    document.getElementById("loginForm");
+  let imagenesActuales = [];
+  let categoriasSeleccionadas = [];
+  let empaqueSeleccionado = "";
 
-const mensajeLogin =
-    document.getElementById("mensajeLogin");
+  function mostrarMensaje(elemento, texto, tipo = "") {
+    elemento.textContent = texto;
+    elemento.className = `mensaje ${tipo}`.trim();
+  }
 
-const productoForm =
-    document.getElementById("productoForm");
-
-const mensajeProducto =
-    document.getElementById("mensajeProducto");
-
-const listaProductos =
-    document.getElementById("listaProductos");
-
-const previewFotos =
-    document.getElementById("previewFotos");
-
-const fotosInput =
-    document.getElementById("fotos");
-
-const cancelarEdicion =
-    document.getElementById("cancelarEdicion");
-
-const guardarProducto =
-    document.getElementById("guardarProducto");
-
-const cerrarSesion =
-    document.getElementById("cerrarSesion");
-
-
-/* =====================================
-   VARIABLES
-===================================== */
-
-let imagenesActuales = [];
-
-let categoriasSeleccionadas = [];
-
-let empaqueSeleccionado = "";
-
-
-/* =====================================
-   INICIAR
-===================================== */
-
-comprobarSesion();
-
-
-/* =====================================
-   CATEGORÍAS
-===================================== */
-
-document
-    .querySelectorAll(".opcion-categoria")
-    .forEach((boton) => {
-
-        boton.addEventListener(
-            "click",
-            () => {
-
-                const valor =
-                    boton.dataset.valor;
-
-
-                if (
-                    categoriasSeleccionadas.includes(
-                        valor
-                    )
-                ) {
-
-                    categoriasSeleccionadas =
-                        categoriasSeleccionadas.filter(
-                            (categoria) =>
-                                categoria !== valor
-                        );
-
-
-                    boton.classList.remove(
-                        "seleccionada"
-                    );
-
-                } else {
-
-                    categoriasSeleccionadas.push(
-                        valor
-                    );
-
-
-                    boton.classList.add(
-                        "seleccionada"
-                    );
-                }
-
-            }
-        );
-
-    });
-
-
-/* =====================================
-   EMPAQUE
-===================================== */
-
-document
-    .querySelectorAll(".opcion-empaque")
-    .forEach((boton) => {
-
-        boton.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .querySelectorAll(
-                        ".opcion-empaque"
-                    )
-                    .forEach(
-                        (otroBoton) => {
-
-                            otroBoton.classList.remove(
-                                "seleccionada"
-                            );
-
-                        }
-                    );
-
-
-                boton.classList.add(
-                    "seleccionada"
-                );
-
-
-                empaqueSeleccionado =
-                    boton.dataset.valor;
-
-            }
-        );
-
-    });
-
-
-/* =====================================
-   COMPROBAR SESIÓN
-===================================== */
-
-async function comprobarSesion() {
-
-    const {
-        data: { session },
-        error
-    } =
-        await supabaseClient.auth
-            .getSession();
-
-
-    if (error) {
-
-        console.error(
-            "Error comprobando sesión:",
-            error
-        );
-
+  function convertirALista(valor) {
+    if (Array.isArray(valor)) return valor.filter(Boolean);
+    if (!valor) return [];
+    if (typeof valor === "string") {
+      try {
+        const parseado = JSON.parse(valor);
+        return Array.isArray(parseado) ? parseado.filter(Boolean) : [valor];
+      } catch {
+        return [valor];
+      }
     }
-
-
-    if (session) {
-
-        mostrarAdmin();
-
-    } else {
-
-        mostrarLogin();
-
-    }
-
-}
-
-
-/* =====================================
-   INICIAR SESIÓN
-===================================== */
-
-loginForm.addEventListener(
-    "submit",
-
-    async (evento) => {
-
-        evento.preventDefault();
-
-
-        const email =
-            document
-                .getElementById("correo")
-                .value
-                .trim();
-
-
-        const password =
-            document
-                .getElementById("contrasena")
-                .value;
-
-
-        mensajeLogin.textContent =
-            "Ingresando...";
-
-
-        const {
-            error
-        } =
-            await supabaseClient.auth
-                .signInWithPassword({
-                    email,
-                    password
-                });
-
-
-        if (error) {
-
-            console.error(
-                "Error de inicio de sesión:",
-                error
-            );
-
-
-            mensajeLogin.textContent =
-                "Correo o contraseña incorrectos.";
-
-            return;
-        }
-
-
-        mensajeLogin.textContent =
-            "";
-
-
-        loginForm.reset();
-
-
-        mostrarAdmin();
-
-    }
-);
-
-
-/* =====================================
-   CERRAR SESIÓN
-===================================== */
-
-cerrarSesion.addEventListener(
-    "click",
-
-    async () => {
-
-        const {
-            error
-        } =
-            await supabaseClient.auth
-                .signOut();
-
-
-        if (error) {
-
-            console.error(
-                "Error cerrando sesión:",
-                error
-            );
-
-            return;
-        }
-
-
-        mostrarLogin();
-
-    }
-);
-
-
-/* =====================================
-   MOSTRAR ADMINISTRADOR
-===================================== */
-
-function mostrarAdmin() {
-
-    loginPanel.classList.add(
-        "oculto"
-    );
-
-
-    adminPanel.classList.remove(
-        "oculto"
-    );
-
-
-    cargarProductos();
-
-}
-
-
-/* =====================================
-   MOSTRAR LOGIN
-===================================== */
-
-function mostrarLogin() {
-
-    adminPanel.classList.add(
-        "oculto"
-    );
-
-
-    loginPanel.classList.remove(
-        "oculto"
-    );
-
-}
-
-
-/* =====================================
-   PREVISUALIZAR FOTOS
-===================================== */
-
-fotosInput.addEventListener(
-    "change",
-
-    () => {
-
-        mostrarPreviewCompleto();
-
-    }
-);
-
-
-/* =====================================
-   MOSTRAR TODAS LAS FOTOS
-===================================== */
-
-function mostrarPreviewCompleto() {
-
-    previewFotos.innerHTML =
-        "";
-
-
-    /* FOTOS QUE YA EXISTEN */
-
-    imagenesActuales.forEach(
-        (url) => {
-
-            const contenedor =
-                document.createElement(
-                    "div"
-                );
-
-
-            contenedor.className =
-                "preview-foto";
-
-
-            const img =
-                document.createElement(
-                    "img"
-                );
-
-
-            img.src =
-                url;
-
-
-            img.alt =
-                "Foto del producto";
-
-
-            contenedor.appendChild(
-                img
-            );
-
-
-            previewFotos.appendChild(
-                contenedor
-            );
-
-        }
-    );
-
-
-    /* FOTOS NUEVAS */
-
-    const archivos =
-        Array.from(
-            fotosInput.files
-        );
-
-
-    archivos.forEach(
-        (archivo) => {
-
-            const url =
-                URL.createObjectURL(
-                    archivo
-                );
-
-
-            const contenedor =
-                document.createElement(
-                    "div"
-                );
-
-
-            contenedor.className =
-                "preview-foto";
-
-
-            const img =
-                document.createElement(
-                    "img"
-                );
-
-
-            img.src =
-                url;
-
-
-            img.alt =
-                "Nueva foto";
-
-
-            contenedor.appendChild(
-                img
-            );
-
-
-            previewFotos.appendChild(
-                contenedor
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   GUARDAR PRODUCTO
-===================================== */
-
-productoForm.addEventListener(
-    "submit",
-
-    async (evento) => {
-
-        evento.preventDefault();
-
-
-        mensajeProducto.textContent =
-            "Guardando producto...";
-
-
-        /* VALIDAR CATEGORÍA */
-
-        if (
-            categoriasSeleccionadas.length === 0
-        ) {
-
-            mensajeProducto.textContent =
-                "Selecciona al menos una categoría.";
-
-            return;
-        }
-
-
-        /* VALIDAR EMPAQUE */
-
-        if (!empaqueSeleccionado) {
-
-            mensajeProducto.textContent =
-                "Selecciona un empaque.";
-
-            return;
-        }
-
-
-        const productoId =
-            document
-                .getElementById(
-                    "productoId"
-                )
-                .value;
-
-
-        const titulo =
-            document
-                .getElementById(
-                    "titulo"
-                )
-                .value
-                .trim();
-
-
-        const precio =
-            Number(
-                document
-                    .getElementById(
-                        "precio"
-                    )
-                    .value
-            );
-
-
-        const orden =
-            Number(
-                document
-                    .getElementById(
-                        "orden"
-                    )
-                    .value
-            ) || 0;
-
-
-        let urlsImagenes =
-            [...imagenesActuales];
-
-
-        const nuevasFotos =
-            Array.from(
-                fotosInput.files
-            );
-
-
-        /* SUBIR FOTOS NUEVAS */
-
-        if (
-            nuevasFotos.length > 0
-        ) {
-
-            const urlsNuevas =
-                await subirFotos(
-                    nuevasFotos
-                );
-
-
-            if (!urlsNuevas) {
-
-                mensajeProducto.textContent =
-                    "No se pudieron subir las fotos.";
-
-                return;
-            }
-
-
-            urlsImagenes = [
-                ...urlsImagenes,
-                ...urlsNuevas
-            ];
-
-        }
-
-
-        /* AL MENOS UNA FOTO */
-
-        if (
-            urlsImagenes.length === 0
-        ) {
-
-            mensajeProducto.textContent =
-                "Debes agregar al menos una fotografía.";
-
-            return;
-        }
-
-
-        /* DATOS */
-
-        const datos = {
-
-            titulo,
-
-            precio,
-
-            etiquetas:
-                categoriasSeleccionadas,
-
-            // Usamos la columna existente "descripcion" para guardar el empaque.
-            // Así no dependemos de crear una columna nueva en Supabase.
-            descripcion:
-                empaqueSeleccionado,
-
-            imagenes:
-                urlsImagenes,
-
-            orden
-
-        };
-
-
-        let error;
-
-
-        /* EDITAR PRODUCTO */
-
-        if (productoId) {
-
-            const resultado =
-                await supabaseClient
-                    .from("productos")
-                    .update(datos)
-                    .eq(
-                        "id",
-                        productoId
-                    );
-
-
-            error =
-                resultado.error;
-
-        }
-
-
-        /* CREAR PRODUCTO */
-
-        else {
-
-            const resultado =
-                await supabaseClient
-                    .from("productos")
-                    .insert([
-                        datos
-                    ]);
-
-
-            error =
-                resultado.error;
-
-        }
-
-
-        if (error) {
-
-            console.error(
-                "Error guardando producto:",
-                error
-            );
-
-
-            mensajeProducto.textContent =
-                `No se pudo guardar: ${error.message || "error desconocido"}`;
-
-            return;
-        }
-
-
-        mensajeProducto.textContent =
-            productoId
-                ? "Producto actualizado correctamente."
-                : "Producto publicado correctamente.";
-
-
-        limpiarFormulario();
-
-
-        await cargarProductos();
-
-    }
-);
-
-
-/* =====================================
-   SUBIR FOTOS A SUPABASE STORAGE
-===================================== */
-
-async function subirFotos(
-    archivos
-) {
-
-    const urls =
-        [];
-
-
-    for (
-        const archivo
-        of archivos
-    ) {
-
-        const extension =
-            archivo.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-
-        const nombre =
-            `${Date.now()}-${crypto.randomUUID()}.${extension}`;
-
-
-        const ruta =
-            `catalogo/${nombre}`;
-
-
-        const {
-            error: errorSubida
-        } =
-            await supabaseClient.storage
-                .from("productos")
-                .upload(
-                    ruta,
-                    archivo,
-                    {
-                        cacheControl:
-                            "3600",
-
-                        upsert:
-                            false
-                    }
-                );
-
-
-        if (errorSubida) {
-
-            console.error(
-                "Error subiendo foto:",
-                errorSubida
-            );
-
-
-            return null;
-        }
-
-
-        const {
-            data
-        } =
-            supabaseClient.storage
-                .from("productos")
-                .getPublicUrl(
-                    ruta
-                );
-
-
-        if (
-            data &&
-            data.publicUrl
-        ) {
-
-            urls.push(
-                data.publicUrl
-            );
-
-        }
-
-    }
-
-
-    return urls;
-
-}
-
-
-/* =====================================
-   CARGAR PRODUCTOS
-===================================== */
-
-async function cargarProductos() {
-
-    listaProductos.innerHTML =
-        "<p>Cargando productos...</p>";
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("productos")
-            .select("*")
-            .order(
-                "orden",
-                {
-                    ascending: true
-                }
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-
-    if (error) {
-
-        console.error(
-            "Error cargando productos:",
-            error
-        );
-
-
-        listaProductos.innerHTML =
-            "<p>No se pudieron cargar los productos.</p>";
-
-        return;
-    }
-
-
-    listaProductos.innerHTML =
-        "";
-
-
-    if (
-        !data ||
-        data.length === 0
-    ) {
-
-        listaProductos.innerHTML =
-            "<p>No hay productos publicados todavía.</p>";
-
-        return;
-    }
-
-
-    data.forEach(
-        (producto) => {
-
-            const imagenes =
-                convertirALista(
-                    producto.imagenes
-                );
-
-
-            const item =
-                document.createElement(
-                    "article"
-                );
-
-
-            item.className =
-                "producto-admin";
-
-
-            const imagenPrincipal =
-                imagenes.length > 0
-                    ? imagenes[0]
-                    : "";
-
-
-            item.innerHTML = `
-
-                <img
-                    src="${imagenPrincipal}"
-                    alt="${escaparHTML(producto.titulo)}"
-                >
-
-                <div>
-
-                    <h3>
-                        ${escaparHTML(producto.titulo)}
-                    </h3>
-
-                    <p class="precio">
-                        ${formatearPrecio(
-                            producto.precio
-                        )}
-                    </p>
-
-                    <p class="empaque-mini">
-                        ${
-                            (producto.empaque || producto.descripcion)
-                                ? escaparHTML(
-                                    producto.empaque || producto.descripcion
-                                )
-                                : "Sin empaque"
-                        }
-                    </p>
-
-                    <div class="acciones-producto">
-
-                        <button
-                            class="editar"
-                            type="button"
-                        >
-                            Editar
-                        </button>
-
-                        <button
-                            class="eliminar"
-                            type="button"
-                        >
-                            Eliminar
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-
-            item
-                .querySelector(
-                    ".editar"
-                )
-                .addEventListener(
-                    "click",
-
-                    () =>
-                        editarProducto(
-                            producto
-                        )
-                );
-
-
-            item
-                .querySelector(
-                    ".eliminar"
-                )
-                .addEventListener(
-                    "click",
-
-                    () =>
-                        eliminarProducto(
-                            producto
-                        )
-                );
-
-
-            listaProductos.appendChild(
-                item
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   EDITAR PRODUCTO
-===================================== */
-
-function editarProducto(
-    producto
-) {
-
-    document
-        .getElementById(
-            "productoId"
-        )
-        .value =
-        producto.id;
-
-
-    document
-        .getElementById(
-            "titulo"
-        )
-        .value =
-        producto.titulo || "";
-
-
-    document
-        .getElementById(
-            "precio"
-        )
-        .value =
-        producto.precio || "";
-
-
-    document
-        .getElementById(
-            "orden"
-        )
-        .value =
-        producto.orden || 0;
-
-
-    /* CATEGORÍAS */
-
-    categoriasSeleccionadas =
-        convertirALista(
-            producto.etiquetas
-        );
-
-
-    document
-        .querySelectorAll(
-            ".opcion-categoria"
-        )
-        .forEach(
-            (boton) => {
-
-                const activa =
-                    categoriasSeleccionadas
-                        .includes(
-                            boton.dataset.valor
-                        );
-
-
-                boton.classList.toggle(
-                    "seleccionada",
-                    activa
-                );
-
-            }
-        );
-
-
-    /* EMPAQUE */
-
-    empaqueSeleccionado =
-        producto.empaque ||
-        producto.descripcion ||
-        "";
-
-
-    document
-        .querySelectorAll(
-            ".opcion-empaque"
-        )
-        .forEach(
-            (boton) => {
-
-                const activo =
-                    boton.dataset.valor ===
-                    empaqueSeleccionado;
-
-
-                boton.classList.toggle(
-                    "seleccionada",
-                    activo
-                );
-
-            }
-        );
-
-
-    /* IMÁGENES */
-
-    imagenesActuales =
-        convertirALista(
-            producto.imagenes
-        );
-
-
-    fotosInput.value =
-        "";
-
-
-    mostrarPreviewCompleto();
-
-
-    guardarProducto.textContent =
-        "Guardar cambios";
-
-
-    cancelarEdicion.classList.remove(
-        "oculto"
-    );
-
-
-    mensajeProducto.textContent =
-        "Editando producto.";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-/* =====================================
-   ELIMINAR PRODUCTO
-===================================== */
-
-async function eliminarProducto(
-    producto
-) {
-
-    const confirmar =
-        confirm(
-            `¿Seguro que quieres eliminar "${producto.titulo}"?`
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("productos")
-            .delete()
-            .eq(
-                "id",
-                producto.id
-            );
-
-
-    if (error) {
-
-        console.error(
-            "Error eliminando producto:",
-            error
-        );
-
-
-        alert(
-            "No se pudo eliminar el producto."
-        );
-
-        return;
-    }
-
-
-    await cargarProductos();
-
-}
-
-
-/* =====================================
-   CANCELAR EDICIÓN
-===================================== */
-
-cancelarEdicion.addEventListener(
-    "click",
-
-    () => {
-
-        limpiarFormulario();
-
-        mensajeProducto.textContent =
-            "";
-
-    }
-);
-
-
-/* =====================================
-   LIMPIAR FORMULARIO
-===================================== */
-
-function limpiarFormulario() {
-
-    productoForm.reset();
-
-
-    document
-        .getElementById(
-            "productoId"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "orden"
-        )
-        .value =
-        0;
-
-
-    categoriasSeleccionadas =
-        [];
-
-
-    empaqueSeleccionado =
-        "";
-
-
-    imagenesActuales =
-        [];
-
-
-    fotosInput.value =
-        "";
-
-
-    /* CORRECCIÓN IMPORTANTE:
-       TODO EN UNA MISMA LÍNEA
-    */
-
-    document
-        .querySelectorAll(
-            ".opcion-categoria, .opcion-empaque"
-        )
-        .forEach(
-            (boton) => {
-
-                boton.classList.remove(
-                    "seleccionada"
-                );
-
-            }
-        );
-
-
-    previewFotos.innerHTML =
-        "";
-
-
-    guardarProducto.textContent =
-        "Publicar producto";
-
-
-    cancelarEdicion.classList.add(
-        "oculto"
-    );
-
-}
-
-
-/* =====================================
-   CONVERTIR JSON A ARRAY
-===================================== */
-
-function convertirALista(
-    valor
-) {
-
-    if (
-        Array.isArray(valor)
-    ) {
-
-        return valor;
-    }
-
-
-    if (!valor) {
-
-        return [];
-    }
-
-
-    if (
-        typeof valor ===
-        "string"
-    ) {
-
-        try {
-
-            const convertido =
-                JSON.parse(
-                    valor
-                );
-
-
-            if (
-                Array.isArray(
-                    convertido
-                )
-            ) {
-
-                return convertido;
-            }
-
-
-        } catch (error) {
-
-            return [
-                valor
-            ];
-        }
-
-    }
-
-
     return [];
+  }
 
-}
+  document.querySelectorAll(".opcion-categoria").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const valor = boton.dataset.valor;
+      const yaEsta = categoriasSeleccionadas.includes(valor);
+      categoriasSeleccionadas = yaEsta
+        ? categoriasSeleccionadas.filter((x) => x !== valor)
+        : [...categoriasSeleccionadas, valor];
+      boton.classList.toggle("seleccionada", !yaEsta);
+    });
+  });
 
+  document.querySelectorAll(".opcion-empaque").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      empaqueSeleccionado = boton.dataset.valor;
+      document.querySelectorAll(".opcion-empaque").forEach((b) => {
+        b.classList.toggle("seleccionada", b === boton);
+      });
+    });
+  });
 
-/* =====================================
-   FORMATEAR PRECIO
-===================================== */
+  async function comprobarSesion() {
+    if (typeof supabaseClient === "undefined") {
+      mostrarMensaje(mensajeLogin, "No se pudo conectar con Supabase. Revisa supabase-config.js", "error");
+      return;
+    }
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) console.error(error);
+    data?.session ? mostrarAdmin() : mostrarLogin();
+  }
 
-function formatearPrecio(
-    precio
-) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    mostrarMensaje(mensajeLogin, "Ingresando...");
 
-    return new Intl.NumberFormat(
-        "es-CO",
-        {
-            style:
-                "currency",
+    const email = $("correo").value.trim();
+    const password = $("contrasena").value;
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-            currency:
-                "COP",
+    if (error) {
+      console.error(error);
+      mostrarMensaje(mensajeLogin, `No se pudo iniciar sesión: ${error.message}`, "error");
+      return;
+    }
 
-            maximumFractionDigits:
-                0
-        }
-    ).format(
-        Number(precio)
-    );
+    loginForm.reset();
+    mostrarMensaje(mensajeLogin, "");
+    mostrarAdmin();
+  });
 
-}
+  cerrarSesion.addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    mostrarLogin();
+  });
 
+  function mostrarAdmin() {
+    loginPanel.classList.add("oculto");
+    adminPanel.classList.remove("oculto");
+    cargarProductos();
+  }
 
-/* =====================================
-   ESCAPAR TEXTO HTML
-===================================== */
+  function mostrarLogin() {
+    adminPanel.classList.add("oculto");
+    loginPanel.classList.remove("oculto");
+  }
 
-function escaparHTML(
-    texto
-) {
+  fotosInput.addEventListener("change", mostrarPreviewCompleto);
 
-    return String(
-        texto || ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+  function mostrarPreviewCompleto() {
+    previewFotos.innerHTML = "";
 
-}
+    imagenesActuales.forEach((url, indice) => {
+      const caja = document.createElement("div");
+      caja.className = "preview-foto";
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Foto existente";
+      const quitar = document.createElement("button");
+      quitar.type = "button";
+      quitar.textContent = "×";
+      quitar.title = "Quitar esta foto del producto";
+      quitar.addEventListener("click", () => {
+        imagenesActuales.splice(indice, 1);
+        mostrarPreviewCompleto();
+      });
+      caja.append(img, quitar);
+      previewFotos.appendChild(caja);
+    });
+
+    Array.from(fotosInput.files).forEach((archivo) => {
+      const caja = document.createElement("div");
+      caja.className = "preview-foto";
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(archivo);
+      img.alt = "Nueva foto";
+      caja.appendChild(img);
+      previewFotos.appendChild(caja);
+    });
+  }
+
+  productoForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!categoriasSeleccionadas.length) {
+      mostrarMensaje(mensajeProducto, "Selecciona al menos una categoría.", "error");
+      return;
+    }
+    if (!empaqueSeleccionado) {
+      mostrarMensaje(mensajeProducto, "Selecciona un empaque.", "error");
+      return;
+    }
+
+    const productoId = $("productoId").value;
+    const titulo = $("titulo").value.trim();
+    const precio = Number($("precio").value);
+    const orden = Number($("orden").value) || 0;
+
+    guardarProducto.disabled = true;
+    mostrarMensaje(mensajeProducto, "Guardando producto...");
+
+    try {
+      let urlsImagenes = [...imagenesActuales];
+      const archivos = Array.from(fotosInput.files);
+
+      if (archivos.length) {
+        const nuevasUrls = await subirFotos(archivos);
+        urlsImagenes = [...urlsImagenes, ...nuevasUrls];
+      }
+
+      if (!urlsImagenes.length) throw new Error("Debes agregar al menos una fotografía.");
+
+      // IMPORTANTE: usamos la columna descripcion que ya existe para guardar el empaque.
+      // Así no necesitas crear una columna nueva en Supabase.
+      const datos = {
+        titulo,
+        precio,
+        descripcion: empaqueSeleccionado,
+        etiquetas: categoriasSeleccionadas,
+        imagenes: urlsImagenes,
+        orden
+      };
+
+      let resultado;
+      if (productoId) {
+        resultado = await supabaseClient.from("productos").update(datos).eq("id", productoId).select();
+      } else {
+        resultado = await supabaseClient.from("productos").insert([datos]).select();
+      }
+
+      if (resultado.error) throw resultado.error;
+
+      mostrarMensaje(mensajeProducto, productoId ? "Producto actualizado correctamente." : "Producto publicado correctamente.", "ok");
+      limpiarFormulario(false);
+      await cargarProductos();
+    } catch (error) {
+      console.error("Error guardando producto:", error);
+      mostrarMensaje(mensajeProducto, `No se pudo guardar: ${error.message || "Error desconocido"}`, "error");
+    } finally {
+      guardarProducto.disabled = false;
+    }
+  });
+
+  async function subirFotos(archivos) {
+    const urls = [];
+    for (const archivo of archivos) {
+      const extension = (archivo.name.split(".").pop() || "jpg").toLowerCase();
+      const nombre = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
+      const ruta = `catalogo/${nombre}`;
+
+      const { error } = await supabaseClient.storage.from("productos").upload(ruta, archivo, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: archivo.type || undefined
+      });
+      if (error) throw error;
+
+      const { data } = supabaseClient.storage.from("productos").getPublicUrl(ruta);
+      if (!data?.publicUrl) throw new Error("No se pudo obtener la URL pública de una foto.");
+      urls.push(data.publicUrl);
+    }
+    return urls;
+  }
+
+  async function cargarProductos() {
+    listaProductos.innerHTML = "<p>Cargando productos...</p>";
+    const { data, error } = await supabaseClient
+      .from("productos")
+      .select("*")
+      .order("orden", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      listaProductos.innerHTML = `<p>No se pudieron cargar: ${escaparHTML(error.message)}</p>`;
+      return;
+    }
+
+    listaProductos.innerHTML = "";
+    if (!data?.length) {
+      listaProductos.innerHTML = "<p>No hay productos publicados todavía.</p>";
+      return;
+    }
+
+    data.forEach((producto) => {
+      const imagenes = convertirALista(producto.imagenes);
+      const categorias = convertirALista(producto.etiquetas);
+      const empaque = producto.empaque || producto.descripcion || "Sin empaque";
+      const item = document.createElement("article");
+      item.className = "producto-admin";
+      item.innerHTML = `
+        <img src="${escaparAtributo(imagenes[0] || "")}" alt="${escaparAtributo(producto.titulo || "Producto")}">
+        <div>
+          <h3>${escaparHTML(producto.titulo || "Producto")}</h3>
+          <p class="precio">${formatearPrecio(producto.precio)}</p>
+          <p class="empaque-mini">Empaque: ${escaparHTML(empaque)}</p>
+          <p class="categorias-mini">${escaparHTML(categorias.join(", "))}</p>
+          <div class="acciones-producto">
+            <button class="editar" type="button">Editar</button>
+            <button class="eliminar" type="button">Eliminar</button>
+          </div>
+        </div>`;
+      item.querySelector(".editar").addEventListener("click", () => editarProducto(producto));
+      item.querySelector(".eliminar").addEventListener("click", () => eliminarProducto(producto));
+      listaProductos.appendChild(item);
+    });
+  }
+
+  function editarProducto(producto) {
+    $("productoId").value = producto.id;
+    $("titulo").value = producto.titulo || "";
+    $("precio").value = producto.precio || "";
+    $("orden").value = producto.orden || 0;
+
+    categoriasSeleccionadas = convertirALista(producto.etiquetas);
+    document.querySelectorAll(".opcion-categoria").forEach((b) => {
+      b.classList.toggle("seleccionada", categoriasSeleccionadas.includes(b.dataset.valor));
+    });
+
+    empaqueSeleccionado = producto.empaque || producto.descripcion || "";
+    document.querySelectorAll(".opcion-empaque").forEach((b) => {
+      b.classList.toggle("seleccionada", b.dataset.valor === empaqueSeleccionado);
+    });
+
+    imagenesActuales = convertirALista(producto.imagenes);
+    fotosInput.value = "";
+    mostrarPreviewCompleto();
+    guardarProducto.textContent = "Guardar cambios";
+    cancelarEdicion.classList.remove("oculto");
+    mostrarMensaje(mensajeProducto, "Editando producto.");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function eliminarProducto(producto) {
+    if (!confirm(`¿Seguro que quieres eliminar “${producto.titulo}”?`)) return;
+    const { error } = await supabaseClient.from("productos").delete().eq("id", producto.id);
+    if (error) {
+      alert(`No se pudo eliminar: ${error.message}`);
+      return;
+    }
+    await cargarProductos();
+  }
+
+  cancelarEdicion.addEventListener("click", () => limpiarFormulario(true));
+
+  function limpiarFormulario(limpiarMensaje = true) {
+    productoForm.reset();
+    $("productoId").value = "";
+    $("orden").value = 0;
+    categoriasSeleccionadas = [];
+    empaqueSeleccionado = "";
+    imagenesActuales = [];
+    fotosInput.value = "";
+    document.querySelectorAll(".opcion-categoria, .opcion-empaque").forEach((b) => b.classList.remove("seleccionada"));
+    previewFotos.innerHTML = "";
+    guardarProducto.textContent = "Publicar producto";
+    cancelarEdicion.classList.add("oculto");
+    if (limpiarMensaje) mostrarMensaje(mensajeProducto, "");
+  }
+
+  function formatearPrecio(precio) {
+    return new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(Number(precio) || 0);
+  }
+
+  function escaparHTML(texto) {
+    return String(texto ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+  function escaparAtributo(texto) { return escaparHTML(texto); }
+
+  comprobarSesion();
+})();

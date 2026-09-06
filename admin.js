@@ -28,22 +28,129 @@ const fotosInput =
 const cancelarEdicion =
     document.getElementById("cancelarEdicion");
 
+
 let imagenesActuales = [];
+
+let categoriasSeleccionadas = [];
+
+let empaqueSeleccionado = "";
 
 
 /* =====================================
-   COMPROBAR SESIÓN
+   INICIAR
 ===================================== */
 
 comprobarSesion();
 
+
+/* =====================================
+   CATEGORÍAS
+===================================== */
+
+document
+    .querySelectorAll(
+        ".opcion-categoria"
+    )
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    const valor =
+                        boton.dataset.valor;
+
+
+                    if (
+                        categoriasSeleccionadas
+                            .includes(valor)
+                    ) {
+
+                        categoriasSeleccionadas =
+                            categoriasSeleccionadas
+                                .filter(
+                                    categoria =>
+                                        categoria !== valor
+                                );
+
+
+                        boton.classList.remove(
+                            "seleccionada"
+                        );
+
+                    } else {
+
+                        categoriasSeleccionadas
+                            .push(valor);
+
+
+                        boton.classList.add(
+                            "seleccionada"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================
+   EMPAQUE
+===================================== */
+
+document
+    .querySelectorAll(
+        ".opcion-empaque"
+    )
+    .forEach(
+        boton => {
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".opcion-empaque"
+                        )
+                        .forEach(
+                            otro =>
+                                otro.classList.remove(
+                                    "seleccionada"
+                                )
+                        );
+
+
+                    boton.classList.add(
+                        "seleccionada"
+                    );
+
+
+                    empaqueSeleccionado =
+                        boton.dataset.valor;
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================
+   SESIÓN
+===================================== */
 
 async function comprobarSesion() {
 
     const {
         data: { session }
     } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient.auth
+            .getSession();
 
 
     if (session) {
@@ -66,21 +173,26 @@ async function comprobarSesion() {
 loginForm.addEventListener(
     "submit",
 
-    async function(evento) {
+    async evento => {
 
         evento.preventDefault();
 
 
         const email =
-            document.getElementById(
-                "correo"
-            ).value.trim();
+            document
+                .getElementById(
+                    "correo"
+                )
+                .value
+                .trim();
 
 
         const password =
-            document.getElementById(
-                "contrasena"
-            ).value;
+            document
+                .getElementById(
+                    "contrasena"
+                )
+                .value;
 
 
         mensajeLogin.textContent =
@@ -99,8 +211,10 @@ loginForm.addEventListener(
 
         if (error) {
 
+            console.error(error);
+
             mensajeLogin.textContent =
-                "No se pudo iniciar sesión.";
+                "Correo o contraseña incorrectos.";
 
             return;
 
@@ -119,36 +233,35 @@ loginForm.addEventListener(
    CERRAR SESIÓN
 ===================================== */
 
-document.getElementById(
-    "cerrarSesion"
-).addEventListener(
-    "click",
+document
+    .getElementById(
+        "cerrarSesion"
+    )
+    .addEventListener(
+        "click",
 
-    async function() {
+        async () => {
 
-        await supabaseClient.auth
-            .signOut();
-
-
-        mostrarLogin();
-
-    }
-);
+            await supabaseClient.auth
+                .signOut();
 
 
-/* =====================================
-   MOSTRAR PANELES
-===================================== */
+            mostrarLogin();
+
+        }
+    );
+
 
 function mostrarAdmin() {
 
-    loginPanel.classList.add(
-        "oculto"
-    );
+    loginPanel
+        .classList
+        .add("oculto");
 
-    adminPanel.classList.remove(
-        "oculto"
-    );
+
+    adminPanel
+        .classList
+        .remove("oculto");
 
 
     cargarProductos();
@@ -158,62 +271,90 @@ function mostrarAdmin() {
 
 function mostrarLogin() {
 
-    adminPanel.classList.add(
-        "oculto"
-    );
+    adminPanel
+        .classList
+        .add("oculto");
 
-    loginPanel.classList.remove(
-        "oculto"
-    );
+
+    loginPanel
+        .classList
+        .remove("oculto");
 
 }
 
 
 /* =====================================
-   PREVISUALIZACIÓN DE FOTOS
+   PREVISUALIZAR FOTOS
 ===================================== */
 
 fotosInput.addEventListener(
     "change",
 
-    function() {
+    () => {
 
-        previewFotos.innerHTML = "";
-
-
-        const archivos =
-            Array.from(
-                fotosInput.files
-            );
-
-
-        archivos.forEach(
-            archivo => {
-
-                const url =
-                    URL.createObjectURL(
-                        archivo
-                    );
-
-
-                const img =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                img.src = url;
-
-
-                previewFotos.appendChild(
-                    img
-                );
-
-            }
-        );
+        mostrarPreviewCompleto();
 
     }
 );
+
+
+function mostrarPreviewCompleto() {
+
+    previewFotos.innerHTML = "";
+
+
+    imagenesActuales.forEach(
+        url => {
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src = url;
+
+
+            previewFotos.appendChild(
+                img
+            );
+
+        }
+    );
+
+
+    const archivos =
+        Array.from(
+            fotosInput.files
+        );
+
+
+    archivos.forEach(
+        archivo => {
+
+            const url =
+                URL.createObjectURL(
+                    archivo
+                );
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src = url;
+
+
+            previewFotos.appendChild(
+                img
+            );
+
+        }
+    );
+
+}
 
 
 /* =====================================
@@ -223,7 +364,7 @@ fotosInput.addEventListener(
 productoForm.addEventListener(
     "submit",
 
-    async function(evento) {
+    async evento => {
 
         evento.preventDefault();
 
@@ -232,50 +373,60 @@ productoForm.addEventListener(
             "Guardando producto...";
 
 
+        if (
+            categoriasSeleccionadas.length === 0
+        ) {
+
+            mensajeProducto.textContent =
+                "Selecciona al menos una categoría.";
+
+            return;
+        }
+
+
+        if (!empaqueSeleccionado) {
+
+            mensajeProducto.textContent =
+                "Selecciona un empaque.";
+
+            return;
+        }
+
+
         const productoId =
-            document.getElementById(
-                "productoId"
-            ).value;
+            document
+                .getElementById(
+                    "productoId"
+                )
+                .value;
 
 
         const titulo =
-            document.getElementById(
-                "titulo"
-            ).value.trim();
+            document
+                .getElementById(
+                    "titulo"
+                )
+                .value
+                .trim();
 
 
         const precio =
             Number(
-                document.getElementById(
-                    "precio"
-                ).value
+                document
+                    .getElementById(
+                        "precio"
+                    )
+                    .value
             );
-
-
-        const descripcion =
-            document.getElementById(
-                "descripcion"
-            ).value.trim();
-
-
-        const etiquetas =
-            document.getElementById(
-                "etiquetas"
-            )
-            .value
-            .split(",")
-            .map(
-                etiqueta =>
-                    etiqueta.trim()
-            )
-            .filter(Boolean);
 
 
         const orden =
             Number(
-                document.getElementById(
-                    "orden"
-                ).value
+                document
+                    .getElementById(
+                        "orden"
+                    )
+                    .value
             ) || 0;
 
 
@@ -289,7 +440,9 @@ productoForm.addEventListener(
             );
 
 
-        if (nuevasFotos.length > 0) {
+        if (
+            nuevasFotos.length > 0
+        ) {
 
             const urlsNuevas =
                 await subirFotos(
@@ -303,15 +456,13 @@ productoForm.addEventListener(
                     "No se pudieron subir las fotos.";
 
                 return;
-
             }
 
 
-            urlsImagenes =
-                [
-                    ...urlsImagenes,
-                    ...urlsNuevas
-                ];
+            urlsImagenes = [
+                ...urlsImagenes,
+                ...urlsNuevas
+            ];
 
         }
 
@@ -321,10 +472,9 @@ productoForm.addEventListener(
         ) {
 
             mensajeProducto.textContent =
-                "Debes agregar al menos una foto.";
+                "Agrega al menos una fotografía.";
 
             return;
-
         }
 
 
@@ -334,9 +484,11 @@ productoForm.addEventListener(
 
             precio,
 
-            descripcion,
+            etiquetas:
+                categoriasSeleccionadas,
 
-            etiquetas,
+            empaque:
+                empaqueSeleccionado,
 
             imagenes:
                 urlsImagenes,
@@ -386,7 +538,6 @@ productoForm.addEventListener(
                 "No se pudo guardar el producto.";
 
             return;
-
         }
 
 
@@ -445,10 +596,12 @@ async function subirFotos(
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                "Error subiendo foto:",
+                error
+            );
 
             return null;
-
         }
 
 
@@ -510,10 +663,9 @@ async function cargarProductos() {
         console.error(error);
 
         listaProductos.innerHTML =
-            "No se pudieron cargar los productos.";
+            "No se pudieron cargar.";
 
         return;
-
     }
 
 
@@ -526,15 +678,20 @@ async function cargarProductos() {
     ) {
 
         listaProductos.innerHTML =
-            "<p>No hay productos publicados todavía.</p>";
+            "<p>No hay productos todavía.</p>";
 
         return;
-
     }
 
 
     data.forEach(
         producto => {
+
+            const imagenes =
+                convertirALista(
+                    producto.imagenes
+                );
+
 
             const item =
                 document.createElement(
@@ -546,18 +703,10 @@ async function cargarProductos() {
                 "producto-admin";
 
 
-            const imagen =
-                Array.isArray(
-                    producto.imagenes
-                )
-                ? producto.imagenes[0]
-                : "";
-
-
             item.innerHTML = `
 
                 <img
-                    src="${imagen}"
+                    src="${imagenes[0] || ""}"
                     alt="${producto.titulo}"
                 >
 
@@ -571,6 +720,10 @@ async function cargarProductos() {
                         ${formatearPrecio(
                             producto.precio
                         )}
+                    </p>
+
+                    <p class="empaque-mini">
+                        ${producto.empaque || ""}
                     </p>
 
                     <div class="acciones-producto">
@@ -595,28 +748,30 @@ async function cargarProductos() {
             `;
 
 
-            item.querySelector(
-                ".editar"
-            ).addEventListener(
-                "click",
+            item
+                .querySelector(
+                    ".editar"
+                )
+                .addEventListener(
+                    "click",
+                    () =>
+                        editarProducto(
+                            producto
+                        )
+                );
 
-                () =>
-                    editarProducto(
-                        producto
-                    )
-            );
 
-
-            item.querySelector(
-                ".eliminar"
-            ).addEventListener(
-                "click",
-
-                () =>
-                    eliminarProducto(
-                        producto
-                    )
-            );
+            item
+                .querySelector(
+                    ".eliminar"
+                )
+                .addEventListener(
+                    "click",
+                    () =>
+                        eliminarProducto(
+                            producto
+                        )
+                );
 
 
             listaProductos
@@ -638,69 +793,104 @@ function editarProducto(
     producto
 ) {
 
-    document.getElementById(
-        "productoId"
-    ).value =
+    document
+        .getElementById(
+            "productoId"
+        )
+        .value =
         producto.id;
 
 
-    document.getElementById(
-        "titulo"
-    ).value =
+    document
+        .getElementById(
+            "titulo"
+        )
+        .value =
         producto.titulo || "";
 
 
-    document.getElementById(
-        "precio"
-    ).value =
+    document
+        .getElementById(
+            "precio"
+        )
+        .value =
         producto.precio || "";
 
 
-    document.getElementById(
-        "descripcion"
-    ).value =
-        producto.descripcion || "";
-
-
-    document.getElementById(
-        "etiquetas"
-    ).value =
-        Array.isArray(
-            producto.etiquetas
+    document
+        .getElementById(
+            "orden"
         )
-        ? producto.etiquetas.join(
-            ", "
-        )
-        : "";
-
-
-    document.getElementById(
-        "orden"
-    ).value =
+        .value =
         producto.orden || 0;
 
 
-    imagenesActuales =
-        Array.isArray(
-            producto.imagenes
+    categoriasSeleccionadas =
+        convertirALista(
+            producto.etiquetas
+        );
+
+
+    document
+        .querySelectorAll(
+            ".opcion-categoria"
         )
-        ? [...producto.imagenes]
-        : [];
+        .forEach(
+            boton => {
+
+                boton.classList.toggle(
+                    "seleccionada",
+                    categoriasSeleccionadas
+                        .includes(
+                            boton.dataset.valor
+                        )
+                );
+
+            }
+        );
 
 
-    mostrarImagenesActuales();
+    empaqueSeleccionado =
+        producto.empaque || "";
 
 
-    document.getElementById(
-        "guardarProducto"
-    ).textContent =
+    document
+        .querySelectorAll(
+            ".opcion-empaque"
+        )
+        .forEach(
+            boton => {
+
+                boton.classList.toggle(
+                    "seleccionada",
+                    boton.dataset.valor ===
+                    empaqueSeleccionado
+                );
+
+            }
+        );
+
+
+    imagenesActuales =
+        convertirALista(
+            producto.imagenes
+        );
+
+
+    mostrarPreviewCompleto();
+
+
+    document
+        .getElementById(
+            "guardarProducto"
+        )
+        .textContent =
         "Guardar cambios";
 
 
-    cancelarEdicion.classList
-        .remove(
-            "oculto"
-        );
+    cancelarEdicion
+        .classList
+        .remove("oculto");
 
 
     window.scrollTo({
@@ -712,49 +902,7 @@ function editarProducto(
 
 
 /* =====================================
-   IMÁGENES EXISTENTES
-===================================== */
-
-function mostrarImagenesActuales() {
-
-    previewFotos.innerHTML = "";
-
-
-    imagenesActuales.forEach(
-        url => {
-
-            const img =
-                document.createElement(
-                    "img"
-                );
-
-
-            img.src = url;
-
-
-            previewFotos.appendChild(
-                img
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================
-   CANCELAR EDICIÓN
-===================================== */
-
-cancelarEdicion.addEventListener(
-    "click",
-
-    limpiarFormulario
-);
-
-
-/* =====================================
-   ELIMINAR PRODUCTO
+   ELIMINAR
 ===================================== */
 
 async function eliminarProducto(
@@ -768,9 +916,7 @@ async function eliminarProducto(
 
 
     if (!confirmar) {
-
         return;
-
     }
 
 
@@ -795,7 +941,6 @@ async function eliminarProducto(
         );
 
         return;
-
     }
 
 
@@ -805,7 +950,17 @@ async function eliminarProducto(
 
 
 /* =====================================
-   LIMPIAR FORMULARIO
+   CANCELAR EDICIÓN
+===================================== */
+
+cancelarEdicion.addEventListener(
+    "click",
+    limpiarFormulario
+);
+
+
+/* =====================================
+   LIMPIAR
 ===================================== */
 
 function limpiarFormulario() {
@@ -813,39 +968,107 @@ function limpiarFormulario() {
     productoForm.reset();
 
 
-    document.getElementById(
-        "productoId"
-    ).value = "";
+    document
+        .getElementById(
+            "productoId"
+        )
+        .value = "";
 
 
-    document.getElementById(
-        "orden"
-    ).value = 0;
+    document
+        .getElementById(
+            "orden"
+        )
+        .value = 0;
 
+
+    categoriasSeleccionadas = [];
+
+    empaqueSeleccionado = "";
 
     imagenesActuales = [];
+
+
+    document
+        .querySelectorAll(
+            ".opcion-categoria,
+             .opcion-empaque"
+        )
+        .forEach(
+            boton =>
+                boton.classList.remove(
+                    "seleccionada"
+                )
+        );
 
 
     previewFotos.innerHTML = "";
 
 
-    document.getElementById(
-        "guardarProducto"
-    ).textContent =
+    document
+        .getElementById(
+            "guardarProducto"
+        )
+        .textContent =
         "Publicar producto";
 
 
-    cancelarEdicion.classList
-        .add(
-            "oculto"
-        );
+    cancelarEdicion
+        .classList
+        .add("oculto");
 
 }
 
 
 /* =====================================
-   PRECIO
+   UTILIDADES
 ===================================== */
+
+function convertirALista(
+    valor
+) {
+
+    if (
+        Array.isArray(valor)
+    ) {
+        return valor;
+    }
+
+
+    if (!valor) {
+        return [];
+    }
+
+
+    if (
+        typeof valor ===
+        "string"
+    ) {
+
+        try {
+
+            const convertido =
+                JSON.parse(valor);
+
+
+            return Array.isArray(
+                convertido
+            )
+                ? convertido
+                : [];
+
+        } catch {
+
+            return [valor];
+
+        }
+
+    }
+
+
+    return [];
+}
+
 
 function formatearPrecio(
     precio

@@ -22,6 +22,20 @@ let categoriasSeleccionadas = [];
 let empaqueSeleccionado = "";
 let urlTemporalPrincipal = null;
 
+const CATEGORIAS_VALIDAS = new Set([
+    "Baby Shower",
+    "Infantiles",
+    "Bautizos",
+    "Religiosa",
+    "Matrimonios",
+    "Quinceañeras",
+    "Cumpleaños",
+    "Graduaciones",
+    "Corporativas",
+    "Cabos de año",
+    "Personalizadas"
+]);
+
 document.addEventListener("DOMContentLoaded", comprobarSesion);
 
 document.querySelectorAll(".opcion-categoria").forEach((boton) => {
@@ -243,6 +257,8 @@ productoForm.addEventListener("submit", async (evento) => {
         return;
     }
 
+    categoriasSeleccionadas = categoriasSeleccionadas.filter((categoria) => CATEGORIAS_VALIDAS.has(categoria));
+
     const datos = {
         titulo,
         precio,
@@ -272,31 +288,14 @@ productoForm.addEventListener("submit", async (evento) => {
 async function subirFotos(archivos) {
     const urls = [];
 
-    for (let i = 0; i < archivos.length; i++) {
-        const archivo = archivos[i];
-        mensajeProducto.textContent = `Optimizando y subiendo foto ${i + 1} de ${archivos.length}...`;
-
-        let archivoOptimizado;
-
-        try {
-            archivoOptimizado = await optimizarImagenParaWeb(archivo);
-        } catch (error) {
-            console.warn("No se pudo optimizar la imagen; se subirá el original.", error);
-            archivoOptimizado = archivo;
-        }
-
-        const esWebp = archivoOptimizado.type === "image/webp";
-        const extension = esWebp ? "webp" : ((archivo.name.split(".").pop() || "jpg").toLowerCase());
+    for (const archivo of archivos) {
+        const extension = (archivo.name.split(".").pop() || "jpg").toLowerCase();
         const nombre = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
         const ruta = `catalogo/${nombre}`;
 
         const { error } = await supabaseClient.storage
             .from("productos")
-            .upload(ruta, archivoOptimizado, {
-                cacheControl: "31536000",
-                contentType: archivoOptimizado.type || archivo.type,
-                upsert: false
-            });
+            .upload(ruta, archivo, { cacheControl: "3600", upsert: false });
 
         if (error) {
             console.error("ERROR STORAGE:", error);
@@ -309,58 +308,6 @@ async function subirFotos(archivos) {
     }
 
     return urls;
-}
-
-async function optimizarImagenParaWeb(archivo) {
-    const MAX_LADO = 1600;
-    const CALIDAD_WEBP = 0.84;
-
-    const url = URL.createObjectURL(archivo);
-
-    try {
-        const imagen = await cargarImagenLocal(url);
-        const anchoOriginal = imagen.naturalWidth || imagen.width;
-        const altoOriginal = imagen.naturalHeight || imagen.height;
-
-        if (!anchoOriginal || !altoOriginal) return archivo;
-
-        const escala = Math.min(1, MAX_LADO / Math.max(anchoOriginal, altoOriginal));
-        const ancho = Math.max(1, Math.round(anchoOriginal * escala));
-        const alto = Math.max(1, Math.round(altoOriginal * escala));
-
-        const canvas = document.createElement("canvas");
-        canvas.width = ancho;
-        canvas.height = alto;
-
-        const ctx = canvas.getContext("2d", { alpha: false });
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
-        ctx.drawImage(imagen, 0, 0, ancho, alto);
-
-        const blob = await new Promise((resolve, reject) => {
-            canvas.toBlob(
-                (resultado) => resultado ? resolve(resultado) : reject(new Error("No se pudo convertir la imagen.")),
-                "image/webp",
-                CALIDAD_WEBP
-            );
-        });
-
-        // Si por alguna razón la versión optimizada termina más pesada, conserva el original.
-        if (blob.size >= archivo.size && archivo.size < 900000) return archivo;
-
-        return blob;
-    } finally {
-        URL.revokeObjectURL(url);
-    }
-}
-
-function cargarImagenLocal(url) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("No se pudo leer la imagen."));
-        img.src = url;
-    });
 }
 
 async function cargarProductos() {
@@ -396,7 +343,7 @@ async function cargarProductos() {
         item.innerHTML = `
             <div class="producto-miniatura">
                 <img src="${escaparAtributo(imagenes[0] || "")}" alt="" style="object-position:${x}% ${y}%;">
-                <img class="producto-logo-mini" src="imagenes/logo-maile.webp" alt="">
+                <img class="producto-logo-mini" src="imagenes/logo-maile.png" alt="">
             </div>
             <div>
                 <h3></h3>
@@ -423,7 +370,7 @@ function editarProducto(producto) {
     document.getElementById("precio").value = producto.precio || "";
     document.getElementById("orden").value = producto.orden || 0;
 
-    categoriasSeleccionadas = convertirALista(producto.etiquetas);
+    categoriasSeleccionadas = convertirALista(producto.etiquetas).filter((categoria) => CATEGORIAS_VALIDAS.has(categoria));
     document.querySelectorAll(".opcion-categoria").forEach((boton) => {
         boton.classList.toggle("seleccionada", categoriasSeleccionadas.includes(boton.dataset.valor));
     });

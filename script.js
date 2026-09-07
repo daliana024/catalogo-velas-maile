@@ -11,23 +11,48 @@ const carrusel = document.getElementById("carrusel");
 const flechaIzquierda = document.querySelector(".flecha-izquierda");
 const flechaDerecha = document.querySelector(".flecha-derecha");
 
+/*
+   ORDEN AUTOMÁTICO DEL CATÁLOGO
+   Las categorías cercanas quedan juntas.
+   Si un producto tiene varias etiquetas, se usa la primera
+   que aparezca en esta lista solo para decidir su posición.
+*/
+const CATEGORIAS_PRIORIDAD = [
+    "Baby Shower",
+    "Infantiles",
+    "Bautizos",
+    "Religiosa",
+    "Matrimonios",
+    "Quinceañeras",
+    "Cumpleaños",
+    "Graduaciones",
+    "Corporativas",
+    "Cabos de año",
+    "Personalizadas"
+];
+
+const CATEGORIAS_VALIDAS = new Set(CATEGORIAS_PRIORIDAD);
+
 let productos = [];
 let productoActual = 0;
 let fotoActual = 0;
 let estadoModalAgregado = false;
-let cambioBloqueado = false;
+let inicioPointerX = 0;
+let inicioPointerY = 0;
+let pointerActivo = false;
+let ultimoCambioFoto = 0;
+const CACHE_IMAGENES = new Set();
 
-const cacheImagenes = new Map();
-let gesto = null;
-
-document.addEventListener("DOMContentLoaded", cargarProductos, { once: true });
+cargarProductos();
 
 async function cargarProductos() {
     if (!catalogo) return;
     catalogo.innerHTML = '<div class="mensaje-catalogo">Cargando catálogo...</div>';
 
     try {
-        if (typeof supabaseClient === "undefined") throw new Error("No se pudo conectar con Supabase.");
+        if (typeof supabaseClient === "undefined") {
+            throw new Error("No se pudo conectar con Supabase.");
+        }
 
         const { data, error } = await supabaseClient
             .from("productos")
@@ -38,6 +63,7 @@ async function cargarProductos() {
         if (error) throw error;
 
         productos = (data || []).map(normalizarProducto);
+        productos = ordenarProductosPorCategoria(productos);
 
         if (!productos.length) {
             catalogo.innerHTML = '<div class="mensaje-catalogo">No hay productos publicados todavía.</div>';
@@ -45,7 +71,8 @@ async function cargarProductos() {
         }
 
         renderizarCatalogo();
-        programarPrecargaGeneral();
+        precargarPortadasVisibles();
+
     } catch (error) {
         console.error("ERROR CARGANDO CATÁLOGO:", error);
         catalogo.innerHTML = `<div class="mensaje-catalogo">No se pudo cargar el catálogo.<br><small>${escaparHTML(error.message || "Error de conexión")}</small></div>`;
@@ -57,18 +84,29 @@ function normalizarProducto(producto) {
         id: producto.id,
         titulo: producto.titulo || "Vela Maile",
         precio: Number(producto.precio) || 0,
-        etiquetas: convertirALista(producto.etiquetas),
-        imagenes: convertirALista(producto.imagenes).filter(Boolean),
+        etiquetas: normalizarEtiquetas(producto.etiquetas),
+        imagenes: convertirALista(producto.imagenes),
         empaque: producto.descripcion || "Sin especificar",
         orden: Number(producto.orden) || 0,
         posicion_x: limitarPorcentaje(producto.posicion_x ?? 50),
-        posicion_y: limitarPorcentaje(producto.posicion_y ?? 50)
+        posicion_y: limitarPorcentaje(producto.posicion_y ?? 50),
+        created_at: producto.created_at || ""
     };
+}
+
+function normalizarEtiquetas(valor) {
+    const lista = convertirALista(valor)
+        .map((x) => String(x || "").trim())
+        .filter(Boolean)
+        .filter((x) => CATEGORIAS_VALIDAS.has(x));
+
+    return [...new Set(lista)];
 }
 
 function convertirALista(valor) {
     if (Array.isArray(valor)) return valor;
     if (!valor) return [];
+
     if (typeof valor === "string") {
         try {
             const convertido = JSON.parse(valor);
@@ -77,6 +115,7 @@ function convertirALista(valor) {
             return [valor];
         }
     }
+
     return [];
 }
 
@@ -86,9 +125,37 @@ function limitarPorcentaje(valor) {
     return Math.max(0, Math.min(100, numero));
 }
 
+function prioridadDeProducto(producto) {
+    let prioridad = CATEGORIAS_PRIORIDAD.length;
+
+    producto.etiquetas.forEach((etiqueta) => {
+        const indice = CATEGORIAS_PRIORIDAD.indexOf(etiqueta);
+        if (indice !== -1 && indice < prioridad) prioridad = indice;
+    });
+
+    return prioridad;
+}
+
+function ordenarProductosPorCategoria(lista) {
+    return lista
+        .map((producto, indiceOriginal) => ({ ...producto, _indiceOriginal: indiceOriginal }))
+        .sort((a, b) => {
+            const categoriaA = prioridadDeProducto(a);
+            const categoriaB = prioridadDeProducto(b);
+
+            if (categoriaA !== categoriaB) return categoriaA - categoriaB;
+            if (a.orden !== b.orden) return a.orden - b.orden;
+
+            const fechaA = Date.parse(a.created_at) || 0;
+            const fechaB = Date.parse(b.created_at) || 0;
+            if (fechaA !== fechaB) return fechaB - fechaA;
+
+            return a._indiceOriginal - b._indiceOriginal;
+        });
+}
+
 function renderizarCatalogo() {
     catalogo.innerHTML = "";
-    const fragmento = document.createDocumentFragment();
     let cantidad = 0;
 
     productos.forEach((producto, indice) => {
@@ -107,13 +174,14 @@ function renderizarCatalogo() {
         foto.alt = producto.titulo;
         foto.loading = indice < 4 ? "eager" : "lazy";
         foto.decoding = "async";
-        if (indice < 2) foto.fetchPriority = "high";
+        foto.fetchPriority = indice < 2 ? "high" : "auto";
         foto.style.objectPosition = `${producto.posicion_x}% ${producto.posicion_y}%`;
 
         const logo = document.createElement("img");
         logo.className = "logo-marca";
-        logo.src = "imagenes/logo-maile.webp";
+        logo.src = "imagenes/logo-maile.png";
         logo.alt = "";
+        logo.loading = "eager";
         logo.decoding = "async";
         logo.setAttribute("aria-hidden", "true");
 
@@ -122,10 +190,8 @@ function renderizarCatalogo() {
         texto.textContent = "Toca para ver";
 
         publicacion.append(foto, logo, texto);
-        fragmento.appendChild(publicacion);
+        catalogo.appendChild(publicacion);
     });
-
-    catalogo.appendChild(fragmento);
 
     if (!cantidad) {
         catalogo.innerHTML = '<div class="mensaje-catalogo">No hay productos con fotografías.</div>';
@@ -155,14 +221,12 @@ function abrirPublicacion(indice) {
 
     renderizarEtiquetas(producto.etiquetas);
     crearIndicadores();
-    actualizarImagen(true);
+    actualizarImagen();
+    precargarFotosAlrededor();
 
     modal.style.display = "block";
     modal.scrollTop = 0;
     document.body.style.overflow = "hidden";
-
-    // Precarga inmediatamente todas las demás fotos de ESTA publicación.
-    precargarProducto(producto, true);
 
     if (!estadoModalAgregado) {
         try {
@@ -178,7 +242,6 @@ function cerrarModal() {
     if (modal) modal.style.display = "none";
     document.body.style.overflow = "";
     estadoModalAgregado = false;
-    cambioBloqueado = false;
 }
 
 function volverCatalogo() {
@@ -193,65 +256,56 @@ window.addEventListener("popstate", () => {
 
 function renderizarEtiquetas(lista) {
     etiquetasProducto.innerHTML = "";
-    const fragmento = document.createDocumentFragment();
 
     lista.forEach((etiqueta) => {
         const elemento = document.createElement("span");
         elemento.className = "etiqueta";
         elemento.textContent = etiqueta;
-        fragmento.appendChild(elemento);
+        etiquetasProducto.appendChild(elemento);
     });
-
-    etiquetasProducto.appendChild(fragmento);
 }
 
-function actualizarImagen(inmediata = false) {
+function actualizarImagen() {
     const producto = productos[productoActual];
     if (!producto || !producto.imagenes.length) return;
 
     const url = producto.imagenes[fotoActual];
 
+    imagenGrande.src = url;
     imagenGrande.alt = `${producto.titulo} - Foto ${fotoActual + 1}`;
+    imagenGrande.decoding = "async";
     imagenGrande.style.objectPosition = `${producto.posicion_x}% ${producto.posicion_y}%`;
-
-    // Si ya está precargada, el cambio es prácticamente instantáneo.
-    if (inmediata || cacheImagenes.has(url)) {
-        imagenGrande.src = url;
-    } else {
-        precargarImagen(url, true).finally(() => {
-            if (productos[productoActual]?.imagenes[fotoActual] === url) imagenGrande.src = url;
-        });
-    }
-
-    // Precarga la foto siguiente y anterior con máxima prioridad.
-    precargarVecinas(producto);
 
     actualizarIndicadores();
     actualizarFlechas();
     actualizarWhatsapp(producto);
+    precargarFotosAlrededor();
 }
 
-function cambiarFoto(nuevoIndice) {
-    const producto = productos[productoActual];
-    if (!producto || cambioBloqueado) return;
-    if (nuevoIndice < 0 || nuevoIndice >= producto.imagenes.length || nuevoIndice === fotoActual) return;
-
-    cambioBloqueado = true;
-    fotoActual = nuevoIndice;
-    actualizarImagen();
-
-    // Evita dobles saltos accidentales, pero sin hacer sentir lento el carrusel.
-    window.setTimeout(() => {
-        cambioBloqueado = false;
-    }, 120);
+function puedeCambiarFoto() {
+    const ahora = performance.now();
+    if (ahora - ultimoCambioFoto < 120) return false;
+    ultimoCambioFoto = ahora;
+    return true;
 }
 
 function fotoSiguiente() {
-    cambiarFoto(fotoActual + 1);
+    const producto = productos[productoActual];
+    if (!producto || !puedeCambiarFoto()) return;
+
+    if (fotoActual < producto.imagenes.length - 1) {
+        fotoActual++;
+        actualizarImagen();
+    }
 }
 
 function fotoAnterior() {
-    cambiarFoto(fotoActual - 1);
+    if (!puedeCambiarFoto()) return;
+
+    if (fotoActual > 0) {
+        fotoActual--;
+        actualizarImagen();
+    }
 }
 
 function actualizarFlechas() {
@@ -276,18 +330,18 @@ function crearIndicadores() {
     const producto = productos[productoActual];
     if (!producto) return;
 
-    const fragmento = document.createDocumentFragment();
-
     producto.imagenes.forEach((_, indice) => {
         const punto = document.createElement("button");
         punto.type = "button";
         punto.className = "punto";
         punto.setAttribute("aria-label", `Ver foto ${indice + 1}`);
-        punto.addEventListener("click", () => cambiarFoto(indice));
-        fragmento.appendChild(punto);
+        punto.addEventListener("click", () => {
+            fotoActual = indice;
+            actualizarImagen();
+        });
+        indicadores.appendChild(punto);
     });
 
-    indicadores.appendChild(fragmento);
     actualizarIndicadores();
 }
 
@@ -295,6 +349,38 @@ function actualizarIndicadores() {
     indicadores.querySelectorAll(".punto").forEach((punto, indice) => {
         punto.classList.toggle("activo", indice === fotoActual);
     });
+}
+
+function precargarImagen(url) {
+    if (!url || CACHE_IMAGENES.has(url)) return;
+    CACHE_IMAGENES.add(url);
+
+    const img = new Image();
+    img.decoding = "async";
+    img.src = url;
+}
+
+function precargarFotosAlrededor() {
+    const producto = productos[productoActual];
+    if (!producto) return;
+
+    const indices = [fotoActual + 1, fotoActual - 1, fotoActual + 2];
+    indices.forEach((indice) => {
+        if (indice >= 0 && indice < producto.imagenes.length) {
+            precargarImagen(producto.imagenes[indice]);
+        }
+    });
+}
+
+function precargarPortadasVisibles() {
+    const trabajo = () => {
+        productos.slice(0, 8).forEach((producto) => {
+            if (producto.imagenes[0]) precargarImagen(producto.imagenes[0]);
+        });
+    };
+
+    if ("requestIdleCallback" in window) requestIdleCallback(trabajo, { timeout: 1500 });
+    else setTimeout(trabajo, 700);
 }
 
 function actualizarWhatsapp(producto) {
@@ -308,96 +394,32 @@ function actualizarWhatsapp(producto) {
     botonWhatsapp.href = "https://wa.me/573008866132?text=" + encodeURIComponent(mensaje);
 }
 
-function precargarImagen(url, prioridadAlta = false) {
-    if (!url) return Promise.resolve();
-    if (cacheImagenes.has(url)) return cacheImagenes.get(url);
-
-    const promesa = new Promise((resolve) => {
-        const img = new Image();
-        img.decoding = "async";
-        if (prioridadAlta) img.fetchPriority = "high";
-        img.onload = async () => {
-            try {
-                if (img.decode) await img.decode();
-            } catch (_) {}
-            resolve();
-        };
-        img.onerror = resolve;
-        img.src = url;
-    });
-
-    cacheImagenes.set(url, promesa);
-    return promesa;
-}
-
-function precargarVecinas(producto) {
-    const anterior = producto.imagenes[fotoActual - 1];
-    const siguiente = producto.imagenes[fotoActual + 1];
-    if (siguiente) precargarImagen(siguiente, true);
-    if (anterior) precargarImagen(anterior, true);
-}
-
-function precargarProducto(producto, prioridadAlta = false) {
-    producto.imagenes.forEach((url, indice) => {
-        // La primera ya suele estar en caché por la miniatura.
-        if (indice > 0) precargarImagen(url, prioridadAlta && indice <= 2);
-    });
-}
-
-function programarPrecargaGeneral() {
-    const tarea = () => {
-        // Primero las publicaciones iniciales; luego el resto sin bloquear la interfaz.
-        productos.slice(0, 8).forEach((producto) => precargarProducto(producto, false));
-
-        window.setTimeout(() => {
-            productos.slice(8).forEach((producto) => precargarProducto(producto, false));
-        }, 1200);
-    };
-
-    if ("requestIdleCallback" in window) {
-        requestIdleCallback(tarea, { timeout: 1800 });
-    } else {
-        window.setTimeout(tarea, 700);
-    }
-}
-
-// Gesto más preciso y rápido que touchstart/touchend.
+/* Swipe preciso: distingue desplazamiento horizontal de scroll vertical. */
 if (carrusel) {
     carrusel.addEventListener("pointerdown", (evento) => {
-        if (!evento.isPrimary) return;
-        gesto = {
-            id: evento.pointerId,
-            x: evento.clientX,
-            y: evento.clientY,
-            tiempo: performance.now()
-        };
-
-        try {
-            carrusel.setPointerCapture(evento.pointerId);
-        } catch (_) {}
+        if (evento.pointerType === "mouse" && evento.button !== 0) return;
+        inicioPointerX = evento.clientX;
+        inicioPointerY = evento.clientY;
+        pointerActivo = true;
+        try { carrusel.setPointerCapture(evento.pointerId); } catch (_) {}
     });
 
     carrusel.addEventListener("pointerup", (evento) => {
-        if (!gesto || gesto.id !== evento.pointerId) return;
+        if (!pointerActivo) return;
+        pointerActivo = false;
 
-        const dx = evento.clientX - gesto.x;
-        const dy = evento.clientY - gesto.y;
-        const ax = Math.abs(dx);
-        const ay = Math.abs(dy);
-        const ancho = carrusel.clientWidth || 320;
-        const umbral = Math.max(24, ancho * 0.065);
+        const dx = evento.clientX - inicioPointerX;
+        const dy = evento.clientY - inicioPointerY;
 
-        gesto = null;
-
-        // Solo cuenta como swipe si el movimiento es claramente horizontal.
-        if (ax < umbral || ax <= ay * 1.15) return;
+        if (Math.abs(dx) < 28) return;
+        if (Math.abs(dx) <= Math.abs(dy) * 1.15) return;
 
         if (dx < 0) fotoSiguiente();
         else fotoAnterior();
     });
 
     carrusel.addEventListener("pointercancel", () => {
-        gesto = null;
+        pointerActivo = false;
     });
 }
 

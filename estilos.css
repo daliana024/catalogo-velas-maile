@@ -5,7 +5,7 @@ html, body { width: 100%; min-height: 100%; overflow-x: hidden; }
 html { background: var(--fondo-exterior); }
 body { font-family: "Manrope", Arial, Helvetica, sans-serif; color: var(--texto); background: var(--fondo-exterior); }
 .app { width: 100%; max-width: 430px; min-height: 100vh; margin: 0 auto; background: var(--crema); overflow: hidden; }
-.portada { width: 100%; min-height: 610px; position: relative; display: flex; justify-content: center; align-items: flex-start; background-image: url("imagenes/portada.png"); background-size: cover; background-position: center bottom; background-repeat: no-repeat; }
+.portada { width: 100%; min-height: 610px; position: relative; display: flex; justify-content: center; align-items: flex-start; background-image: url("imagenes/portada.webp"); background-size: cover; background-position: center bottom; background-repeat: no-repeat; }
 .capa-portada { width: 100%; min-height: 610px; padding: 24px 22px 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; background: linear-gradient(180deg,rgba(255,250,243,.03) 0%,rgba(255,250,243,.05) 50%,rgba(255,250,243,.01) 100%); }
 .logo { display: block; width: 120px; height: 120px; object-fit: contain; margin: 0 auto 16px; position: relative; left: -5px; border-radius: 50%; }
 .nuestro { width: 100%; margin-bottom: 7px; font-family: "Cormorant Garamond",serif; font-size: clamp(21px,6vw,28px); font-weight: 500; letter-spacing: clamp(4px,1.5vw,7px); line-height: 1; color: #6a4e39; text-align: center; }
@@ -16,8 +16,8 @@ body { font-family: "Manrope", Arial, Helvetica, sans-serif; color: var(--texto)
 .boton-red:active { transform: scale(.97); }
 .icono-red { width: 18px; height: 18px; flex-shrink: 0; fill: currentColor; }
 .catalogo { width: 100%; display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: -34px; padding: 10px 10px 18px; background: var(--crema); position: relative; z-index: 1; }
-.publicacion { position: relative; width: 100%; aspect-ratio: 1 / 1; border: 0; padding: 0; margin: 0; background: var(--crema-oscuro); overflow: hidden; cursor: pointer; border-radius: 18px; display: block; box-shadow: var(--sombra); -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: transform .15s ease,box-shadow .15s ease; }
-.foto-producto { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .18s ease,filter .18s ease; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.publicacion { position: relative; contain: layout paint; width: 100%; aspect-ratio: 1 / 1; border: 0; padding: 0; margin: 0; background: var(--crema-oscuro); overflow: hidden; cursor: pointer; border-radius: 18px; display: block; box-shadow: var(--sombra); -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: transform .15s ease,box-shadow .15s ease; }
+.foto-producto { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .14s ease,filter .14s ease; pointer-events: none; backface-visibility: hidden; transform: translateZ(0); user-select: none; -webkit-user-drag: none; }
 .publicacion::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg,rgba(0,0,0,.01) 0%,rgba(0,0,0,0) 58%,rgba(0,0,0,.30) 100%); pointer-events: none; }
 .publicacion:active { transform: scale(.97); box-shadow: 0 4px 12px rgba(72,48,26,.16); }
 .publicacion:active .foto-producto { transform: scale(1.04); filter: brightness(.90); }
@@ -32,8 +32,8 @@ body { font-family: "Manrope", Arial, Helvetica, sans-serif; color: var(--texto)
 .volver:active { transform: scale(.92); }
 .carrusel-wrapper { position: relative; padding: 14px 14px 0; }
 .carrusel { position: relative; width: 100%; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f8efe6; border-radius: 24px; box-shadow: var(--sombra); touch-action: pan-y; }
-.imagen-modal-producto { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; -webkit-user-drag: none; }
-.logo-modal { position: absolute; top: 8px; left: 8px; z-index: 6; width: 50px; height: 5S0px; object-fit: contain; border-radius: 50%; background: transparent; padding: 0; box-shadow: none; pointer-events: none; }
+.imagen-modal-producto { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; -webkit-user-drag: none; backface-visibility: hidden; transform: translateZ(0); }
+.logo-modal { position: absolute; top: 8px; left: 8px; z-index: 6; width: 50px; height: 50px; object-fit: contain; border-radius: 50%; background: transparent; padding: 0; box-shadow: none; pointer-events: none; }
 .flecha { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border: 0; border-radius: 50%; background: rgba(255,253,249,.88); color: #5d4431; font-size: 28px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 16px rgba(0,0,0,.09); z-index: 7; -webkit-tap-highlight-color: transparent; }
 .flecha:active { transform: translateY(-50%) scale(.92); }
 .flecha-izquierda { left: 24px; }
